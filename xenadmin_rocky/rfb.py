@@ -65,6 +65,7 @@ class RFB:
         """Yield bounded drawing events; the caller owns its framebuffer/UI thread."""
         message, = self.unpack('!B')
         if message == 0:
+            resized = False
             _, count = self.unpack('!BH')
             if count > 4096:
                 raise ConsoleError('Console update has too many rectangles')
@@ -75,6 +76,7 @@ class RFB:
                         raise ConsoleError('Invalid console resize origin')
                     self.dimensions(width, height)
                     self.width, self.height = width, height
+                    resized = True
                     yield ('resize', width, height)
                     continue
                 self.rectangle(x, y, width, height)
@@ -89,7 +91,9 @@ class RFB:
                     yield ('copy', x, y, width, height, source_x, source_y)
                 else:
                     raise ConsoleError('Host used an unsupported framebuffer encoding')
-            self.request()
+            # A resize invalidates the local framebuffer, even if dimensions
+            # repeat. Ask for every pixel rather than only subsequent changes.
+            self.request(not resized)
         elif message == 2:
             yield ('bell',)
         elif message == 3:

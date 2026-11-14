@@ -137,6 +137,6 @@ test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTest
 test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 137 tests in 2.946s
+Ran 137 tests in 3.171s
 
 OK

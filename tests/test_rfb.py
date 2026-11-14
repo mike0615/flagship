@@ -44,6 +44,7 @@ class RFBTests(unittest.TestCase):
         update += struct.pack('!HHHHiHH', 1, 1, 2, 1, 1, 0, 0)
         rfb = RFB(Wire(greeting() + update));rfb.handshake()
         self.assertEqual(list(rfb.events()), [('resize', 4, 3), ('copy', 1, 1, 2, 1, 0, 0)])
+        self.assertEqual(rfb.tunnel.sent[-1], struct.pack('!BBHHHH', 3, 0, 0, 0, 4, 3))
 
     def test_refuses_authentication_downgrade_and_oversized_desktop(self):
         for wire in (b'RFB 003.008\n\x01\x02', b'RFB 003.003\n\x00\x00\x00\x02',
