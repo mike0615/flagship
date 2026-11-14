@@ -15,11 +15,11 @@ See QUALIFICATION.md for the evidence boundary.
 | Rename | Synchronous setter | Live permission/state tests |
 | Same-pool migration | Async submission with host selection | Live migration and compatibility |
 | Delete VM record | Confirmed async submission, disks retained | Disk lifecycle cleanup wizard |
-| Tasks and alerts | Submitted-task progress/outcomes; pool inventory display | Live qualification, persistent history, cancel and alert actions |
+| Tasks and alerts | Submitted-task outcomes, cancellation requests, persistent operation history | Live cancellation qualification, alert actions and advanced history/report views |
 | Inventory export | Local JSON, selected credential fields redacted | Review metadata before sharing |
 | New VM wizard | Template clone/copy, selected SR, disk, one NIC, optional ISO/start | Live provisioning, additional NICs/disks and advanced installation options |
 | CPU/memory editing | Halted VM vCPU and fixed-memory editor | Live qualification, dynamic memory and live CPU controls |
-| Disk, ISO, VIF editing | Not implemented | Full device lifecycle |
+| Disk, ISO, VIF editing | Add/attach/grow/rename/detach/delete disks, DVD/ISO lifecycle, NIC add/move/connect/remove | Live qualification; advanced QoS/slots/MAC edits, specialized devices and storage migration |
 | SR/network creation | Not implemented | Validated creation wizards |
 | XVA/OVF import and export | Not implemented | Streaming transfer and task/error handling |
 | Embedded VNC/RDP console | Not implemented | Authenticated console tunnel and viewer |
@@ -28,7 +28,7 @@ See QUALIFICATION.md for the evidence boundary.
 | Cross-pool migration | Not implemented | Transfer networks and credential boundaries |
 | Windows plugins/ReportViewer | Not implemented | Linux replacement design |
 | Multiple saved pool connections | Not implemented | Secure connection profiles |
-| Offline help | Included with RPM | Clean install verification |
+| Offline help | Indexed installed chapters, including recovery; no browser/network | Booted-desktop operator verification |
 
 A v1.0 of the full requested compatibility scope cannot be declared from this
 candidate. Expand and test the missing workflows before a parity-oriented release.

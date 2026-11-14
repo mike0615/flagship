@@ -32,6 +32,10 @@ class WireTests(unittest.TestCase):
                 return {'Status': 'Success', 'Value': 'test-session'}
             if method == 'session.logout':
                 return {'Status': 'Success', 'Value': ''}
+            if method == 'VM.get_by_uuid':
+                return {'Status': 'Success', 'Value': 'current-vm-ref'}
+            if method == 'VM.get_record':
+                return {'Status': 'Success', 'Value': {'uuid': '00000000-0000-4000-8000-000000000001', 'name_label': 'Wire guest'}}
             if method == 'Async.VM.start':
                 return {'Status': 'Failure', 'ErrorDescription': ['VM_BAD_POWER_STATE', 'vm']}
             return {'Status': 'Success', 'Value': {'vm': {'name_label': 'Wire guest'}}}
@@ -80,4 +84,14 @@ class WireTests(unittest.TestCase):
         memory = 4 * 1024**3
         client.call('VM.set_memory_limits', 'vm', 0, memory, memory, memory)
         self.assertIn(('VM.set_memory_limits', ('test-session', 'vm', '0', str(memory), str(memory), str(memory))), self.calls)
+        client.logout()
+
+    def test_recovery_uuid_inspection_crosses_verified_https(self):
+        from xenadmin_rocky.recovery import inspect_by_uuid
+        client = Client('https://localhost:' + str(self.port), str(self.cert))
+        client.login('test-user', 'test-only-password')
+        report = inspect_by_uuid(client, 'VM', '00000000-0000-4000-8000-000000000001')
+        self.assertEqual(report['record']['name_label'], 'Wire guest')
+        self.assertEqual(report['current_reference'], 'current-vm-ref')
+        self.assertEqual(report['endpoint'], client.endpoint)
         client.logout()

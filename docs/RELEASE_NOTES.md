@@ -1,5 +1,15 @@
 # Release notes
 
+## 1.0.0.dev3 — in development
+
+Disk/DVD/NIC management, separate detach versus permanent disk deletion, private
+fsync operation journals, recovery/history after restart, UUID inspection in GUI
+and headless CLI, cancellation requests, named-host migration selection, and an
+indexed offline help viewer. Explicit JSON exports use private permissions.
+114 local checks pass; current package builds/install checks are pending.
+Full Windows parity, live pool and booted/independent-operator qualification remain
+open. Journals never replay changes or guarantee automatic rollback.
+
 ## 1.0.0.dev2 — development candidate, November 14, 2026
 
 Submitted task tracking now distinguishes server-confirmed outcomes from submission.

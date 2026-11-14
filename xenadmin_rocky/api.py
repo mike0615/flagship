@@ -1,8 +1,10 @@
 """TLS-verified XenAPI XML-RPC transport. No automatic mutation retries."""
 import ssl
 import threading
+import xml.etree.ElementTree as ET
 import xmlrpc.client
 from urllib.parse import urlsplit
+from .journal import JournalError, OBJECT_CLASSES
 
 
 def wire_value(value):
@@ -46,12 +48,18 @@ class Client:
     classes = ('pool', 'host', 'VM', 'SR', 'network', 'VDI', 'VBD', 'VIF',
                'PIF', 'task', 'message', 'VM_metrics', 'host_metrics')
 
-    def __init__(self, endpoint, ca_file=None):
+    def __init__(self, endpoint, ca_file=None, journal=None):
         parts = urlsplit(endpoint)
         if (parts.scheme != 'https' or not parts.hostname or parts.username or
                 parts.password or parts.query or parts.fragment or parts.path not in ('', '/')):
             raise ValueError('Use https://hostname[:port] without credentials or a path')
         self.endpoint = endpoint.rstrip('/')
+        self.journal = journal
+        self.journal_failed = False
+        self.identities = {}
+        self.task_origins = {}
+        self.task_states = {}
+        self.created_refs = {}
         self.lock = threading.RLock()
         self.session = None
         self.proxy = xmlrpc.client.ServerProxy(
@@ -74,7 +82,99 @@ class Client:
     def call(self, name, *args):
         if not self.session:
             raise APIError(['SESSION_INVALID'])
-        return self._rpc(name, self.session, *args)
+        mutation = self.is_mutation(name)
+        op_id = None
+        if mutation and self.journal:
+            if self.journal_failed:
+                raise JournalError('Further changes are blocked after a journal failure. Inspect the pool and restart after correcting storage.')
+            op_id = self.journal.intent(name, self.affected_objects(name, args))
+        try:
+            result = self._rpc(name, self.session, *args)
+        except Exception as exc:
+            if op_id:
+                try:
+                    self.journal.outcome(op_id, 'server_failure' if isinstance(exc, APIError) else 'unknown', error=exc)
+                except JournalError:
+                    self.journal_failed = True
+                    raise
+            raise
+        if op_id:
+            ref = result if isinstance(result, str) and (name.startswith('Async.') or self.returns_reference(name)) else None
+            try:
+                self.journal.outcome(op_id, 'returned', result_ref=ref)
+            except JournalError:
+                self.journal_failed = True
+                raise JournalError('Server operation returned but its outcome could not be saved. Returned reference: ' +
+                                   (ref or '(none)') + '. Inspect server state before retrying.') from None
+            if name.startswith('Async.') and ref:
+                self.task_origins[ref] = (op_id, name.removeprefix('Async.'))
+        self.observe(name, args, result)
+        return result
+
+    @staticmethod
+    def is_mutation(name):
+        base = name.removeprefix('Async.')
+        kind, _, action = base.partition('.')
+        return (kind in OBJECT_CLASSES and bool(action) and
+                not action.startswith(('get_', 'assert_', 'check_', 'query_', 'compute_')))
+
+    @staticmethod
+    def returns_reference(name):
+        kind, _, action = name.removeprefix('Async.').partition('.')
+        return kind in OBJECT_CLASSES and action in ('create', 'clone', 'copy', 'snapshot', 'checkpoint')
+
+    def affected_objects(self, name, args):
+        refs = []
+        base = name.removeprefix('Async.')
+        if args and isinstance(args[0], str):
+            refs.append(args[0])
+        elif args and isinstance(args[0], dict):
+            refs.extend(args[0][key] for key in ('VM', 'VDI', 'SR', 'network', 'host') if key in args[0])
+        indices = {'VM.copy': (2,), 'VM.pool_migrate': (1,), 'VIF.move': (1,), 'VBD.insert': (1,)}
+        refs.extend(args[i] for i in indices.get(base, ()) if len(args) > i)
+        return [dict(self.identities[ref], ref=ref) for ref in refs if isinstance(ref, str) and ref in self.identities]
+
+    def observe(self, name, args, result):
+        kind, _, action = name.partition('.')
+        if kind in OBJECT_CLASSES:
+            if action == 'get_all_records' and isinstance(result, dict):
+                for ref, record in result.items():
+                    if isinstance(record, dict) and isinstance(record.get('uuid'), str):
+                        self.identities[ref] = {'class': kind, 'uuid': record['uuid']}
+            elif action == 'get_record' and args and isinstance(result, dict) and isinstance(result.get('uuid'), str):
+                self.identities[args[0]] = {'class': kind, 'uuid': result['uuid']}
+        if (action == 'get_record' and args and isinstance(result, dict) and isinstance(result.get('uuid'), str)
+                and args[0] in self.created_refs and self.journal and not self.journal_failed and not self.journal.failed):
+            try:
+                self.journal.identity(kind, args[0], result['uuid'])
+                self.created_refs.pop(args[0], None)
+            except JournalError:
+                self.journal_failed = True
+                raise
+        if name == 'task.get_record' and args and self.journal and not self.journal_failed and not self.journal.failed and args[0] in self.task_origins and isinstance(result, dict):
+            ref = args[0]
+            state = (result.get('uuid'), result.get('status'))
+            if self.task_states.get(ref) == state:
+                return
+            op_id, method = self.task_origins[ref]
+            object_ref = None
+            if result.get('status') == 'success' and self.returns_reference(method):
+                text = result.get('result', '')
+                if isinstance(text, str) and len(text) <= 65536 and '<!DOCTYPE' not in text.upper() and '<!ENTITY' not in text.upper():
+                    try:
+                        nodes = list(ET.fromstring(text).iter('string'))
+                        if len(nodes) == 1:
+                            object_ref = nodes[0].text
+                    except ET.ParseError:
+                        pass
+            try:
+                self.journal.task(op_id, ref, result, result_ref=object_ref)
+                if object_ref:
+                    self.created_refs[object_ref] = method.partition('.')[0]
+                self.task_states[ref] = state
+            except JournalError:
+                self.journal_failed = True
+                raise
 
     def logout(self):
         try:

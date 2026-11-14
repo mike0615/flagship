@@ -38,3 +38,19 @@ For client rollback install a previously retained RPM with DNF downgrade using
 only the corresponding offline dependency set. Retain package SHA-256 manifests.
 There is no application database or credential store to migrate. Server tasks are
 owned by XAPI, not by the client process.
+
+## Persistent recovery records (dev.3)
+
+The client records operation intent before changes, observed server outcomes and
+workflow transitions in a private owner-only state directory. It excludes login
+parameters, raw RPC arguments and API session tokens. The files do retain sensitive
+infrastructure metadata and survive client restart/uninstall. See RECOVERY.md for
+paths, record semantics, retention/view limits, inspection by UUID and journal
+storage-failure recovery. These records never cause automatic RPC replay.
+
+An unavailable journal blocks further changes; read-only inventory/inspection can
+still be used to investigate. Permanent disk-data deletion is distinct from detach,
+requires the exact UUID and refuses shared/snapshot/read-only or other-associated
+disks. A rejected unplug stops removal. Coordinate destructive operations with
+other administrators and retain independent backups; client checks are not a
+server-wide transaction locking every competing administrative client.

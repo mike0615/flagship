@@ -56,3 +56,27 @@ attempting speculative deletion. `ChangeVCPUSettingsAction` ordering is mirrored
 when reducing vCPUs (startup before maximum). The XML-RPC wire reference also
 requires decimal-string integer encoding and opaque references; regression checks
 cover values above XML-RPC int32 and non-OpaqueRef-shaped task references.
+
+## Device and recovery work (dev.3)
+
+The native device actions follow the separation in
+`XenModel/Actions/VDI/{DetachVirtualDiskAction,DestroyDiskAction}.cs`: remove a
+connection versus explicitly destroy its underlying disk. Unlike a cleanup in a
+finally block, a rejected native unplug stops before connection removal. The
+native data-delete operation additionally requires the exact disk UUID and rejects
+shared/read-only/snapshot or other-associated disks. This is a deliberate safety
+boundary, not a claim to implement every advanced Windows storage workflow.
+
+`VIF.move` is used for network changes where the server supports it, preserving
+adapter identity/MAC rather than deleting and recreating the VIF. Unsupported
+server methods fail explicitly; there is no destructive fallback. Online growth
+uses the server's advertised allowed operations rather than assuming support from
+a product version alone. Required VBD/VIF/VDI constructor fields were checked
+against the supplied generated classes and the primary XAPI reference.
+
+The native operation journal records intent before mutation RPCs, returned outcomes,
+observed UUIDs/task states and structural workflow progress. It does not serialize
+login parameters or raw RPC arguments. A read-only inspector resolves fresh
+references through get_by_uuid and verifies UUID identity; history never replays
+stored operations. Task cancellation requests remain distinct from terminal task
+outcomes, consistent with https://xapi-project.github.io/xen-api/classes/task.html.

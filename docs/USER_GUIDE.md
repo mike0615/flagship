@@ -95,3 +95,63 @@ The server remains responsible for capacity, permissions and license restriction
 A failed sequence may have applied earlier settings: save the workflow report,
 refresh and inspect the VM before deciding how to recover. Dynamic memory ranges
 and live CPU changes are not yet exposed by this editor.
+
+## Manage disks, DVD drives and network adapters (dev.3)
+
+Select an ordinary VM and choose Devices. The window has structured disk/DVD and
+network-adapter tables. Its title identifies the VM; changing the main tree's
+selection does not retarget this window. Refresh from server after another
+administrator changes the guest. A window belonging to an old connection cannot
+submit changes to a new pool. The backend re-checks VM ownership of each device.
+
+The current editor supports halted/running ordinary VMs. Templates, control domains,
+snapshots and suspended/paused VMs are rejected. The server's permissions, driver
+capabilities and current state remain the final authority.
+
+- Add disk creates a new VDI on writable VM storage and connects it to a free slot.
+  Attach existing connects an available disk; non-shared disks with existing
+  associations are rejected. Running guests receive a hotplug request.
+- Grow disk increases its virtual capacity using a server-advertised resize method.
+  Shrinking is refused. Guest partitions/filesystems must be expanded separately.
+- Detach — keep data removes the connection and retains the VDI. A failed clean
+  unplug stops the sequence before connection removal; no forced unplug is used.
+- Delete disk data is a separate permanent operation. Enter the exact disk UUID
+  and confirm. Shared, snapshot, read-only, unmanaged and multiply-associated
+  disks are refused. Associations/identity are checked again after detachment.
+- Connect/disconnect device changes attachment state without deleting metadata or
+  data. Rename disk changes the VDI label. Server/guest-driver restrictions apply.
+- Add DVD creates a drive with optional ISO media. Change/eject ISO validates the
+  selected ISO repository before replacing media. Remove DVD removes the drive
+  connection while retaining the ISO image.
+- Add adapter creates a NIC on a selected network, with automatic or a valid
+  unicast MAC address. Change network uses VIF.move and retains adapter identity
+  and MAC. Connect/disconnect retains the adapter definition; Remove deletes it
+  after a successful unplug. Guest IP/DHCP configuration is a separate task.
+
+Review each confirmation. Device/network changes can interrupt guest access.
+A partial failure retains references in the recovery report and private journal;
+no guessed cleanup or automatic replay follows. See the Recovery chapter.
+Advanced device QoS, slot reassignment, live MAC replacement, storage migration
+and specialized devices remain work in progress.
+
+## Recovery, task cancellation and all offline help chapters
+
+Tools → Operation history / recovery opens records from earlier runs, even without
+a pool connection. Export displayed history if needed, and inspect current objects
+by UUID after reconnecting to the correct pool. See RECOVERY.md for record meanings,
+private storage, headless commands and recovery steps. Do not reuse stale references
+or interpret a saved intent as proof of a completed operation.
+
+Stopping monitoring and requesting task cancellation are distinct controls. A
+cancellation request does not prove the task was cancelled or undo earlier steps.
+Wait for the server's terminal state and inspect any partial resources.
+
+Help now provides an indexed viewer for every installed Markdown chapter, including
+Recovery, Operations, Installation, Build, release notes and the qualification/feature
+matrix. Find chapter filters the index; no network or external browser is required.
+
+The title bar identifies the connected HTTPS pool. Disconnect clears device/task
+context even if remote logout cannot be confirmed; reconnecting does not reuse the
+previous pool's pending references. Persistent history remains available for
+investigation, and a remote authentication session may remain until server expiry
+if logout could not be delivered.

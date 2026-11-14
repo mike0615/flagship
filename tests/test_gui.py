@@ -133,3 +133,36 @@ class DesktopTests(unittest.TestCase):
         self.assertEqual(self.app.last_workflow_report['resources']['VM'], 'created-vm')
         self.assertIn('Save workflow report', error.call_args.args[1])
         self.assertLess(len(error.call_args.args[1]), 600)
+
+    @patch('xenadmin_rocky.app.choose_resource', return_value=(True, 'task'))
+    @patch('xenadmin_rocky.app.messagebox.askyesno', return_value=False)
+    def test_declined_task_cancellation_never_submits(self, confirm, choose):
+        self.app.records['task'] = {'task': {'name_label': 'Example task', 'status': 'pending', 'allowed_operations': ['cancel']}}
+        self.app.submit = Mock()
+        self.app.cancel_task()
+        confirm.assert_called_once()
+        self.app.submit.assert_not_called()
+        self.app.client.call.assert_not_called()
+
+    @patch('xenadmin_rocky.app.choose_resource', return_value=(True, 'host-1'))
+    @patch('xenadmin_rocky.app.messagebox.askyesno', return_value=True)
+    def test_migration_uses_named_host_selector_and_reviews_destination(self, confirm, choose):
+        self.app.records['VM']['vm-1']['allowed_operations'].append('pool_migrate')
+        self.app.submit = Mock()
+        self.app.action('pool_migrate')
+        self.assertIn('Test host', confirm.call_args.args[1])
+        self.app.submit.call_args.args[0]()
+        self.app.client.vm_action.assert_called_once_with('vm-1', 'pool_migrate', 'host-1', {})
+        self.assertTrue(self.app.submit.call_args.kwargs['mutation'])
+
+    def test_failed_remote_logout_clears_local_pool_and_task_context(self):
+        self.app.client.logout.side_effect = OSError('connection lost')
+        self.app.tracker.add('old-task', 'start', 'Old guest')
+        self.app.last_workflow_report = {'tasks': [{'task': 'old-pool-task', 'status': 'pending'}]}
+        self.app.submit = lambda work, done, label: done(work())
+        self.app.disconnect()
+        self.assertIsNone(self.app.client)
+        self.assertIsNone(self.app.last_workflow_report)
+        self.assertEqual(self.app.records, {})
+        self.assertEqual(self.app.tracker.tasks, {})
+        self.assertIn('not confirmed', self.app.status.get())

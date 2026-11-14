@@ -22,13 +22,21 @@ def stage_label(stage):
               'Async.VM.provision': 'Provisioning VM', 'VM.provision': 'Provisioning VM',
               'Async.VDI.create': 'Creating virtual disk', 'VDI.create': 'Creating virtual disk',
               'Async.VBD.create': 'Connecting virtual disk or media', 'VBD.create': 'Connecting virtual disk or media',
-              'Async.VIF.destroy': 'Replacing inherited network adapters', 'VIF.destroy': 'Replacing inherited network adapters',
+              'Async.VIF.destroy': 'Removing network adapter', 'VIF.destroy': 'Removing network adapter',
               'Async.VIF.create': 'Adding network adapter', 'VIF.create': 'Adding network adapter',
               'Async.VBD.eject': 'Ejecting existing media', 'VBD.eject': 'Ejecting existing media',
               'Async.VBD.insert': 'Attaching installation media', 'VBD.insert': 'Attaching installation media',
               'Async.VM.start': 'Starting VM', 'VM.start': 'Starting VM',
               'Configure CPU and memory': 'Configuring CPU and memory'}
-    return labels.get(method, 'Checking provisioning state')
+    device_labels = {'VBD.plug': 'Connecting disk/DVD device', 'VBD.unplug': 'Disconnecting disk/DVD device',
+                     'VBD.destroy': 'Removing disk/DVD connection', 'VDI.destroy': 'Deleting disk data',
+                     'VDI.resize': 'Growing virtual disk', 'VDI.resize_online': 'Growing virtual disk',
+                     'VDI.set_name_label': 'Renaming virtual disk', 'VIF.move': 'Changing adapter network',
+                     'VIF.plug': 'Connecting network adapter', 'VIF.unplug': 'Disconnecting network adapter',
+                     'VM.get_allowed_VBD_devices': 'Finding free disk/DVD position',
+                     'VM.get_allowed_VIF_devices': 'Finding free network adapter position'}
+    labels.update(device_labels)
+    return labels.get(method.removeprefix('Async.'), labels.get(method, 'Checking workflow state'))
 
 
 class WorkflowError(RuntimeError):
@@ -211,6 +219,7 @@ class Provisioner:
                     'sharable': False, 'read_only': False, 'other_config': {},
                     'xenstore_data': {}, 'sm_config': {}}, reference=True)
                 self.resources['VDI'] = vdi
+                self.call('VDI.get_record', vdi)
                 self.add_vbd(vm, vdi, 'Disk')
             fresh = self.call('VM.get_record', vm)
             # Only the new VM's inherited VIFs are replaced, as upstream does.
