@@ -122,6 +122,13 @@ test_pending_is_not_success (test_tasks.TaskTests) ... ok
 test_progress_is_bounded (test_tasks.TaskTests) ... ok
 test_success_is_reported_after_server_confirmation (test_tasks.TaskTests) ... ok
 test_task_reference_is_opaque (test_tasks.TaskTests) ... ok
+test_existing_file_and_running_vm_are_never_exported (test_transfers.TransferTests) ... ok
+test_export_publishes_only_confirmed_task_and_records_digest (test_transfers.TransferTests) ... ok
+test_failed_server_task_keeps_private_partial_and_no_final_archive (test_transfers.TransferTests) ... ok
+test_import_creates_halted_guest_maps_network_and_keeps_source (test_transfers.TransferTests) ... ok
+test_import_refuses_device_changes_on_preexisting_result (test_transfers.TransferTests) ... ok
+test_network_failure_keeps_recovery_task_and_never_replays (test_transfers.TransferTests) ... ok
+test_nonregular_empty_and_symlink_sources_send_nothing (test_transfers.TransferTests) ... ok
 test_large_memory_arguments_cross_real_xmlrpc_as_decimal_strings (test_wire.WireTests) ... ok
 test_real_wire_api_error_is_not_success (test_wire.WireTests) ... ok
 test_recovery_uuid_inspection_crosses_verified_https (test_wire.WireTests) ... ok
@@ -143,8 +150,11 @@ test_running_guest_cannot_be_reconfigured (test_workflows.WorkflowTests) ... ok
 test_stopped_monitor_does_not_submit_work (test_workflows.WorkflowTests) ... ok
 test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTests) ... ok
 test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests) ... ok
+test_arbitrary_block_boundaries_preserve_complete_envelope (test_xva.EnvelopeTests) ... ok
+test_truncated_body_and_end_markers_do_not_pass (test_xva.EnvelopeTests) ... ok
+test_wrong_metadata_bad_checksum_and_data_after_end_are_refused (test_xva.EnvelopeTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 145 tests in 3.479s
+Ran 155 tests in 3.103s
 
 OK

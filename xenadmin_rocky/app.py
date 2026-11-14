@@ -116,7 +116,7 @@ class Application:
             try:
                 value = work()
             except Exception as exc:
-                report = ({'stage': exc.stage, 'resources': exc.resources, 'tasks': exc.tasks}
+                report = (getattr(exc, 'report', {'stage': exc.stage, 'resources': exc.resources, 'tasks': exc.tasks})
                           if isinstance(exc, WorkflowError) else None)
                 try:
                     self.journal.finish('interrupted_or_failed', report=report, error=exc)
@@ -161,8 +161,8 @@ class Application:
                 # Do not display transport tracebacks, RPC arguments or session tokens.
                 self.status.set('Operation failed: ' + (str(exc) if isinstance(exc, APIError) else type(exc).__name__))
                 if isinstance(exc, WorkflowError):
-                    self.last_workflow_report = {'stage': exc.stage, 'reason': exc.reason,
-                                                 'resources': exc.resources, 'tasks': exc.tasks}
+                    self.last_workflow_report = getattr(exc, 'report', {'stage': exc.stage, 'reason': exc.reason,
+                                                 'resources': exc.resources, 'tasks': exc.tasks})
                 if isinstance(exc, JournalError) and hasattr(exc, 'report'):
                     self.last_workflow_report = exc.report
                 self.workflow_stop = None
