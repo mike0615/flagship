@@ -14,3 +14,10 @@ in offline-container-el10-initial-failure.txt. A local DNF repository fixed that
 resolution issue on both majors. The next checks exposed missing help when the
 container's default tsflags=nodocs suppressed RPM %doc files. Help is now installed
 as application data as well; rebuild and rerun are required before qualification.
+
+Final candidate container checks passed for both majors: network namespace disabled,
+only a local DNF repository enabled, version/import checks, unconditional help and
+launcher files present. installed-gui-el9.txt and installed-gui-el10.txt additionally
+show the installed RPM GUI creating a window under the builder's isolated Xvfb
+Unix socket with the container network still disabled. These do not test reboot,
+interactive desktop menus, guest management or an independent operator.

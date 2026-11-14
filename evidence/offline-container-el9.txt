@@ -7,6 +7,7 @@
 ./docs/OPERATIONS.md: OK
 ./docs/QUALIFICATION.md: OK
 ./docs/RELEASE_NOTES.md: OK
+./docs/ROADMAP.md: OK
 ./docs/SOURCE_ANALYSIS.md: OK
 ./docs/USER_GUIDE.md: OK
 ./install-offline.sh: OK
@@ -80,12 +81,12 @@
 ./rpms/python3-setuptools-wheel-53.0.0-15.el9.noarch.rpm: OK
 ./rpms/python3-tkinter-3.9.25-7.el9_8.6.x86_64.rpm: OK
 ./rpms/readline-8.1-4.el9.x86_64.rpm: OK
-./rpms/repodata/3ab73ef2be0946660f768f40cd63160bbe7b728d49fe5392554ddde57c80f22b-primary.sqlite.bz2: OK
-./rpms/repodata/449ed378ac69eecea30d68100ed6dd9c4279f2dccbbdc942193c806c4553e031-filelists.sqlite.bz2: OK
-./rpms/repodata/6c1fcdc103fbc2604c035ede34839d9812008db06a15bc83908792d2851a7716-filelists.xml.gz: OK
-./rpms/repodata/cd2fbcd2d239c3f8f3c11800e08bfcb962d3d5d986f2525e36f8449a1f0ba34f-primary.xml.gz: OK
-./rpms/repodata/dcc319d4a1068e3fec1f2b929dabfac4a37485cee6c775daee575c918e4fc9c5-other.xml.gz: OK
-./rpms/repodata/e18d99fd4973bb509bd30e7fbcc21b3b907712c9a2d37fa4fe501bdd1dddfb55-other.sqlite.bz2: OK
+./rpms/repodata/0508abf3b7060121ec1a247ed9e009d50aecbd1131ae18b92a7b58e5bc40995b-primary.xml.gz: OK
+./rpms/repodata/361471098fa2d56d7a405d8c715e5192d8e5a222db57af5c0360d89102dead03-other.sqlite.bz2: OK
+./rpms/repodata/82a0e59985b938ddfc8bd7343f617c08860a281c6ba2b3b7ea7c74b226985d62-filelists.xml.gz: OK
+./rpms/repodata/bfaaa86e2234abff6ba707bd48073610000d30973500e821f371c07352a90b10-filelists.sqlite.bz2: OK
+./rpms/repodata/e47b5f5d1d376da2366155ca06b8ebda21a14a43665c6e624931749a3c83395d-primary.sqlite.bz2: OK
+./rpms/repodata/e8476f9e342efa6e5140991bd1ad71ec17d25c009005607a33a9f6bdc70b585f-other.xml.gz: OK
 ./rpms/repodata/repomd.xml: OK
 ./rpms/rocky-gpg-keys-9.8-1.2.el9.noarch.rpm: OK
 ./rpms/rocky-release-9.8-1.2.el9.noarch.rpm: OK
@@ -101,13 +102,13 @@
 ./rpms/xz-libs-5.2.5-8.el9_8.1.x86_64.rpm: OK
 ./rpms/zlib-1.2.11-40.el9.x86_64.rpm: OK
 Added xenadmin-offline repo from file:///bundle/rpms
-xenadmin-offline                                 50 MB/s | 157 kB     00:00
+xenadmin-offline                                 51 MB/s | 158 kB     00:00
 Dependencies resolved.
 ================================================================================
  Package                 Arch    Version                Repository         Size
 ================================================================================
 Installing:
- xenadmin-rocky          noarch  1.0.0-0.1.dev1.el9     xenadmin-offline   23 k
+ xenadmin-rocky          noarch  1.0.0-0.1.dev1.el9     xenadmin-offline   26 k
 Upgrading:
  python3                 x86_64  3.9.25-7.el9_8.6       xenadmin-offline   26 k
  python3-libs            x86_64  3.9.25-7.el9_8.6       xenadmin-offline  7.5 M
@@ -226,3 +227,6 @@ Installed:
 Complete!
 1.0.0.dev1
 8.6
+xenadmin-rocky-1.0.0-0.1.dev1.el9.noarch
+python3-tkinter-3.9.25-7.el9_8.6.x86_64
+PASS: network-disabled install, imports, help and launcher files

@@ -7,6 +7,7 @@
 ./docs/OPERATIONS.md: OK
 ./docs/QUALIFICATION.md: OK
 ./docs/RELEASE_NOTES.md: OK
+./docs/ROADMAP.md: OK
 ./docs/SOURCE_ANALYSIS.md: OK
 ./docs/USER_GUIDE.md: OK
 ./install-offline.sh: OK
@@ -82,9 +83,12 @@
 ./rpms/python3-tkinter-3.12.15-1.el10_2.x86_64.rpm: OK
 ./rpms/readline-8.2-11.el10.x86_64.rpm: OK
 ./rpms/redhat-text-vf-fonts-4.1.0-1.el10.noarch.rpm: OK
-./rpms/repodata/0b1c57cca03d8b065f14e3ebd947bc55657da32ab41ab3d15611faaaa6140040-filelists.xml.zst: OK
-./rpms/repodata/3258618a8f5198655e35afe1e4eba24a500454c9ecc9b95a1bc059e9220835de-primary.xml.zst: OK
-./rpms/repodata/7d468d567bfced1ae0a0f6dfeb53cbd2a63f236959cfd692924ded9e18a06b4b-other.xml.zst: OK
+./rpms/repodata/16facedb76799c62fc414e09e4cb510369167b30032c118aafb92e89767a131b-primary.sqlite.bz2: OK
+./rpms/repodata/33c4907772cc0a677a22bc613c204007277eca7d226131c34a4beb6c386201bd-other.sqlite.bz2: OK
+./rpms/repodata/86795e99afa7058297a926ab3e124de01aaadd323879d5af66912172b5b8abc7-primary.xml.gz: OK
+./rpms/repodata/921fb7ba38acd8110f01d0688c9abc7d11c7b87c9643aa6d18f2a8ab904d81cd-filelists.xml.gz: OK
+./rpms/repodata/d972d60ebec251cc34c2ca566ba9163075956e23529a20eec12de0afa946f5d3-other.xml.gz: OK
+./rpms/repodata/e3a2042a4d1bb942391771510f8e445bc69f9648539d86c23681ad77792243d7-filelists.sqlite.bz2: OK
 ./rpms/repodata/repomd.xml: OK
 ./rpms/rocky-gpg-keys-10.2-1.2.el10.noarch.rpm: OK
 ./rpms/rocky-release-10.2-1.2.el10.noarch.rpm: OK
@@ -100,13 +104,13 @@
 ./rpms/xz-libs-5.6.2-4.el10_2.1.x86_64.rpm: OK
 ./rpms/zlib-ng-compat-2.2.3-3.el10_1.x86_64.rpm: OK
 Added xenadmin-offline repo from file:///bundle/rpms
-xenadmin-offline                                 31 MB/s |  36 kB     00:00
+xenadmin-offline                                 31 MB/s |  41 kB     00:00
 Dependencies resolved.
 ================================================================================
  Package                   Arch   Version                Repository        Size
 ================================================================================
 Installing:
- xenadmin-rocky            noarch 1.0.0-0.1.dev1.el10    xenadmin-offline  23 k
+ xenadmin-rocky            noarch 1.0.0-0.1.dev1.el10    xenadmin-offline  26 k
 Upgrading:
  python3                   x86_64 3.12.15-1.el10_2       xenadmin-offline  27 k
  python3-libs              x86_64 3.12.15-1.el10_2       xenadmin-offline 8.9 M
@@ -207,3 +211,6 @@ Installed:
 Complete!
 1.0.0.dev1
 8.6
+xenadmin-rocky-1.0.0-0.1.dev1.el10.noarch
+python3-tkinter-3.12.15-1.el10_2.x86_64
+PASS: network-disabled install, imports, help and launcher files

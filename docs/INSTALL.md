@@ -5,7 +5,8 @@
 A Rocky Linux 9 or 10 x86_64 desktop with a graphical session, trusted HTTPS access
 to the XAPI pool coordinator on TCP 443, administrative install access, and the
 matching-major airgap bundle. Internet access is not required by the installed
-client. A desktop environment itself is a prerequisite; the bundle does not install
+client. The matching dependency-source archive is supplied separately for offline source
+access; it is not installed or needed at runtime. A desktop environment itself is a prerequisite; the bundle does not install
 GNOME/KDE or turn a minimal server into a workstation.
 
 ## Transfer and install

@@ -32,3 +32,9 @@ builder's Git HEAD; use a clean committed checkout for release builds. The appli
 and source RPM filenames differ by major; their RPM metadata must both be inspected.
 CI checks are configured in `.github/workflows/ci.yml`; a configured workflow is
 not evidence of a passing remote run. Bundles are generated separately on the builder.
+
+Use `./scripts/test-offline.sh 9` and `./scripts/test-offline.sh 10` for fresh
+network-disabled container installation checks. Collect corresponding dependency
+SRPMs using `./scripts/collect-dependency-sources.sh 9` and the equivalent for 10.
+Source archives can be large (the Rocky 10 Noto font SRPM alone is about 1 GB);
+retain them with the binary bundles for offline source access.
