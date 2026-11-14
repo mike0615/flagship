@@ -59,3 +59,9 @@ layout clipping, corrected in source with display-aware sizing, wrapped actions
 and reserved status/action space. Second reboot, desktop-menu and pool-workflow
 qualification are still open. The Rocky 10.2 DVD full SHA-256 matched its signed
 checksum; it has not yet been installed.
+
+The actual Tk ConsoleWindow (not only a protocol harness) also rendered live
+guest content through verified TLS on a 1024x768 source-client display, with input
+off by default. `qa/live_console_window.py` reproduces that UUID-scoped check.
+The guest check log confirmed dev.3 RPM version, installed offline help and the
+standalone recovery command in the booted SELinux-enforcing system.
