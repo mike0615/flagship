@@ -4,7 +4,7 @@ Native Linux desktop management client inspired by XCP-ng Center 25.04.
 Targets Rocky Linux 9 and 10 desktops. Public project maintained by Mike Anderson;
 not an official XCP-ng or XenServer product.
 
-**Status: development candidate 1.0.0.dev1. No qualified v1.0 release yet.**
+**Status: development tree 1.0.0.dev2; dev.1 is the published candidate. No qualified v1.0 release yet.**
 A successful RPM build is not proof of working pool management or an offline install.
 Candidate downloads are published under GitHub Releases; use the matching Rocky major.
 See [qualification status](docs/QUALIFICATION.md) and [feature matrix](docs/FEATURE_MATRIX.md).

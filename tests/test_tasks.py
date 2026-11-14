@@ -44,7 +44,7 @@ class TaskTests(unittest.TestCase):
         self.assertIn('unavailable', self.tracker.summary())
 
     def test_malformed_task_ref_is_rejected(self):
-        for value in ('', None, 'not-a-task', {}, 'OpaqueRef:', 'OpaqueRef:NULL'):
+        for value in ('', None, {}, 0, 'OpaqueRef:NULL'):
             with self.assertRaises(ValueError):
                 self.tracker.add(value, 'start', 'guest')
 
@@ -53,3 +53,7 @@ class TaskTests(unittest.TestCase):
         self.tracker.poll(self.client)
         self.assertIn('(100%)', self.tracker.summary())
         self.assertTrue(self.tracker.pending)
+
+    def test_task_reference_is_opaque(self):
+        self.tracker.add('server-task-42', 'snapshot', 'guest')
+        self.assertIn('server-task-42', self.tracker.tasks)

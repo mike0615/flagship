@@ -9,8 +9,7 @@ class TaskTracker:
         self.tasks = {}
 
     def add(self, ref, operation, target):
-        if (not isinstance(ref, str) or not ref.startswith('OpaqueRef:') or
-                ref in ('OpaqueRef:', 'OpaqueRef:NULL')):
+        if not isinstance(ref, str) or not ref or ref == 'OpaqueRef:NULL':
             raise ValueError('Server did not return a valid task reference; refresh before retrying')
         self.tasks[ref] = {'operation': operation, 'target': target, 'status': 'pending',
                            'progress': 0.0, 'error_code': ''}

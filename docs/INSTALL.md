@@ -9,6 +9,9 @@ client. The matching dependency-source archive is supplied separately for offlin
 access; it is not installed or needed at runtime. A desktop environment itself is a prerequisite; the bundle does not install
 GNOME/KDE or turn a minimal server into a workstation.
 
+For the published dev.1 candidate, use its attached documentation and original
+archive names. The current source build targets dev.2, which is not yet a stable release.
+
 ## Transfer and install
 
 On a connected builder follow BUILD.md. Transfer the matching archive through your
@@ -19,7 +22,7 @@ corruption, not a malicious replacement of both files and manifest.
 Extract in a staging directory, review PACKAGES.tsv and run:
 
 ```sh
-tar -xzf xenadmin-rocky-airgap-el9-x86_64-dev1.tar.gz
+tar -xzf xenadmin-rocky-airgap-el9-x86_64-1.0.0.dev2.tar.gz
 cd airgap
 sha256sum -c SHA256SUMS
 sudo ./install-offline.sh

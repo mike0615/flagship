@@ -73,3 +73,11 @@ class WireTests(unittest.TestCase):
             client.vm_action('vm', 'start', False, False)
         self.assertEqual(str(caught.exception), 'VM_BAD_POWER_STATE')
         client.logout()
+
+    def test_large_memory_arguments_cross_real_xmlrpc_as_decimal_strings(self):
+        client = Client('https://localhost:' + str(self.port), str(self.cert))
+        client.login('test-user', 'test-only-password')
+        memory = 4 * 1024**3
+        client.call('VM.set_memory_limits', 'vm', 0, memory, memory, memory)
+        self.assertIn(('VM.set_memory_limits', ('test-session', 'vm', '0', str(memory), str(memory), str(memory))), self.calls)
+        client.logout()

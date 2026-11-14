@@ -1,6 +1,6 @@
 Name:           xenadmin-rocky
 Version:        1.0.0
-Release:        0.1.dev1%{?dist}
+Release:        0.2.dev2%{?dist}
 Summary:        Native Linux desktop management client for XAPI pools
 License:        BSD-2-Clause
 URL:            https://github.com/mike0615/xenadmin-rocky
@@ -12,7 +12,7 @@ Requires:       python3-tkinter
 Requires:       ca-certificates
 
 %description
-Native Tk desktop inventory and VM lifecycle client for XAPI hosts.
+Native Tk desktop inventory, VM provisioning and lifecycle client for XAPI hosts.
 No Windows runtime, Python package downloads, or hosted service required.
 This development build is not qualified for production use.
 
@@ -39,5 +39,7 @@ install -m 0644 packaging/xenadmin-rocky.desktop %{buildroot}%{_datadir}/applica
 %{_datadir}/%{name}/
 
 %changelog
+* Sat Nov 14 2026 Mike Anderson <mike0615@users.noreply.github.com> - 1.0.0-0.2.dev2
+- VM creation, hardware configuration, task monitoring and XAPI wire corrections.
 * Sat Nov 14 2026 Mike Anderson <mike0615@users.noreply.github.com> - 1.0.0-0.1.dev1
 - Initial native development candidate; qualification pending.

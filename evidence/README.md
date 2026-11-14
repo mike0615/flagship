@@ -21,3 +21,10 @@ launcher files present. installed-gui-el9.txt and installed-gui-el10.txt additio
 show the installed RPM GUI creating a window under the builder's isolated Xvfb
 Unix socket with the container network still disabled. These do not test reboot,
 interactive desktop menus, guest management or an independent operator.
+
+`provisioning-tests.txt` records 51 passing local checks for the dev.2 development
+tree. It includes a stateful simulated pool exercising creation from installer and
+installed templates, preservation of the source template, partial-failure reports,
+CPU ordering, GUI review/confirmation, and real HTTPS large-integer encoding.
+The simulation does not prove any live host workflow. dev.1 package evidence above
+remains specific to the dev.1 release, not proof of dev.2 offline installation.

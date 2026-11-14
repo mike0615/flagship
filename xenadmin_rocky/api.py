@@ -5,6 +5,21 @@ import xmlrpc.client
 from urllib.parse import urlsplit
 
 
+def wire_value(value):
+    """XAPI integers use decimal strings, including values larger than int32."""
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int):
+        if not -(2**63) <= value < 2**63:
+            raise ValueError('XAPI integer is outside signed 64-bit range')
+        return str(value)
+    if isinstance(value, dict):
+        return {str(k): wire_value(v) for k, v in value.items()}
+    if isinstance(value, (tuple, list)):
+        return [wire_value(v) for v in value]
+    return value
+
+
 class APIError(RuntimeError):
     def __init__(self, details):
         self.details = tuple(str(x) for x in details)
@@ -45,7 +60,7 @@ class Client:
 
     def _rpc(self, name, *args):
         with self.lock:
-            result = getattr(self.proxy, name)(*args)
+            result = getattr(self.proxy, name)(*(wire_value(arg) for arg in args))
         if not isinstance(result, dict) or 'Status' not in result:
             raise APIError(['INVALID_RESPONSE'])
         if result['Status'] != 'Success':
