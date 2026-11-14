@@ -16,8 +16,9 @@ cp "$root"/docs/*.md "$bundle/docs/"
 cp "$root/LICENSE" "$bundle/LICENSE"
 cp "$root/scripts/install-offline.sh" "$bundle/"
 podman run --rm -v "$bundle:/bundle:Z" "quay.io/rockylinux/rockylinux:$major" bash -euc '
-    dnf install -y dnf-plugins-core
-    dnf download --resolve --alldeps --destdir=/bundle/rpms /bundle/rpms/xenadmin-rocky-*.rpm
+    dnf --disablerepo="*" --enablerepo=baseos --enablerepo=appstream install -y dnf-plugins-core createrepo_c
+    dnf --disablerepo="*" --enablerepo=baseos --enablerepo=appstream download --resolve --alldeps --destdir=/bundle/rpms /bundle/rpms/xenadmin-rocky-*.rpm
+    createrepo_c /bundle/rpms
     rpm -qp --qf "%{NAME}\t%{VERSION}-%{RELEASE}\t%{ARCH}\t%{LICENSE}\n" /bundle/rpms/*.rpm > /bundle/PACKAGES.tsv
     cp /etc/os-release /bundle/BUILD_OS_RELEASE
     '

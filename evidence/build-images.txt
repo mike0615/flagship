@@ -1,0 +1,2 @@
+[quay.io/rockylinux/rockylinux:9] sha256:ed654c694190a670bb5c33f68995b862214fc96ffbdca95e07a8935ba0a3717d
+[quay.io/rockylinux/rockylinux:10] sha256:e372170ca8630f0f03e9b70fdd0bf4a3ce3426b0de7cdba615f06337389de176

@@ -1,0 +1,108 @@
+{
+  "input": "xenadmin-25.04",
+  "total_files": 2435,
+  "extensions": {
+    ".cs": 1658,
+    ".png": 384,
+    ".resx": 323,
+    ".xsd": 11,
+    ".xcf": 10,
+    ".rdlc": 7,
+    ".md": 6,
+    ".csproj": 5,
+    ".bmp": 5,
+    "(none)": 4,
+    ".xml": 4,
+    ".sh": 3,
+    ".ico": 2,
+    ".props": 1,
+    ".targets": 1,
+    ".sln": 1,
+    ".yml": 1,
+    ".rc": 1,
+    ".config": 1,
+    ".manifest": 1,
+    ".gif": 1,
+    ".jpg": 1,
+    ".bin": 1,
+    ".mht": 1,
+    ".html": 1,
+    ".wsi": 1
+  },
+  "projects": {
+    "CommandLib/CommandLib.csproj": {
+      "target_frameworks": [
+        "net481"
+      ]
+    },
+    "XenAdmin/XenAdmin.csproj": {
+      "target_frameworks": [
+        "net481"
+      ]
+    },
+    "XenCenterLib/XenCenterLib.csproj": {
+      "target_frameworks": [
+        "net481"
+      ]
+    },
+    "XenModel/XenModel.csproj": {
+      "target_frameworks": [
+        "net481"
+      ]
+    },
+    "XenOvfApi/XenOvfApi.csproj": {
+      "target_frameworks": [
+        "net481"
+      ]
+    }
+  },
+  "vm_action_classes": [
+    "ChangeMemorySettingsAction.cs",
+    "ChangeVCPUSettingsAction.cs",
+    "ChangeVMISOAction.cs",
+    "CreateCdDriveAction.cs",
+    "CreateVMAction.cs",
+    "CreateVMFastAction.cs",
+    "ExportVmAction.cs",
+    "GpuAssignAction.cs",
+    "HAUnprotectVMAction.cs",
+    "HVMBootAction.cs",
+    "ImportVmAction.cs",
+    "InstallPVToolsAction.cs",
+    "ResumeAndStartVMsAction.cs",
+    "SetHaPrioritiesAction.cs",
+    "SetVMOtherConfigAction.cs",
+    "SetVMStartupOptionsAction.cs",
+    "SuspendAndShutdownVMsAction.cs",
+    "VMCloneAction.cs",
+    "VMCopyAction.cs",
+    "VMCrossPoolMigrateAction.cs",
+    "VMDestroyAction.cs",
+    "VMMigrateAction.cs",
+    "VMMoveAction.cs",
+    "VMPauseAction.cs",
+    "VMRebootAction.cs",
+    "VMShutdownAction.cs",
+    "VMSnapshotCreateAction.cs",
+    "VMSnapshotDeleteAction.cs",
+    "VMSnapshotRevertAction.cs",
+    "VMStartAction.cs",
+    "VMToTemplateAction.cs",
+    "VMUnPauseAction.cs"
+  ],
+  "wizard_directories": [
+    "BallooningWizard_Pages",
+    "ConversionWizard",
+    "CrossPoolMigrateWizard",
+    "DRWizards",
+    "ExportWizard",
+    "GenericPages",
+    "HAWizard_Pages",
+    "ImportWizard",
+    "NewNetworkWizard_Pages",
+    "NewPolicyWizard",
+    "NewSRWizard_Pages",
+    "NewVMApplianceWizard",
+    "NewVMWizard"
+  ]
+}

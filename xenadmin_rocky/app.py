@@ -1,14 +1,13 @@
 """Tk desktop: all network work is serialized outside the Tk main thread."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
-import csv
 import json
 from pathlib import Path
 import queue
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog, filedialog
 from . import __version__
-from .api import Client
+from .api import Client, APIError
 
 
 def safe_record(value):
@@ -103,7 +102,7 @@ class Application:
                 done(value)
             except Exception as exc:
                 # Do not display transport tracebacks, RPC arguments or session tokens.
-                self.status.set('Operation failed: ' + type(exc).__name__)
+                self.status.set('Operation failed: ' + (str(exc) if isinstance(exc, APIError) else type(exc).__name__))
                 messagebox.showerror('Operation failed', str(exc) if isinstance(exc, ValueError)
                                      else 'The server or connection rejected the operation. '
                                      'Check TLS trust, coordinator address, permissions and current state. '
@@ -136,7 +135,10 @@ class Application:
                         raise ValueError('Pool and host inventory required; verify permissions and coordinator address.')
                     return client, records, errors
                 except Exception:
-                    client.logout()
+                    try:
+                        client.logout()
+                    except Exception:
+                        pass
                     raise
             def done(result):
                 self.client, self.records, errors = result

@@ -1,0 +1,25 @@
+name: Native client checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y python3-tk xvfb openssl
+      - run: xvfb-run -a python3 -m unittest discover -s tests -v
+  rpm:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        major: [9, 10]
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y podman
+      - run: ./scripts/build-rpm.sh ${{ matrix.major }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rocky-${{ matrix.major }}-candidate-rpms
+          path: dist/el${{ matrix.major }}/

@@ -1,0 +1,155 @@
+./BUILD_OS_RELEASE: OK
+./LICENSE: OK
+./PACKAGES.tsv: OK
+./docs/BUILD.md: OK
+./docs/FEATURE_MATRIX.md: OK
+./docs/INSTALL.md: OK
+./docs/OPERATIONS.md: OK
+./docs/QUALIFICATION.md: OK
+./docs/RELEASE_NOTES.md: OK
+./docs/SOURCE_ANALYSIS.md: OK
+./docs/USER_GUIDE.md: OK
+./install-offline.sh: OK
+./rpms/alternatives-1.30-2.el10.x86_64.rpm: OK
+./rpms/audit-libs-4.0.3-5.el10.x86_64.rpm: OK
+./rpms/basesystem-11-22.el10.noarch.rpm: OK
+./rpms/bash-5.2.26-6.el10.x86_64.rpm: OK
+./rpms/bzip2-libs-1.0.8-25.el10.x86_64.rpm: OK
+./rpms/ca-certificates-2026.2.92_v9.0.319-100.3.el10_2.noarch.rpm: OK
+./rpms/coreutils-9.5-8.el10_2.1.x86_64.rpm: OK
+./rpms/coreutils-common-9.5-8.el10_2.1.x86_64.rpm: OK
+./rpms/crypto-policies-20260216-1.git0e54016.el10_2.2.noarch.rpm: OK
+./rpms/default-fonts-core-sans-4.1-3.el10.noarch.rpm: OK
+./rpms/expat-2.7.3-1.el10_2.7.x86_64.rpm: OK
+./rpms/filesystem-3.18-17.el10.x86_64.rpm: OK
+./rpms/findutils-4.10.0-5.el10.x86_64.rpm: OK
+./rpms/fontconfig-2.15.0-7.el10.x86_64.rpm: OK
+./rpms/fonts-filesystem-2.0.5-18.el10.noarch.rpm: OK
+./rpms/freetype-2.13.2-8.el10.x86_64.rpm: OK
+./rpms/gdbm-libs-1.23-14.el10.x86_64.rpm: OK
+./rpms/glib2-2.80.4-12.el10_2.22.x86_64.rpm: OK
+./rpms/glibc-2.39-145.el10_2.x86_64.rpm: OK
+./rpms/glibc-common-2.39-145.el10_2.x86_64.rpm: OK
+./rpms/glibc-gconv-extra-2.39-145.el10_2.x86_64.rpm: OK
+./rpms/glibc-minimal-langpack-2.39-145.el10_2.x86_64.rpm: OK
+./rpms/gmp-6.2.1-12.el10.x86_64.rpm: OK
+./rpms/gnutls-3.8.10-5.el10_2.x86_64.rpm: OK
+./rpms/google-noto-fonts-common-20240401-5.el10.noarch.rpm: OK
+./rpms/google-noto-sans-vf-fonts-20240401-5.el10.noarch.rpm: OK
+./rpms/graphite2-1.3.14-17.el10.x86_64.rpm: OK
+./rpms/grep-3.11-10.el10.x86_64.rpm: OK
+./rpms/harfbuzz-8.4.0-6.el10.x86_64.rpm: OK
+./rpms/libX11-1.8.10-1.el10_2.1.x86_64.rpm: OK
+./rpms/libX11-common-1.8.10-1.el10_2.1.noarch.rpm: OK
+./rpms/libXau-1.0.11-8.el10.x86_64.rpm: OK
+./rpms/libXft-2.3.8-8.el10.x86_64.rpm: OK
+./rpms/libXrender-0.9.11-8.el10_2.1.x86_64.rpm: OK
+./rpms/libacl-2.4.0-1.el10_2.x86_64.rpm: OK
+./rpms/libattr-2.6.0-1.el10_2.x86_64.rpm: OK
+./rpms/libblkid-2.40.2-18.el10_2.20.x86_64.rpm: OK
+./rpms/libbrotli-1.1.0-8.el10_2.1.x86_64.rpm: OK
+./rpms/libcap-2.69-7.el10_1.1.x86_64.rpm: OK
+./rpms/libcap-ng-0.8.4-6.el10.x86_64.rpm: OK
+./rpms/libeconf-0.6.2-4.el10.x86_64.rpm: OK
+./rpms/libffi-3.4.4-10.el10.x86_64.rpm: OK
+./rpms/libgcc-14.3.1-4.4.el10.x86_64.rpm: OK
+./rpms/libidn2-2.3.7-3.el10.x86_64.rpm: OK
+./rpms/libmount-2.40.2-18.el10_2.20.x86_64.rpm: OK
+./rpms/libpng-1.6.40-11.el10_2.1.x86_64.rpm: OK
+./rpms/libselinux-3.10-1.el10.x86_64.rpm: OK
+./rpms/libsepol-3.10-1.el10.x86_64.rpm: OK
+./rpms/libstdc++-14.3.1-4.4.el10.x86_64.rpm: OK
+./rpms/libtasn1-4.20.0-5.el10_2.x86_64.rpm: OK
+./rpms/libunistring-1.1-10.el10.x86_64.rpm: OK
+./rpms/libuuid-2.40.2-18.el10_2.20.x86_64.rpm: OK
+./rpms/libxcb-1.17.0-3.el10.x86_64.rpm: OK
+./rpms/libxcrypt-4.4.36-10.el10.x86_64.rpm: OK
+./rpms/libxml2-2.12.5-10.el10_2.4.x86_64.rpm: OK
+./rpms/mpdecimal-2.5.1-12.el10.x86_64.rpm: OK
+./rpms/ncurses-base-6.4-15.20240127.el10_1.noarch.rpm: OK
+./rpms/ncurses-libs-6.4-15.20240127.el10_1.x86_64.rpm: OK
+./rpms/openssl-fips-provider-3.5.8-2.el10_2.x86_64.rpm: OK
+./rpms/openssl-libs-3.5.8-2.el10_2.x86_64.rpm: OK
+./rpms/p11-kit-0.26.4-1.el10_2.x86_64.rpm: OK
+./rpms/p11-kit-trust-0.26.4-1.el10_2.x86_64.rpm: OK
+./rpms/pam-libs-1.6.1-9.el10_2.1.x86_64.rpm: OK
+./rpms/pcre2-10.44-1.5.el10_2.x86_64.rpm: OK
+./rpms/pcre2-syntax-10.44-1.5.el10_2.noarch.rpm: OK
+./rpms/python-unversioned-command-3.12.15-1.el10_2.noarch.rpm: OK
+./rpms/python3-3.12.15-1.el10_2.x86_64.rpm: OK
+./rpms/python3-libs-3.12.15-1.el10_2.x86_64.rpm: OK
+./rpms/python3-pip-wheel-23.3.2-11.el10_2.noarch.rpm: OK
+./rpms/python3-tkinter-3.12.15-1.el10_2.x86_64.rpm: OK
+./rpms/readline-8.2-11.el10.x86_64.rpm: OK
+./rpms/redhat-text-vf-fonts-4.1.0-1.el10.noarch.rpm: OK
+./rpms/rocky-gpg-keys-10.2-1.2.el10.noarch.rpm: OK
+./rpms/rocky-release-10.2-1.2.el10.noarch.rpm: OK
+./rpms/rocky-repos-10.2-1.2.el10.noarch.rpm: OK
+./rpms/sed-4.9-5.el10.x86_64.rpm: OK
+./rpms/setup-2.14.5-7.el10.noarch.rpm: OK
+./rpms/sqlite-libs-3.46.1-6.el10_2.x86_64.rpm: OK
+./rpms/tcl-8.6.13-4.el10.x86_64.rpm: OK
+./rpms/tk-8.6.13-5.el10.x86_64.rpm: OK
+./rpms/tzdata-2026f-1.el10_2.noarch.rpm: OK
+./rpms/xenadmin-rocky-1.0.0-0.1.dev1.el10.noarch.rpm: OK
+./rpms/xml-common-0.6.3-65.el10.noarch.rpm: OK
+./rpms/xz-libs-5.6.2-4.el10_2.1.x86_64.rpm: OK
+./rpms/zlib-ng-compat-2.2.3-3.el10_1.x86_64.rpm: OK
+Package alternatives-1.30-2.el10.x86_64 is already installed.
+Package audit-libs-4.0.3-5.el10.x86_64 is already installed.
+Package basesystem-11-22.el10.noarch is already installed.
+Package bash-5.2.26-6.el10.x86_64 is already installed.
+Package bzip2-libs-1.0.8-25.el10.x86_64 is already installed.
+Package filesystem-3.18-17.el10.x86_64 is already installed.
+Package findutils-1:4.10.0-5.el10.x86_64 is already installed.
+Package gdbm-libs-1:1.23-14.el10.x86_64 is already installed.
+Package gmp-1:6.2.1-12.el10.x86_64 is already installed.
+Package grep-3.11-10.el10.x86_64 is already installed.
+Package libcap-2.69-7.el10_1.1.x86_64 is already installed.
+Package libcap-ng-0.8.4-6.el10.x86_64 is already installed.
+Package libeconf-0.6.2-4.el10.x86_64 is already installed.
+Package libffi-3.4.4-10.el10.x86_64 is already installed.
+Package libgcc-14.3.1-4.4.el10.x86_64 is already installed.
+Package libidn2-2.3.7-3.el10.x86_64 is already installed.
+Package libselinux-3.10-1.el10.x86_64 is already installed.
+Package libsepol-3.10-1.el10.x86_64 is already installed.
+Package libstdc++-14.3.1-4.4.el10.x86_64 is already installed.
+Package libunistring-1.1-10.el10.x86_64 is already installed.
+Package libxcrypt-4.4.36-10.el10.x86_64 is already installed.
+Package mpdecimal-2.5.1-12.el10.x86_64 is already installed.
+Package ncurses-base-6.4-15.20240127.el10_1.noarch is already installed.
+Package ncurses-libs-6.4-15.20240127.el10_1.x86_64 is already installed.
+Package python3-pip-wheel-23.3.2-11.el10_2.noarch is already installed.
+Package readline-8.2-11.el10.x86_64 is already installed.
+Package sed-4.9-5.el10.x86_64 is already installed.
+Package setup-2.14.5-7.el10.noarch is already installed.
+Package zlib-ng-compat-2.2.3-3.el10_1.x86_64 is already installed.
+Error: 
+ Problem 1: package coreutils-9.5-8.el10_2.1.x86_64 from @commandline conflicts with coreutils-single provided by coreutils-single-9.5-7.el10.x86_64 from @System
+  - conflicting requests
+  - problem with installed package coreutils-single-9.5-7.el10.x86_64
+ Problem 2: cannot install both crypto-policies-20260216-1.git0e54016.el10_2.2.noarch from @commandline and crypto-policies-20260216-1.git0e54016.el10.noarch from @System
+  - package crypto-policies-scripts-20260216-1.git0e54016.el10.noarch from @System requires crypto-policies = 20260216-1.git0e54016.el10, but none of the providers can be installed
+  - conflicting requests
+  - problem with installed package crypto-policies-scripts-20260216-1.git0e54016.el10.noarch
+ Problem 3: cannot install both libattr-2.6.0-1.el10_2.x86_64 from @commandline and libattr-2.5.2-5.el10.x86_64 from @System
+  - package attr-2.5.2-5.el10.x86_64 from @System requires libattr(x86-64) = 2.5.2-5.el10, but none of the providers can be installed
+  - conflicting requests
+  - problem with installed package attr-2.5.2-5.el10.x86_64
+ Problem 4: cannot install both libblkid-2.40.2-18.el10_2.20.x86_64 from @commandline and libblkid-2.40.2-18.el10.x86_64 from @System
+  - package libfdisk-2.40.2-18.el10.x86_64 from @System requires libblkid(x86-64) = 2.40.2-18.el10, but none of the providers can be installed
+  - conflicting requests
+  - problem with installed package libfdisk-2.40.2-18.el10.x86_64
+ Problem 5: cannot install both libmount-2.40.2-18.el10_2.20.x86_64 from @commandline and libmount-2.40.2-18.el10.x86_64 from @System
+  - package util-linux-2.40.2-18.el10.x86_64 from @System requires libmount = 2.40.2-18.el10, but none of the providers can be installed
+  - conflicting requests
+  - problem with installed package util-linux-2.40.2-18.el10.x86_64
+ Problem 6: cannot install both libuuid-2.40.2-18.el10_2.20.x86_64 from @commandline and libuuid-2.40.2-18.el10.x86_64 from @System
+  - package util-linux-core-2.40.2-18.el10.x86_64 from @System requires libuuid = 2.40.2-18.el10, but none of the providers can be installed
+  - conflicting requests
+  - problem with installed package util-linux-core-2.40.2-18.el10.x86_64
+ Problem 7: cannot install both pam-libs-1.6.1-9.el10_2.1.x86_64 from @commandline and pam-libs-1.6.1-9.el10.x86_64 from @System
+  - package pam-1.6.1-9.el10.x86_64 from @System requires pam-libs(x86-64) = 1.6.1-9.el10, but none of the providers can be installed
+  - conflicting requests
+  - problem with installed package pam-1.6.1-9.el10.x86_64
+(try to add '--allowerasing' to command line to replace conflicting packages or '--skip-broken' to skip uninstallable packages or '--nobest' to use not only best candidate packages)

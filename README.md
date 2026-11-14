@@ -37,6 +37,6 @@ The desktop requires a graphical session; the application is not a web server.
 - [Release notes](docs/RELEASE_NOTES.md)
 - [Qualification and evidence](docs/QUALIFICATION.md)
 
-Original application copyright/license notices are preserved in `upstream/LICENSE`.
+Original application copyright/license notices are preserved in `upstream/LICENSE.xcp-ng`.
 The supplied Windows source is inventoried in `upstream/SHA256SUMS`; this repository
 contains the new native client, not the Wine wrapper found in the older private fork.

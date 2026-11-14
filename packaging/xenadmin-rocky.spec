@@ -30,8 +30,8 @@ install -m 0755 packaging/xenadmin-rocky %{buildroot}%{_bindir}/xenadmin-rocky
 install -m 0644 packaging/xenadmin-rocky.desktop %{buildroot}%{_datadir}/applications/
 
 %files
-%license LICENSE upstream/LICENSE
-%doc README.md docs/*.md
+%license LICENSE upstream/LICENSE.xcp-ng
+%doc README.md SOURCE_COMMIT docs/*.md
 %{_bindir}/xenadmin-rocky
 %{_datadir}/applications/xenadmin-rocky.desktop
 %{_datadir}/%{name}/

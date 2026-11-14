@@ -26,3 +26,9 @@ After changes, rebuild both bundles and perform the qualification checklist on
 fresh disconnected desktops. Production release requires RPM signing, retained
 public verification keys and an authenticated delivery procedure. Development
 candidate RPMs are unsigned and must not be presented as a signed stable release.
+
+The source archive and SRPM include scripts and tests. SOURCE_COMMIT records the
+builder's Git HEAD; use a clean committed checkout for release builds. The application
+and source RPM filenames differ by major; their RPM metadata must both be inspected.
+CI checks are configured in `.github/workflows/ci.yml`; a configured workflow is
+not evidence of a passing remote run. Bundles are generated separately on the builder.

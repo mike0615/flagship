@@ -27,8 +27,9 @@ xenadmin-rocky
 ```
 
 Use the el10 archive on Rocky 10. DNF is invoked with every repository disabled;
-it receives only the transferred RPM files. The candidate RPM is unsigned, so the
-installer explicitly disables local package signature checking for this transaction.
+it enables only the transferred file:// repository and selects the application
+and necessary dependencies. It does not force an upgrade of every bundled RPM. The candidate RPM is unsigned, so the
+installer explicitly disables package signature checking for the local repository and this transaction.
 Do not use that setting as a global DNF configuration. Stable release signing remains
 a qualification gate. Dependency license identifiers are recorded in PACKAGES.tsv;
 retain their license files installed by each package.
