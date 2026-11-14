@@ -1,0 +1,230 @@
+./BUILD_OS_RELEASE: OK
+./LICENSE: OK
+./PACKAGES.tsv: OK
+./docs/BUILD.md: OK
+./docs/CONSOLE.md: OK
+./docs/FEATURE_MATRIX.md: OK
+./docs/INSTALL.md: OK
+./docs/OPERATIONS.md: OK
+./docs/QUALIFICATION.md: OK
+./docs/RECOVERY.md: OK
+./docs/RELEASE_NOTES.md: OK
+./docs/ROADMAP.md: OK
+./docs/SOURCE_ANALYSIS.md: OK
+./docs/USER_GUIDE.md: OK
+./install-offline.sh: OK
+./rpms/alternatives-1.24-2.el9.x86_64.rpm: OK
+./rpms/basesystem-11-13.el9.0.1.noarch.rpm: OK
+./rpms/bash-5.1.8-9.el9.x86_64.rpm: OK
+./rpms/bzip2-libs-1.0.8-11.el9.x86_64.rpm: OK
+./rpms/ca-certificates-2026.2.92_v9.0.319-90.3.el9_8.noarch.rpm: OK
+./rpms/coreutils-8.32-41.el9_8.1.x86_64.rpm: OK
+./rpms/coreutils-common-8.32-41.el9_8.1.x86_64.rpm: OK
+./rpms/crypto-policies-20260224-1.gitea0f072.el9.noarch.rpm: OK
+./rpms/dejavu-sans-fonts-2.37-18.el9.noarch.rpm: OK
+./rpms/expat-2.5.0-6.el9_8.7.x86_64.rpm: OK
+./rpms/filesystem-3.16-5.el9.x86_64.rpm: OK
+./rpms/findutils-4.8.0-7.el9.x86_64.rpm: OK
+./rpms/fontconfig-2.14.0-2.el9_1.x86_64.rpm: OK
+./rpms/fonts-filesystem-2.0.5-7.el9.1.noarch.rpm: OK
+./rpms/freetype-2.10.4-10.el9_5.x86_64.rpm: OK
+./rpms/gdbm-libs-1.23-1.el9.x86_64.rpm: OK
+./rpms/glib2-2.68.4-19.el9_8.10.x86_64.rpm: OK
+./rpms/glibc-2.34-284.el9_8.4.x86_64.rpm: OK
+./rpms/glibc-common-2.34-284.el9_8.4.x86_64.rpm: OK
+./rpms/glibc-gconv-extra-2.34-284.el9_8.4.x86_64.rpm: OK
+./rpms/glibc-minimal-langpack-2.34-284.el9_8.4.x86_64.rpm: OK
+./rpms/gmp-6.2.0-13.el9.x86_64.rpm: OK
+./rpms/gnutls-3.8.10-9.el9_8.x86_64.rpm: OK
+./rpms/graphite2-1.3.14-9.el9.x86_64.rpm: OK
+./rpms/grep-3.6-5.el9.x86_64.rpm: OK
+./rpms/harfbuzz-2.7.4-10.el9.x86_64.rpm: OK
+./rpms/langpacks-core-font-en-3.0-16.el9.noarch.rpm: OK
+./rpms/libX11-1.8.12-1.el9_8.1.x86_64.rpm: OK
+./rpms/libX11-common-1.8.12-1.el9_8.1.noarch.rpm: OK
+./rpms/libXau-1.0.9-8.el9.x86_64.rpm: OK
+./rpms/libXft-2.3.3-8.el9.x86_64.rpm: OK
+./rpms/libXrender-0.9.10-16.el9_8.2.x86_64.rpm: OK
+./rpms/libacl-2.4.0-1.el9_8.x86_64.rpm: OK
+./rpms/libattr-2.6.0-1.el9_8.x86_64.rpm: OK
+./rpms/libblkid-2.37.4-25.el9.x86_64.rpm: OK
+./rpms/libbrotli-1.0.9-10.el9_8.1.x86_64.rpm: OK
+./rpms/libcap-2.48-10.el9_7.1.x86_64.rpm: OK
+./rpms/libffi-3.4.2-8.el9.x86_64.rpm: OK
+./rpms/libgcc-11.5.0-14.el9.x86_64.rpm: OK
+./rpms/libidn2-2.3.0-7.el9.x86_64.rpm: OK
+./rpms/libmount-2.37.4-25.el9.x86_64.rpm: OK
+./rpms/libpng-1.6.37-15.el9_8.2.x86_64.rpm: OK
+./rpms/libselinux-3.6-3.el9.x86_64.rpm: OK
+./rpms/libsepol-3.6-3.el9.x86_64.rpm: OK
+./rpms/libsigsegv-2.13-4.el9.x86_64.rpm: OK
+./rpms/libstdc++-11.5.0-14.el9.x86_64.rpm: OK
+./rpms/libtasn1-4.16.0-10.el9_8.x86_64.rpm: OK
+./rpms/libunistring-0.9.10-15.el9.x86_64.rpm: OK
+./rpms/libuuid-2.37.4-25.el9.x86_64.rpm: OK
+./rpms/libxcb-1.13.1-9.el9.x86_64.rpm: OK
+./rpms/libxcrypt-4.4.18-3.el9.x86_64.rpm: OK
+./rpms/libxcrypt-compat-4.4.18-3.el9.x86_64.rpm: OK
+./rpms/libxml2-2.9.13-14.el9_8.5.x86_64.rpm: OK
+./rpms/ncurses-base-6.2-12.20210508.el9.noarch.rpm: OK
+./rpms/ncurses-libs-6.2-12.20210508.el9.x86_64.rpm: OK
+./rpms/nettle-3.10.1-1.el9.x86_64.rpm: OK
+./rpms/openssl-fips-provider-3.5.8-2.el9_8.x86_64.rpm: OK
+./rpms/openssl-libs-3.5.8-2.el9_8.x86_64.rpm: OK
+./rpms/p11-kit-0.26.4-1.el9_8.x86_64.rpm: OK
+./rpms/p11-kit-trust-0.26.4-1.el9_8.x86_64.rpm: OK
+./rpms/pcre-8.44-4.el9.x86_64.rpm: OK
+./rpms/pcre2-10.40-7.el9_8.x86_64.rpm: OK
+./rpms/pcre2-syntax-10.40-7.el9_8.noarch.rpm: OK
+./rpms/python-unversioned-command-3.9.25-7.el9_8.6.noarch.rpm: OK
+./rpms/python3-3.9.25-7.el9_8.6.x86_64.rpm: OK
+./rpms/python3-libs-3.9.25-7.el9_8.6.x86_64.rpm: OK
+./rpms/python3-pip-wheel-21.3.1-2.el9_8.rocky.0.1.noarch.rpm: OK
+./rpms/python3-setuptools-wheel-53.0.0-15.el9.noarch.rpm: OK
+./rpms/python3-tkinter-3.9.25-7.el9_8.6.x86_64.rpm: OK
+./rpms/readline-8.1-4.el9.x86_64.rpm: OK
+./rpms/repodata/07a8b6b4d60444c9ba5f8fe79ca3c4a99b42e5702aac33b4559dbf85a55ebbc1-filelists.sqlite.bz2: OK
+./rpms/repodata/2285b357e30e40f6d5e4fa4d6c95261ff821e29f06dd1b46298744d16123da6c-other.sqlite.bz2: OK
+./rpms/repodata/2b1db8603d701dfb0dc4da4f041a31862ae0d1a9b7a843c7c1684fe2549914ed-filelists.xml.gz: OK
+./rpms/repodata/46da2b281cf09b858469dcec11835c193b78864f27917e1d930ce6fae9dc7b65-other.xml.gz: OK
+./rpms/repodata/7e30694bd208804d1033b66d44c2f6351029e4b3fb17ba94c78cfdb809b7d2f2-primary.sqlite.bz2: OK
+./rpms/repodata/a4cb084b72ac455dbc851c1961ff323baa17f1b1d57e05a866d66a666d00f011-primary.xml.gz: OK
+./rpms/repodata/repomd.xml: OK
+./rpms/rocky-gpg-keys-9.8-1.2.el9.noarch.rpm: OK
+./rpms/rocky-release-9.8-1.2.el9.noarch.rpm: OK
+./rpms/rocky-repos-9.8-1.2.el9.noarch.rpm: OK
+./rpms/sed-4.8-10.el9_8.x86_64.rpm: OK
+./rpms/setup-2.13.7-10.el9.noarch.rpm: OK
+./rpms/sqlite-libs-3.34.1-11.el9_8.x86_64.rpm: OK
+./rpms/tcl-8.6.10-7.el9.x86_64.rpm: OK
+./rpms/tk-8.6.10-9.el9.x86_64.rpm: OK
+./rpms/tzdata-2026f-1.el9_8.noarch.rpm: OK
+./rpms/xenadmin-rocky-1.0.0-0.4.dev4.el9.noarch.rpm: OK
+./rpms/xml-common-0.6.3-58.el9.noarch.rpm: OK
+./rpms/xz-libs-5.2.5-8.el9_8.1.x86_64.rpm: OK
+./rpms/zlib-1.2.11-40.el9.x86_64.rpm: OK
+Added xenadmin-offline repo from file:///bundle/rpms
+xenadmin-offline                                 40 MB/s | 158 kB     00:00
+Dependencies resolved.
+================================================================================
+ Package                 Arch    Version                Repository         Size
+================================================================================
+Installing:
+ xenadmin-rocky          noarch  1.0.0-0.4.dev4.el9     xenadmin-offline   61 k
+Upgrading:
+ python3                 x86_64  3.9.25-7.el9_8.6       xenadmin-offline   26 k
+ python3-libs            x86_64  3.9.25-7.el9_8.6       xenadmin-offline  7.5 M
+Installing dependencies:
+ dejavu-sans-fonts       noarch  2.37-18.el9            xenadmin-offline  1.3 M
+ fontconfig              x86_64  2.14.0-2.el9_1         xenadmin-offline  274 k
+ fonts-filesystem        noarch  1:2.0.5-7.el9.1        xenadmin-offline  9.0 k
+ freetype                x86_64  2.10.4-10.el9_5        xenadmin-offline  386 k
+ graphite2               x86_64  1.3.14-9.el9           xenadmin-offline   94 k
+ harfbuzz                x86_64  2.7.4-10.el9           xenadmin-offline  623 k
+ langpacks-core-font-en  noarch  3.0-16.el9             xenadmin-offline  9.5 k
+ libX11                  x86_64  1.8.12-1.el9_8.1       xenadmin-offline  648 k
+ libX11-common           noarch  1.8.12-1.el9_8.1       xenadmin-offline  144 k
+ libXau                  x86_64  1.0.9-8.el9            xenadmin-offline   30 k
+ libXft                  x86_64  2.3.3-8.el9            xenadmin-offline   61 k
+ libXrender              x86_64  0.9.10-16.el9_8.2      xenadmin-offline   26 k
+ libbrotli               x86_64  1.0.9-10.el9_8.1       xenadmin-offline  312 k
+ libpng                  x86_64  2:1.6.37-15.el9_8.2    xenadmin-offline  116 k
+ libxcb                  x86_64  1.13.1-9.el9           xenadmin-offline  224 k
+ python3-tkinter         x86_64  3.9.25-7.el9_8.6       xenadmin-offline  309 k
+ tcl                     x86_64  1:8.6.10-7.el9         xenadmin-offline  1.1 M
+ tk                      x86_64  1:8.6.10-9.el9         xenadmin-offline  1.6 M
+ xml-common              noarch  0.6.3-58.el9           xenadmin-offline   31 k
+
+Transaction Summary
+================================================================================
+Install  20 Packages
+Upgrade   2 Packages
+
+Total size: 15 M
+Downloading Packages:
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1
+  Installing       : tcl-1:8.6.10-7.el9.x86_64                             1/24
+  Installing       : fonts-filesystem-1:2.0.5-7.el9.1.noarch               2/24
+  Installing       : dejavu-sans-fonts-2.37-18.el9.noarch                  3/24
+  Installing       : langpacks-core-font-en-3.0-16.el9.noarch              4/24
+  Running scriptlet: xml-common-0.6.3-58.el9.noarch                        5/24
+  Installing       : xml-common-0.6.3-58.el9.noarch                        5/24
+  Installing       : libpng-2:1.6.37-15.el9_8.2.x86_64                     6/24
+  Installing       : libbrotli-1.0.9-10.el9_8.1.x86_64                     7/24
+  Installing       : libXau-1.0.9-8.el9.x86_64                             8/24
+  Installing       : libxcb-1.13.1-9.el9.x86_64                            9/24
+  Installing       : libX11-common-1.8.12-1.el9_8.1.noarch                10/24
+  Installing       : libX11-1.8.12-1.el9_8.1.x86_64                       11/24
+  Installing       : libXrender-0.9.10-16.el9_8.2.x86_64                  12/24
+  Installing       : graphite2-1.3.14-9.el9.x86_64                        13/24
+  Installing       : harfbuzz-2.7.4-10.el9.x86_64                         14/24
+  Installing       : freetype-2.10.4-10.el9_5.x86_64                      15/24
+  Installing       : fontconfig-2.14.0-2.el9_1.x86_64                     16/24
+  Running scriptlet: fontconfig-2.14.0-2.el9_1.x86_64                     16/24
+  Installing       : libXft-2.3.3-8.el9.x86_64                            17/24
+  Running scriptlet: tk-1:8.6.10-9.el9.x86_64                             18/24
+  Installing       : tk-1:8.6.10-9.el9.x86_64                             18/24
+  Upgrading        : python3-3.9.25-7.el9_8.6.x86_64                      19/24
+  Installing       : python3-tkinter-3.9.25-7.el9_8.6.x86_64              20/24
+  Upgrading        : python3-libs-3.9.25-7.el9_8.6.x86_64                 21/24
+  Installing       : xenadmin-rocky-1.0.0-0.4.dev4.el9.noarch             22/24
+  Cleanup          : python3-3.9.25-7.el9_8.x86_64                        23/24
+  Cleanup          : python3-libs-3.9.25-7.el9_8.x86_64                   24/24
+  Running scriptlet: fontconfig-2.14.0-2.el9_1.x86_64                     24/24
+  Running scriptlet: python3-libs-3.9.25-7.el9_8.x86_64                   24/24
+  Verifying        : dejavu-sans-fonts-2.37-18.el9.noarch                  1/24
+  Verifying        : fontconfig-2.14.0-2.el9_1.x86_64                      2/24
+  Verifying        : fonts-filesystem-1:2.0.5-7.el9.1.noarch               3/24
+  Verifying        : freetype-2.10.4-10.el9_5.x86_64                       4/24
+  Verifying        : graphite2-1.3.14-9.el9.x86_64                         5/24
+  Verifying        : harfbuzz-2.7.4-10.el9.x86_64                          6/24
+  Verifying        : langpacks-core-font-en-3.0-16.el9.noarch              7/24
+  Verifying        : libX11-1.8.12-1.el9_8.1.x86_64                        8/24
+  Verifying        : libX11-common-1.8.12-1.el9_8.1.noarch                 9/24
+  Verifying        : libXau-1.0.9-8.el9.x86_64                            10/24
+  Verifying        : libXft-2.3.3-8.el9.x86_64                            11/24
+  Verifying        : libXrender-0.9.10-16.el9_8.2.x86_64                  12/24
+  Verifying        : libbrotli-1.0.9-10.el9_8.1.x86_64                    13/24
+  Verifying        : libpng-2:1.6.37-15.el9_8.2.x86_64                    14/24
+  Verifying        : libxcb-1.13.1-9.el9.x86_64                           15/24
+  Verifying        : python3-tkinter-3.9.25-7.el9_8.6.x86_64              16/24
+  Verifying        : tcl-1:8.6.10-7.el9.x86_64                            17/24
+  Verifying        : tk-1:8.6.10-9.el9.x86_64                             18/24
+  Verifying        : xenadmin-rocky-1.0.0-0.4.dev4.el9.noarch             19/24
+  Verifying        : xml-common-0.6.3-58.el9.noarch                       20/24
+  Verifying        : python3-3.9.25-7.el9_8.6.x86_64                      21/24
+  Verifying        : python3-3.9.25-7.el9_8.x86_64                        22/24
+  Verifying        : python3-libs-3.9.25-7.el9_8.6.x86_64                 23/24
+  Verifying        : python3-libs-3.9.25-7.el9_8.x86_64                   24/24
+
+Upgraded:
+  python3-3.9.25-7.el9_8.6.x86_64      python3-libs-3.9.25-7.el9_8.6.x86_64
+Installed:
+  dejavu-sans-fonts-2.37-18.el9.noarch
+  fontconfig-2.14.0-2.el9_1.x86_64
+  fonts-filesystem-1:2.0.5-7.el9.1.noarch
+  freetype-2.10.4-10.el9_5.x86_64
+  graphite2-1.3.14-9.el9.x86_64
+  harfbuzz-2.7.4-10.el9.x86_64
+  langpacks-core-font-en-3.0-16.el9.noarch
+  libX11-1.8.12-1.el9_8.1.x86_64
+  libX11-common-1.8.12-1.el9_8.1.noarch
+  libXau-1.0.9-8.el9.x86_64
+  libXft-2.3.3-8.el9.x86_64
+  libXrender-0.9.10-16.el9_8.2.x86_64
+  libbrotli-1.0.9-10.el9_8.1.x86_64
+  libpng-2:1.6.37-15.el9_8.2.x86_64
+  libxcb-1.13.1-9.el9.x86_64
+  python3-tkinter-3.9.25-7.el9_8.6.x86_64
+  tcl-1:8.6.10-7.el9.x86_64
+  tk-1:8.6.10-9.el9.x86_64
+  xenadmin-rocky-1.0.0-0.4.dev4.el9.noarch
+  xml-common-0.6.3-58.el9.noarch
+
+Complete!
+PASS: installed New VM review, disk/NIC tables, indexed recovery help, persisted history, headless recovery CLI, console rendering/input default and clean child-window closure; synthetic records only

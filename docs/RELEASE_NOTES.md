@@ -6,7 +6,9 @@ Authenticated native RFB console window, opt-in keyboard/mouse input, full repai
 after resize, held-modifier preservation, display-aware main-window sizing and
 wrapped toolbar controls. VM actions/status stay visible on small displays.
 141 local checks pass, including a 1024x768 client display and narrower windows;
-new RPM qualification is pending. Actual live Tk-console rendering passed.
+both RPM builds and fresh network-disabled installs/installed GUI/help/recovery/
+console rendering/child-window closure checks passed on Rocky 9 and 10 containers.
+Actual live source Tk-console rendering passed. Booted dev.4 qualification is pending.
 The published dev.3 RPMs passed an isolated Rocky 9.6 Workstation install, clean
 installed-system reboot, repeated application/help/recovery checks and desktop
 menu launch. These guest results do not qualify dev.4 RPMs or Rocky 10.

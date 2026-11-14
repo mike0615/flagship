@@ -47,3 +47,10 @@ errors. Booted/independent operator qualification remains open.
 `dev3-offline-el9.txt` / `dev3-offline-el10.txt` record disconnected installations;
 `dev3-installed-gui-el9.txt` / `dev3-installed-gui-el10.txt` record the installed
 GUI, help, durable history and independent headless launcher smoke on both majors.
+
+`dev4-offline-el9.txt` / `dev4-offline-el10.txt` record fresh network-disabled
+installs. `dev4-installed-gui-el9.txt` / `dev4-installed-gui-el10.txt` exercise
+installed New VM review, disk/NIC tables, indexed help, durable history, standalone
+recovery, console pixels/input default and clean child-window closure. The records
+are synthetic; the fixture is `fixtures/dev4_installed_gui.py`. Booted Rocky 9
+dev.3 evidence and explicit limits are in `BOOTED_ROCKY9.md`.
