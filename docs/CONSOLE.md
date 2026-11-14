@@ -24,7 +24,7 @@ failure or a separate VNC authentication requirement stops the connection.
 
 ## Evidence and limits
 
-137 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
+140 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
 resize, input opt-in, modifier/button release, old-client isolation, TLS failure,
 HTTP refusal, destination/ownership checks and bounded malformed protocol data.
 A dedicated firmware-only VM on XCP-ng 8.3/XAPI 26.1.11 passed authenticated RFB
@@ -51,3 +51,11 @@ observed inside the installer with `lsblk`. `/run/install/ks.cfg` confirmed
 seed discovery. The console then showed unattended Workstation installation,
 partition creation on the dedicated xvda disk and local package installation.
 Completion, first desktop boot and reboot remain unverified.
+
+The isolated Rocky 9.6 Workstation installation completed and rebooted into GNOME.
+The installed dev.3 application launched and its indexed offline help opened via
+native RFB pointer input. SELinux remained enforcing. A 1024x768 display exposed
+layout clipping, corrected in source with display-aware sizing, wrapped actions
+and reserved status/action space. Second reboot, desktop-menu and pool-workflow
+qualification are still open. The Rocky 10.2 DVD full SHA-256 matched its signed
+checksum; it has not yet been installed.

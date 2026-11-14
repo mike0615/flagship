@@ -43,7 +43,9 @@ class Application:
         self.workflow_stop = None
         self.last_workflow_report = None
         root.title('XenAdmin Rocky — ' + __version__)
-        root.geometry('1200x760')
+        width = min(1200, max(640, root.winfo_screenwidth()-40))
+        height = min(760, max(480, root.winfo_screenheight()-100))
+        root.geometry(f'{width}x{height}')
         menu = tk.Menu(root)
         tools = tk.Menu(menu, tearoff=False)
         tools.add_command(label='Stop workflow monitoring', command=self.stop_workflow)
@@ -54,14 +56,22 @@ class Application:
         root.configure(menu=menu)
         toolbar = ttk.Frame(root, padding=6)
         toolbar.pack(fill='x')
+        self.buttonbar = ttk.Frame(toolbar)
+        self.buttonbar.pack(fill='x')
+        self.toolbar_buttons = []
+        self.toolbar_columns = None
         for label, command in [('Connect', self.connect), ('Disconnect', self.disconnect),
                                ('Refresh', self.refresh), ('New VM', self.new_vm),
                                ('CPU / memory', self.hardware), ('Devices', self.manage_devices), ('Console', self.open_console), ('Export inventory', self.export),
                                ('Help', self.help)]:
-            ttk.Button(toolbar, text=label, command=command).pack(side='left', padx=3)
+            self.toolbar_buttons.append(ttk.Button(self.buttonbar, text=label, command=command))
+        self.buttonbar.bind('<Configure>', lambda event: self.layout_toolbar(event.width))
+        self.layout_toolbar(width-12)
+        filterbar = ttk.Frame(toolbar)
+        filterbar.pack(fill='x', pady=(4, 0))
         self.search = tk.StringVar()
-        ttk.Entry(toolbar, textvariable=self.search).pack(side='right')
-        ttk.Label(toolbar, text='Filter inventory:').pack(side='right')
+        ttk.Label(filterbar, text='Filter inventory:').pack(side='left')
+        ttk.Entry(filterbar, textvariable=self.search).pack(side='left', fill='x', expand=True)
         self.search.trace_add('write', lambda *_: self.populate())
         split = ttk.Panedwindow(root, orient='horizontal')
         split.pack(fill='both', expand=True)
@@ -85,7 +95,7 @@ class Application:
             self.tabs.add(frame, text=title)
             self.views[title] = view
         actions = ttk.Frame(right, padding=6)
-        actions.pack(fill='x')
+        actions.pack(side='bottom', fill='x', before=self.tabs)
         for index, (label, action) in enumerate([
                 ('Start', 'start'), ('Shut down', 'clean_shutdown'),
                 ('Reboot', 'clean_reboot'), ('Pause', 'pause'), ('Unpause', 'unpause'),
@@ -96,11 +106,31 @@ class Application:
             ttk.Button(actions, text=label, command=lambda a=action: self.action(a)).grid(
                 row=index // 5, column=index % 5, sticky='ew', padx=2, pady=2)
         self.status = tk.StringVar(value='Disconnected. Connect to a pool coordinator using HTTPS.')
-        ttk.Label(root, textvariable=self.status, padding=6).pack(fill='x')
+        ttk.Label(root, textvariable=self.status, padding=6).pack(side='bottom', fill='x', before=split)
         self.tree.bind('<<TreeviewSelect>>', lambda *_: self.show())
         root.protocol('WM_DELETE_WINDOW', self.close)
+        root.bind('<Destroy>', self.cancel_timers, add='+')
         root.after(100, self.poll)
         root.after(3000, self.poll_tasks)
+        root.update_idletasks()
+
+    def cancel_timers(self, event):
+        if event.widget is not self.root: return
+        # Destroying a Tk window removes callback commands but leaves timers in
+        # the interpreter's queue unless cancelled (also affects embedded use).
+        for timer in self.root.tk.call('after', 'info'):
+            try: self.root.after_cancel(timer)
+            except tk.TclError: pass
+
+    def layout_toolbar(self, width):
+        requested = max(button.winfo_reqwidth()+6 for button in self.toolbar_buttons)
+        columns = max(1, min(len(self.toolbar_buttons), width//requested))
+        if columns == self.toolbar_columns: return
+        self.toolbar_columns = columns
+        for index in range(len(self.toolbar_buttons)):
+            self.buttonbar.columnconfigure(index, weight=1 if index < columns else 0)
+        for index, button in enumerate(self.toolbar_buttons):
+            button.grid(row=index//columns, column=index%columns, padx=3, pady=2, sticky='ew')
 
     def submit(self, work, done, label, mutation=False, completion='completed'):
         if self.busy or self.closing:

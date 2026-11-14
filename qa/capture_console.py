@@ -25,6 +25,13 @@ def capture(c, state, guest, args):
         width, height = rfb.handshake()
         pixels = bytearray(width*height*3)
         received = False
+        click = getattr(args, 'click', None)
+        if click is not None:
+            if len(click) != 3 or any(not isinstance(value, int) for value in click) or not 1 <= click[2] <= 5:
+                raise ValueError('Click requires x, y and a button number from 1 to 5')
+            x, y, button = click
+            rfb.pointer(x, y, 1 << (button-1)); rfb.pointer(x, y, 0)
+            time.sleep(.3)
         for chord in args.chord:
             keys = [int(value, 0) for value in chord.split(',')]
             for key in keys: rfb.key(key, True)
@@ -70,6 +77,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     for name in ('endpoint', 'username', 'ca-file', 'state-file'):
         p.add_argument('--'+name, required=True)
+    p.add_argument('--click', type=lambda value: [int(part) for part in value.split(',')], help='Guest x,y,button; only the recorded QA VM receives input')
     p.add_argument('--output')
     p.add_argument('--interactive', action='store_true', help='Read nonsecret QA commands as JSON lines; retain only the API session in memory')
     p.add_argument('--key', type=lambda value: int(value, 0), action='append', default=[])
@@ -100,7 +108,7 @@ def main():
                     if not isinstance(name, str) or Path(name).name != name or name in ('.', '..'):
                         raise ValueError('Output must be a new basename in the private state directory')
                     operation = SimpleNamespace(output=str(Path(args.state_file).parent/name),
-                        text=command.get('text', ''), chord=command.get('chord', []), key=command.get('key', []))
+                        text=command.get('text', ''), chord=command.get('chord', []), key=command.get('key', []), click=command.get('click'))
                     capture(c, state, guests[0], operation)
                 except Exception as exc:
                     print('QA command stopped:', type(exc).__name__, flush=True)

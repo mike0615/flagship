@@ -51,6 +51,7 @@ class ConsoleWindow:
             self.canvas.bind('<ButtonRelease-%d>' % button, lambda event, b=button: self.pointer(event, b, False))
         self.window.protocol('WM_DELETE_WINDOW', self.close)
         self.worker = threading.Thread(target=self.receive, args=(connector,), daemon=True)
+        self.window.update_idletasks()
         self.worker.start()
         self.window.after(25, self.poll)
 

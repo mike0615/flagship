@@ -114,6 +114,9 @@ test_pending_is_not_success (test_tasks.TaskTests) ... ok
 test_progress_is_bounded (test_tasks.TaskTests) ... ok
 test_success_is_reported_after_server_confirmation (test_tasks.TaskTests) ... ok
 test_task_reference_is_opaque (test_tasks.TaskTests) ... ok
+test_every_toolbar_action_stays_visible_after_narrowing (test_window_layout.WindowLayoutTests) ... ok
+test_initial_window_fits_the_display (test_window_layout.WindowLayoutTests) ... ok
+test_vm_actions_and_status_remain_visible_at_default_guest_resolution (test_window_layout.WindowLayoutTests) ... ok
 test_large_memory_arguments_cross_real_xmlrpc_as_decimal_strings (test_wire.WireTests) ... ok
 test_real_wire_api_error_is_not_success (test_wire.WireTests) ... ok
 test_recovery_uuid_inspection_crosses_verified_https (test_wire.WireTests) ... ok
@@ -137,6 +140,6 @@ test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTest
 test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 137 tests in 3.171s
+Ran 140 tests in 4.020s
 
 OK
