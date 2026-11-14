@@ -1,0 +1,6 @@
+{
+  "run": "https://github.com/mike0615/xenadmin-rocky/actions/runs/43612151995",
+  "commit": "21a975ff1e678f9786e7474a8c5747d47c37cd2e",
+  "conclusion": "success",
+  "jobs": {"tests": "success", "rpm (9)": "success", "rpm (10)": "success"}
+}

@@ -1,0 +1,12 @@
+{
+  "9": {
+    "binary_packages": 83,
+    "corresponding_source_rpms": 65,
+    "missing_sources": []
+  },
+  "10": {
+    "binary_packages": 85,
+    "corresponding_source_rpms": 67,
+    "missing_sources": []
+  }
+}

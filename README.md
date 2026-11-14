@@ -6,6 +6,7 @@ not an official XCP-ng or XenServer product.
 
 **Status: development candidate 1.0.0.dev1. No qualified v1.0 release yet.**
 A successful RPM build is not proof of working pool management or an offline install.
+Candidate downloads are published under GitHub Releases; use the matching Rocky major.
 See [qualification status](docs/QUALIFICATION.md) and [feature matrix](docs/FEATURE_MATRIX.md).
 
 The interface uses a resource tree, inventory tabs and VM action buttons. Python/Tk

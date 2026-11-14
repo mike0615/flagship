@@ -1,0 +1,22 @@
+{
+  "9": {
+    "source_commit": "c8f30cfdb14e5dbde139f7d134da08f815951905",
+    "native_modules_match_worktree": {
+      "xenadmin_rocky/__init__.py": true,
+      "xenadmin_rocky/api.py": true,
+      "xenadmin_rocky/__main__.py": true,
+      "xenadmin_rocky/app.py": true
+    },
+    "source_sha256": "f7b9c8881436b98b46d80a70d60e91102103ba386ba56b164a989b7a21b01b0d"
+  },
+  "10": {
+    "source_commit": "c8f30cfdb14e5dbde139f7d134da08f815951905",
+    "native_modules_match_worktree": {
+      "xenadmin_rocky/__init__.py": true,
+      "xenadmin_rocky/api.py": true,
+      "xenadmin_rocky/__main__.py": true,
+      "xenadmin_rocky/app.py": true
+    },
+    "source_sha256": "e5be9fc1a4832a6a5f8fc1c79cd4c78e4075f574f8657ec6778c980d83aaee5a"
+  }
+}

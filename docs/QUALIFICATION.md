@@ -17,7 +17,7 @@ Development status. This record must be updated with evidence, not assumptions.
 | Disposable guest lifecycle, snapshots, restore, migration | Pending live host |
 | Windows workflow comparison and independent operator | Pending |
 | Offline dependency resolution | Pass on both fresh base containers, local file repository only |
-| Dependency license inventory and source retention | Binary license table collected; source retention in progress |
+| Dependency license inventory and source retention | License identifiers recorded; all 83/el9 and 85/el10 binary RPMs have matching SRPMs retained |
 | Stable v1.0 | Not qualified |
 
 Container checks can establish package installation and GUI creation, but do not
