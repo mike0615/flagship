@@ -66,6 +66,15 @@ class ConsoleWindowTests(unittest.TestCase):
         tunnel.close.assert_called_once()
         self.assertFalse(view.window.winfo_exists())
 
+    def test_input_overflow_closes_without_recursing_during_key_release(self):
+        view = self.viewer
+        view.pressed = {0xffe3}
+        for _ in range(view.inputs.maxsize): view.inputs.put_nowait(('key', (65, True)))
+        view.enqueue('key', 65, False)
+        self.assertTrue(view.stop.is_set())
+        self.assertFalse(view.window.winfo_exists())
+        self.assertFalse(view.pressed)
+
     def test_error_is_visible_and_disables_control(self):
         self.viewer.control.set(True)
         self.viewer.draw(('error', 'ConsoleError'))

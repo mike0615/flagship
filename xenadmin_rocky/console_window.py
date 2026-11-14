@@ -110,6 +110,7 @@ class ConsoleWindow:
         try: self.inputs.put_nowait((method, args))
         except queue.Full:
             self.status.set('Input queue overflow; console closed. Reopen to continue.')
+            self.stop.set()  # Release must not recursively enqueue into a full queue.
             self.close()
 
     def active(self):

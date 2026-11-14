@@ -18,6 +18,7 @@ test_tunnel_preserves_buffered_frame_and_cookie_not_url (test_console.ConsoleTes
 test_default_view_only_and_explicit_control_events (test_console_window.ConsoleWindowTests) ... ok
 test_error_is_visible_and_disables_control (test_console_window.ConsoleWindowTests) ... ok
 test_focus_release_clears_buttons_and_modifiers (test_console_window.ConsoleWindowTests) ... ok
+test_input_overflow_closes_without_recursing_during_key_release (test_console_window.ConsoleWindowTests) ... ok
 test_old_connection_cannot_receive_input_and_poll_closes_tunnel (test_console_window.ConsoleWindowTests) ... ok
 test_raw_copy_and_resize_preserve_display_pixels (test_console_window.ConsoleWindowTests) ... ok
 test_cancelled_resource_choice_never_submits (test_device_panel.DevicePanelTests) ... ok
@@ -135,6 +136,6 @@ test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTest
 test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 135 tests in 4.317s
+Ran 136 tests in 2.901s
 
 OK

@@ -24,7 +24,7 @@ failure or a separate VNC authentication requirement stops the connection.
 
 ## Evidence and limits
 
-135 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
+136 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
 resize, input opt-in, modifier/button release, old-client isolation, TLS failure,
 HTTP refusal, destination/ownership checks and bounded malformed protocol data.
 A dedicated firmware-only VM on XCP-ng 8.3/XAPI 26.1.11 passed authenticated RFB
@@ -37,3 +37,10 @@ the separately reviewed, UUID-scoped `qa/cleanup_protocol.py` harness.
 Protocol references: [XAPI consoles](https://xapi-project.github.io/xen-api/consoles.html)
 and [RFB specification](https://www.rfc-editor.org/rfc/rfc6143). Windows behavior was
 compared with XenAdmin ConsoleView/XSVNCScreen.cs and XenModel/Network/HTTPHelper.cs.
+
+A dedicated isolated 24 GiB / 4 GiB RAM guest also booted the Rocky 9.6 DVD.
+The native framebuffer showed its boot menu and subsequent media-check screen,
+including a live resolution change from 640x480 to 1024x768. Installation and
+booted-desktop qualification are in progress; media-check progress alone does
+not establish a completed installation or prove that transmitted keys changed
+the guest. Private captures and the running guest UUID remain outside Git.
