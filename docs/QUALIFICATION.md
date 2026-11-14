@@ -12,7 +12,7 @@ Development status. This record must be updated with evidence, not assumptions.
 | Rocky 9 clean disconnected desktop installation | dev.3 installed from the transferred local bundle during isolated Rocky 9.6 Workstation installation; booted GNOME, native application and indexed help observed |
 | Rocky 10 clean disconnected desktop installation | Pending |
 | Installed GUI and help in network-disabled containers | dev.3 installed New VM/device tables/indexed help/history/recovery CLI pass on both majors |
-| Reboot and graphical desktop menu interaction | Rocky 9 installer-to-desktop reboot passed; second installed-system reboot and menu journey pending; Rocky 10 pending |
+| Reboot and graphical desktop menu interaction | Rocky 9 installer reboot, subsequent clean installed-system reboot with distinct boot IDs, repeated application checks and manual desktop-search/menu launch passed; Rocky 10 pending |
 | Trusted TLS, read-only and restricted account behavior | Verified trusted TLS/native login on live XCP-ng; restricted-role qualification pending |
 | Disposable guest lifecycle, snapshots, restore, migration | Live provisioning, cold devices and firmware start/pause/unpause/shutdown pass; guest OS, snapshots, restore and migration pending |
 | Windows workflow comparison and independent operator | Pending |

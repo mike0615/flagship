@@ -31,16 +31,19 @@ def capture(c, state, guest, args):
                 raise ValueError('Click requires x, y and a button number from 1 to 5')
             x, y, button = click
             rfb.pointer(x, y, 1 << (button-1)); rfb.pointer(x, y, 0)
-            time.sleep(.3)
+            time.sleep(1.0)
         for chord in args.chord:
             keys = [int(value, 0) for value in chord.split(',')]
             for key in keys: rfb.key(key, True)
             for key in reversed(keys): rfb.key(key, False)
-            time.sleep(.3)  # Allow a guest VT switch before sending shell text.
+            time.sleep(1.0)  # Allow a guest focus/VT switch before sending text.
         for char in args.text:
             code = ord(char)
-            key = 0xff0d if char == '\n' else code if code < 256 else 0x01000000 | code
+            key = {'\n': 0xff0d, '\r': 0xff0d, '\t': 0xff09}.get(char, code if code < 256 else 0x01000000 | code)
+            shifted = 'A' <= char <= 'Z' or char in '~!@#$%^&*()_+{}|:"<>?'
+            if shifted: rfb.key(0xffe1, True)
             rfb.key(key, True); rfb.key(key, False)
+            if shifted: rfb.key(0xffe1, False)
             time.sleep(.02)
         for key in args.key:
             rfb.key(key, True); rfb.key(key, False)

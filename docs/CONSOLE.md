@@ -65,3 +65,7 @@ guest content through verified TLS on a 1024x768 source-client display, with inp
 off by default. `qa/live_console_window.py` reproduces that UUID-scoped check.
 The guest check log confirmed dev.3 RPM version, installed offline help and the
 standalone recovery command in the booted SELinux-enforcing system.
+
+Rocky 9 subsequently passed a clean installed-system reboot with a distinct boot
+ID, repeated startup checks and manual GNOME desktop-search/menu launch. See
+`evidence/BOOTED_ROCKY9.md`; guest pool workflows and Rocky 10 remain open.

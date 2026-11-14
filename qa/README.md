@@ -4,6 +4,8 @@ These tools create or operate on explicitly recorded disposable test resources.
 They are not product installation commands. Keep state directories private and
 outside Git; credentials are prompted and are not accepted through arguments.
 Use the tested pool's trusted CA file. Never disable TLS verification.
+Run from the checkout root with `export PYTHONPATH="$PWD"` before invoking tools
+that import `xenadmin_rocky`.
 
 `live_protocol_smoke.py --execute` creates isolated networks and a firmware VM,
 tests provisioning/devices/power states and retains an exact UUID manifest.
@@ -14,7 +16,7 @@ recorded resources. It deliberately refuses running VMs; investigate uncertain
 outcomes before changing state or retrying. A recovered clone task must appear in
 the original journal. See each tool's `--help` for required parameters.
 
-## Booted Rocky 9 desktop
+## Booted desktop qualification
 
 `prepare_desktop.py --execute` creates one 24 GiB disk / 4 GiB RAM / two-vCPU guest
 from the builtin installer template and selected ISO. Its network has no physical
@@ -26,7 +28,7 @@ pykickstart (`ksvalidator`) and xorriso:
 
 ```sh
 python3 qa/build_desktop_seed.py \
-  --airgap /absolute/path/to/extracted/airgap \
+  --major 9 --airgap /absolute/path/to/extracted/airgap \
   --output-directory /private/new/output-directory
 ```
 
@@ -36,7 +38,13 @@ The root account is locked. For disposable graphical testing, the `qa` guest
 account has automatic graphical login and passwordless sudo. Preserve network
 isolation and remove this VM after qualification; this is not a production image.
 The Kickstart erases **xvda**. Attach it only to the exact recorded disposable VM.
-The current template/builder is validated for RHEL9 Kickstart syntax, not RHEL10.
+Both rendered profiles passed their matching RHEL9/RHEL10 Kickstart validators.
+Use `--major 10` with a Rocky 10 bundle; that build validates in a connected Rocky
+10 Podman container. Rocky 9 uses GNOME Terminal and an Xorg QA session. Rocky 10
+uses Ptyxis and retains Wayland, with XWayland installed for Tk. The Rocky 10 DVD
+package metadata and Ptyxis man page confirmed those dependencies and CLI flags.
+Syntax validation does not establish a completed Rocky 10 desktop installation.
+See [RHEL 10 removed desktop features](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/10.0_release_notes/removed-features).
 
 Transfer the seed with authenticated SSH to a dedicated ISO SR, compare SHA-256
 before and after transfer, scan that SR, and attach it as a secondary DVD while
@@ -75,3 +83,25 @@ name. Keep manifests, cleanup plans and journals until the run is reviewed.
 
 References: [automatic OEMDRV discovery](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/automatically_installing_rhel/starting-kickstart-installations_rhel-installer)
 and [Kickstart commands](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/automatically_installing_rhel/kickstart-commands-and-options-reference_rhel-installer).
+
+## Large ISO staging
+
+`stage_iso.py` streams a verified image directly to a new `xenadmin-qa-*.iso`
+filename inside the selected ISO SR. It does not stage large media in dom0 /tmp.
+It requires an existing authenticated SSH control connection and prompts for
+sudo authentication through a forced, confirmed password handshake; credentials
+are never arguments or files. The remote filesystem must retain 20 GiB free.
+The complete remote SHA-256 must match before atomic no-overwrite publication;
+interruptions retain only the exact private `.part` file named in the private
+record. Inspect that record and actual remote process/file state before retrying.
+
+Console `text` diagnostics use the seeded US keyboard layout, explicitly send
+Shift for uppercase/symbols, and pause after focus/VT changes. This is a QA typing
+helper; it is not a layout-independent clipboard or QEMU scancode implementation.
+The seed now holds an interactive shell after its checks; retain exact seed
+revision/hash when comparing runs.
+
+Legacy dom0 coreutils exposes only argument-free `sync`; staging uses that
+portable flush. A completed upload can exist even if a later flush/status step
+fails. Inspect the exact final/partial names and full remote checksum before any
+retry; an existing staging record is never silently replaced.

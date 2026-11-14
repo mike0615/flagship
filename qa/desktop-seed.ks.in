@@ -50,7 +50,7 @@ DESKTOP
 cat > /usr/local/bin/xenadmin-qa-check <<'CHECK'
 #!/bin/bash
 set -Eeuo pipefail
-trap 'echo "FAIL: desktop qualification command failed"; exec bash' ERR
+trap 'echo "FAIL: desktop qualification command failed"; exec bash -i' ERR
 mkdir -p "$HOME/qa-evidence"
 exec > >(tee -a "$HOME/qa-evidence/desktop-check.log") 2>&1
 date -u
@@ -67,7 +67,7 @@ gsettings set org.gnome.desktop.screensaver lock-enabled false
 xenadmin-rocky &
 printf '\nDesktop qualification session ready. Installer log:\n'
 sudo tail -n 8 /var/log/xenadmin-qa-install.log
-exec bash
+exec bash -i
 CHECK
 chmod 755 /usr/local/bin/xenadmin-qa-check
 chown -R qa:qa /home/qa/.config

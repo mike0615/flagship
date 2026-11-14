@@ -8,7 +8,7 @@ mkdir -p "$out"
 stage=$(mktemp -d "$root/build-rpm.XXXXXX")
 trap 'rm -rf -- "$stage"' EXIT
 mkdir "$stage/$archive_name"
-for part in xenadmin_rocky docs packaging scripts tests README.md LICENSE upstream CONTRIBUTING.md SECURITY.md; do
+for part in xenadmin_rocky docs packaging scripts tests qa README.md LICENSE upstream CONTRIBUTING.md SECURITY.md; do
     cp -a "$root/$part" "$stage/$archive_name/"
 done
 git -C "$root" rev-parse HEAD > "$stage/$archive_name/SOURCE_COMMIT"
