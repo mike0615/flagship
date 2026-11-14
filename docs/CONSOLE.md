@@ -24,7 +24,7 @@ failure or a separate VNC authentication requirement stops the connection.
 
 ## Evidence and limits
 
-140 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
+141 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
 resize, input opt-in, modifier/button release, old-client isolation, TLS failure,
 HTTP refusal, destination/ownership checks and bounded malformed protocol data.
 A dedicated firmware-only VM on XCP-ng 8.3/XAPI 26.1.11 passed authenticated RFB

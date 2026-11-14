@@ -6,7 +6,7 @@ Development status. This record must be updated with evidence, not assumptions.
 |---|---|
 | Targeted Windows source architectural review | Completed; SOURCE_ANALYSIS.md |
 | Native implementation and feature-gap inventory | Initial implementation; FEATURE_MATRIX.md |
-| Unit/security regression tests | Published dev.3 baseline: 117 checks; console development branch: 140 checks, including 1024x768/narrow-window layout; dev.3 disconnected container install/GUI/help/recovery passed on both Rocky majors |
+| Unit/security regression tests | Published dev.3 baseline: 117 checks; console development branch: 141 checks, including 1024x768/narrow-window layout; dev.3 disconnected container install/GUI/help/recovery passed on both Rocky majors |
 | Rocky 9 RPM build | dev.1/dev.2/dev.3 pass |
 | Rocky 10 RPM build | dev.1/dev.2/dev.3 pass |
 | Rocky 9 clean disconnected desktop installation | dev.3 installed from the transferred local bundle during isolated Rocky 9.6 Workstation installation; booted GNOME, native application and indexed help observed |
@@ -23,7 +23,7 @@ Development status. This record must be updated with evidence, not assumptions.
 Container checks can establish package installation and GUI creation, but do not
 replace a booted desktop, live hypervisor or independent operator journey.
 
-Console development branch: 140 local checks pass under a 1024x768 X display.
+Console development branch: 141 local checks pass under a 1024x768 X display.
 The booted dev.3 guest exposed a small-display layout issue. Source now fits the
 screen, wraps toolbar actions, reserves space for VM actions/status and cancels
 pending Tk timers on destruction. These source fixes are not in dev.3 RPMs.

@@ -91,5 +91,14 @@ class ConsoleWindowTests(unittest.TestCase):
         self.assertFalse(self.viewer.control.get())
         self.assertIn('Close and reopen', self.viewer.status.get())
 
+    def test_closing_console_cancels_its_pending_callback_while_parent_lives(self):
+        errors = []
+        self.root.tk.createcommand('bgerror', errors.append)
+        self.viewer.close()
+        self.root.after(80, self.root.quit)
+        self.root.mainloop()
+        self.assertFalse(errors, errors)
+        self.assertTrue(self.root.winfo_exists())
+
 
 if __name__ == '__main__': unittest.main()
