@@ -45,3 +45,9 @@ including a live resolution change from 640x480 to 1024x768. Installation and
 booted-desktop qualification are in progress; media-check progress alone does
 not establish a completed installation or prove that transmitted keys changed
 the guest. Private captures and the running guest UUID remain outside Git.
+
+The corrected two-CD QA layout (Rocky DVD slot 1, OEMDRV seed slot 3) was
+observed inside the installer with `lsblk`. `/run/install/ks.cfg` confirmed
+seed discovery. The console then showed unattended Workstation installation,
+partition creation on the dedicated xvda disk and local package installation.
+Completion, first desktop boot and reboot remain unverified.

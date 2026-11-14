@@ -57,6 +57,12 @@ and exact template used for each attempt.
 
 `capture_console.py` verifies the recorded VM UUID and namespace, then saves a
 private PPM framebuffer. Optional `--key` values send X11 keysyms to that guest.
+With `--interactive`, the tool logs in once and accepts JSON lines such as
+`{"output":"status.ppm"}`; `quit` logs out. Output names must be new basenames in
+the private state directory. Optional `text`, `chord` and `key` fields operate
+only on the recorded guest. Commands are for nonsecret diagnostics; terminal
+input may be echoed. The password is discarded after login and no session token
+is saved. Each capture revalidates the recorded VM UUID and namespace.
 No received pixels, keyboard input or session cookie is written to public logs.
 Captures prove only what is visible. Input transmission, installer launch,
 completed installation, reboot, menu launch and real pool workflows are separate
