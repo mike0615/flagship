@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=XenAdmin Rocky
+Comment=Manage XAPI hosts and virtual machines
+Exec=xenadmin-rocky
+Icon=computer
+Terminal=false
+Categories=System;RemoteAccess;

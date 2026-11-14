@@ -1,0 +1,16 @@
+test_error_does_not_expose_arguments (test_api.ClientTests) ... ok
+test_expired_session_aborts_inventory (test_api.ClientTests) ... ok
+test_inventory_permission_failure_is_visible (test_api.ClientTests) ... ok
+test_logout_clears_session_even_on_error (test_api.ClientTests) ... ok
+test_mutation_not_retried (test_api.ClientTests) ... ok
+test_no_unlisted_mutations (test_api.ClientTests) ... ok
+test_redaction_is_recursive (test_api.ClientTests) ... ok
+test_reject_insecure_or_credential_urls (test_api.ClientTests) ... ok
+test_secure_context_and_timeout (test_api.ClientTests) ... ok
+test_setter_is_synchronous (test_api.ClientTests) ... ok
+test_start_signature (test_api.ClientTests) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.912s
+
+OK
