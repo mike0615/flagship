@@ -1,0 +1,66 @@
+{
+  "release_id": 445480999,
+  "verified_asset_count": 12,
+  "assets": [
+    {
+      "name": "DEPENDENCY-SOURCES.json",
+      "digest": "sha256:71ceddfc6cd85171e6fd06ec4e3d141efe1ebda7c937b200b55bbba487d11547",
+      "size": 83083
+    },
+    {
+      "name": "SHA256SUMS",
+      "digest": "sha256:6af42def73e2cc5a75dd651bf8132c7660813f133e41700ef9ddef9b426dc022",
+      "size": 1217
+    },
+    {
+      "name": "xenadmin-rocky-1.0.0-0.3.dev3.el10.noarch.rpm",
+      "digest": "sha256:0b14324e020ac302296011ed6a4f8d939de14ae4aef9af1800bc752a890e4fbc",
+      "size": 54124
+    },
+    {
+      "name": "xenadmin-rocky-1.0.0-0.3.dev3.el10.src.rpm",
+      "digest": "sha256:41ec4308d7cb3ae348796cd99ff68cd0d1032288ce0f247afe9686780d7d36b7",
+      "size": 192769
+    },
+    {
+      "name": "xenadmin-rocky-1.0.0-0.3.dev3.el9.noarch.rpm",
+      "digest": "sha256:597229ebf46198131f54738dcea6b536d40c378e8a495266217e16d2b933af99",
+      "size": 54044
+    },
+    {
+      "name": "xenadmin-rocky-1.0.0-0.3.dev3.el9.src.rpm",
+      "digest": "sha256:9b3c383ccd505292f60b0e65a1d1cfbb30f23552a52fd8535bee548137d5eb80",
+      "size": 189850
+    },
+    {
+      "name": "xenadmin-rocky-1.0.0.dev3-documentation.tar.gz",
+      "digest": "sha256:a6fd0e826f13751bd4c2bf60693129bb9475831f0a4b3f5d3374fd32762c04e8",
+      "size": 41206
+    },
+    {
+      "name": "xenadmin-rocky-1.0.0.dev3-source.tar.gz",
+      "digest": "sha256:37157ae91c95de9574e58bc6f9a5e6a6acb8cf4035e2391a36112c9358215d2f",
+      "size": 211534
+    },
+    {
+      "name": "xenadmin-rocky-airgap-el10-x86_64-1.0.0.dev3.tar.gz",
+      "digest": "sha256:7187b5cbcf9d95d0e837d111eef7e1c07ee7dd77071f441ca7466de1853f31fb",
+      "size": 44941344
+    },
+    {
+      "name": "xenadmin-rocky-airgap-el9-x86_64-1.0.0.dev3.tar.gz",
+      "digest": "sha256:9ed9bec014784b299f061611d2e12a3f0acb6d57cc687f1a0bea1d8c69840a85",
+      "size": 42680943
+    },
+    {
+      "name": "xenadmin-rocky-source-delta-el10-1.0.0.dev3.tar.gz",
+      "digest": "sha256:591270c2cac6dcdad720dc115c13b9e4db9ae3a455e1681804a1e83fc47adafe",
+      "size": 2360493
+    },
+    {
+      "name": "xenadmin-rocky-source-delta-el9-1.0.0.dev3.tar.gz",
+      "digest": "sha256:ef691e28f6c881a21954bcc2530a04a3e9bf6c6a479111c091297d2ca9e7265d",
+      "size": 21103803
+    }
+  ]
+}
