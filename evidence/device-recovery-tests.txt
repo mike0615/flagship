@@ -74,6 +74,9 @@ test_result_write_failure_blocks_further_mutations_but_allows_reads (test_journa
 test_symlink_directory_is_rejected (test_journal.JournalTests) ... ok
 test_terminal_task_state_and_uuid_survive_new_journal_instance (test_journal.JournalTests) ... ok
 test_uuid_identity_is_recorded_without_full_object (test_journal.JournalTests) ... ok
+test_explicit_string_and_escaped_opaque_content (test_protocol.ProtocolTests) ... ok
+test_live_xcp_ng_26_task_result_implicit_string (test_protocol.ProtocolTests) ... ok
+test_non_string_task_results_are_not_coerced_into_references (test_protocol.ProtocolTests) ... ok
 test_headless_cli_help_imports_without_display (test_recovery.RecoveryTests) ... ok
 test_headless_history_reopens_saved_intent_and_does_not_replay (test_recovery.RecoveryTests) ... ok
 test_inspection_resolves_new_reference_by_uuid_and_only_uses_getters (test_recovery.RecoveryTests) ... ok
@@ -114,6 +117,6 @@ test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTest
 test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 114 tests in 2.786s
+Ran 117 tests in 3.154s
 
 OK

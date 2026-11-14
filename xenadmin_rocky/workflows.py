@@ -3,12 +3,11 @@ from dataclasses import dataclass
 import json
 import threading
 import time
-import xml.etree.ElementTree as ET
 from .api import APIError
+from .protocol import NULL, decode_reference_result as task_reference
 
 MiB = 1024**2
 GiB = 1024**3
-NULL = 'OpaqueRef:NULL'
 
 
 def stage_label(stage):
@@ -74,19 +73,6 @@ class VMPlan:
             if type(value) is not int or not low <= value <= high:
                 raise ValueError('{} must be between {} and {}'.format(label, low, high))
 
-
-def task_reference(result):
-    if not isinstance(result, str) or not result or result == NULL:
-        raise ValueError('Task did not return an object reference')
-    if result.lstrip().startswith('<'):
-        if len(result) > 65536 or '<!DOCTYPE' in result.upper() or '<!ENTITY' in result.upper():
-            raise ValueError('Invalid task result XML')
-        node = ET.fromstring(result)
-        strings = list(node.iter('string'))
-        if len(strings) != 1 or not strings[0].text or strings[0].text == NULL:
-            raise ValueError('Task did not return one object reference')
-        return strings[0].text
-    return result
 
 
 def configure_hardware(client, vm, cpus, memory_mib, checkpoint=lambda: None):
@@ -201,17 +187,17 @@ class Provisioner:
             if vm == plan.template or (template.get('uuid') and cloned.get('uuid') == template['uuid']):
                 raise ValueError('Server returned the source VM; refusing to change it')
             self.resources['VM'] = vm
-            if cloned.get('is_a_template'):
-                self.call('VM.set_is_a_template', vm, False)
-            self.stage = 'Configure CPU and memory'
-            self.announce()
-            configure_hardware(self.client, vm, plan.cpus, plan.memory_mib, self.checkpoint)
             config = dict(cloned.get('other_config', {}))
             config.pop('disks', None)  # Explicit storage below; avoid template's default SR.
             if plan.iso:
                 config['install-repository'] = 'cdrom'
             self.call('VM.set_other_config', vm, config)
+            # XAPI requires a template here and converts it into a VM on success.
+            # Clearing is_a_template before provision leaves a partial unusable clone.
             self.async_call('VM.provision', vm)
+            self.stage = 'Configure CPU and memory'
+            self.announce()
+            configure_hardware(self.client, vm, plan.cpus, plan.memory_mib, self.checkpoint)
             if not installed:
                 vdi = self.async_call('VDI.create', {
                     'name_label': plan.name.strip() + ' disk', 'name_description': '',

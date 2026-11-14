@@ -90,7 +90,7 @@ class JournalTests(unittest.TestCase):
     def test_terminal_task_state_and_uuid_survive_new_journal_instance(self):
         self.client.call('Async.VM.clone', 'template', 'name')
         self.client._rpc.return_value = {'uuid': 'stable-task-uuid', 'status': 'success',
-                                         'result': '<value><string>new-vm</string></value>'}
+                                         'result': '<value>new-vm</value>'}
         self.client.call('task.get_record', 'server-task')
         self.client.call('task.get_record', 'server-task')
         self.journal.close()

@@ -37,7 +37,7 @@ dev2-provenance.json compares all native modules with both RPM source archives;
 dev2-source-closure.json confirms exact corresponding source coverage. dev.2
 source archives combine the retained dev.1 baseline with changed/new SRPM deltas.
 
-`device-recovery-tests.txt` records 114 passing dev.3 checks, including stateful
+`device-recovery-tests.txt` records 117 passing dev.3 checks, including stateful
 simulated disk/DVD/NIC operations, refused unplug/delete paths, private durable
 journals, process-exit recovery, storage-write failures, UUID inspection over
 verified HTTPS, cancellation requests and GUI confirmations. No live pool success

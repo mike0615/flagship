@@ -1,10 +1,10 @@
 """TLS-verified XenAPI XML-RPC transport. No automatic mutation retries."""
 import ssl
 import threading
-import xml.etree.ElementTree as ET
 import xmlrpc.client
 from urllib.parse import urlsplit
 from .journal import JournalError, OBJECT_CLASSES
+from .protocol import decode_reference_result
 
 
 def wire_value(value):
@@ -159,14 +159,10 @@ class Client:
             op_id, method = self.task_origins[ref]
             object_ref = None
             if result.get('status') == 'success' and self.returns_reference(method):
-                text = result.get('result', '')
-                if isinstance(text, str) and len(text) <= 65536 and '<!DOCTYPE' not in text.upper() and '<!ENTITY' not in text.upper():
-                    try:
-                        nodes = list(ET.fromstring(text).iter('string'))
-                        if len(nodes) == 1:
-                            object_ref = nodes[0].text
-                    except ET.ParseError:
-                        pass
+                try:
+                    object_ref = decode_reference_result(result.get('result', ''))
+                except ValueError:
+                    pass
             try:
                 self.journal.task(op_id, ref, result, result_ref=object_ref)
                 if object_ref:

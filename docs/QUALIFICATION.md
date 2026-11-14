@@ -6,7 +6,7 @@ Development status. This record must be updated with evidence, not assumptions.
 |---|---|
 | Targeted Windows source architectural review | Completed; SOURCE_ANALYSIS.md |
 | Native implementation and feature-gap inventory | Initial implementation; FEATURE_MATRIX.md |
-| Unit/security regression tests | 114 passing local checks including device states, durable journal failures/restarts, UUID inspection, real TLS and GUI; dev.3 package checks pending |
+| Unit/security regression tests | 117 passing local checks including device states, durable journal failures/restarts, UUID inspection, real TLS and GUI; dev.3 package checks pending |
 | Rocky 9 RPM build | dev.1/dev.2 pass; dev.3 current build pending |
 | Rocky 10 RPM build | dev.1/dev.2 pass; dev.3 current build pending |
 | Rocky 9 clean disconnected desktop installation | Pending |
