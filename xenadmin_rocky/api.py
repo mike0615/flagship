@@ -62,9 +62,10 @@ class Client:
         self.created_refs = {}
         self.lock = threading.RLock()
         self.session = None
+        self.ssl_context = ssl.create_default_context(cafile=ca_file)
         self.proxy = xmlrpc.client.ServerProxy(
             self.endpoint + '/', allow_none=True,
-            transport=Transport(ssl.create_default_context(cafile=ca_file)))
+            transport=Transport(self.ssl_context))
 
     def _rpc(self, name, *args):
         with self.lock:

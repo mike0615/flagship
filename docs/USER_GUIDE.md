@@ -37,8 +37,8 @@ guest tools may be required. Force off can lose unsaved guest data.
 Snapshot and Clone ask for a name. Clone submits a clone operation only; this is
 not the complete new-VM provisioning wizard for a template. Revert snapshot can
 replace the VM's current disk state. Keep an independent backup before reverting.
-Migrate in pool asks for a host reference listed in the dialog; cross-pool migration
-is not supported. Rename changes the label. Delete VM record removes metadata;
+Migrate in pool opens a named-host chooser and asks you to confirm the destination.
+Cross-pool migration is not supported. Rename changes the label. Delete VM record removes metadata;
 it deliberately leaves disks, which may need separately reviewed storage cleanup.
 
 Expected result: submission returns and inventory refreshes. A returned task is

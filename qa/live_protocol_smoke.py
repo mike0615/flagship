@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--ca-file', required=True)
     parser.add_argument('--sr-uuid', required=True)
     parser.add_argument('--state-directory', required=True)
+    parser.add_argument('--console', action='store_true', help='Also test authenticated framebuffer and input on the dedicated firmware VM')
     parser.add_argument('--execute', action='store_true', help='Explicitly create isolated, clearly named QA resources')
     args = parser.parse_args()
     if not args.execute:
@@ -136,6 +137,27 @@ def main():
             own_vm(vm)
             workflow.async_call('VM.'+operation, vm, *parameters)
             check('live VM '+operation+' -> '+expected, own_vm(vm)['power_state']==expected)
+            if operation == 'start' and args.console:
+                stage = 'verified console tunnel and framebuffer'
+                from xenadmin_rocky.console import open_console
+                from xenadmin_rocky.rfb import RFB
+                tunnel = open_console(client, vm)
+                try:
+                    console = RFB(tunnel)
+                    width, height = console.handshake()
+                    check('live authenticated RFB handshake', width > 0 and height > 0)
+                    seen = False
+                    deadline = time.monotonic() + 30
+                    while not seen and time.monotonic() < deadline:
+                        seen = any(event[0] == 'pixels' for event in console.events())
+                    check('live framebuffer pixels received', seen)
+                    console.key(0xff0d, True)
+                    console.key(0xff0d, False)
+                    console.pointer(0, 0, 0)
+                    check('live firmware input events transmitted', True)
+                finally:
+                    tunnel.close()
+                stage = 'native VM power-state transitions'
         after = client.call('VM.get_record', template)
         check('builtin source template UUID/name unchanged', before['uuid']==after['uuid'] and before['name_label']==after['name_label'])
         state['status'] = 'passed'

@@ -1,0 +1,76 @@
+#version=RHEL9
+# Disposable isolated QA guest only. Never use on an existing machine.
+text
+cdrom
+lang en_US.UTF-8
+keyboard us
+timezone America/New_York --utc
+rootpw --lock
+user --name=qa --groups=wheel --iscrypted --password=@QA_PASSWORD_HASH@
+network --hostname=xenadmin-qa
+firewall --enabled
+selinux --enforcing
+firstboot --disable
+ignoredisk --only-use=xvda
+zerombr
+clearpart --all --initlabel --drives=xvda
+autopart --type=lvm --nohome
+bootloader --location=mbr --boot-drive=xvda
+services --enabled=gdm
+reboot --eject
+
+%packages
+@^workstation-product-environment
+python3-tkinter
+gnome-terminal
+%end
+
+%post --erroronfail --log=/root/xenadmin-qa-post.log
+set -eu
+mkdir -p /mnt/qa-seed /opt/xenadmin-qa /etc/sudoers.d
+mount -o ro /dev/disk/by-label/OEMDRV /mnt/qa-seed
+cp -a /mnt/qa-seed/airgap /opt/xenadmin-qa/
+cd /opt/xenadmin-qa/airgap
+bash install-offline.sh > /var/log/xenadmin-qa-install.log 2>&1
+printf 'qa ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/xenadmin-qa
+chmod 440 /etc/sudoers.d/xenadmin-qa
+cat > /etc/gdm/custom.conf <<'GDM'
+[daemon]
+AutomaticLoginEnable=True
+AutomaticLogin=qa
+WaylandEnable=false
+GDM
+mkdir -p /home/qa/.config/autostart
+cat > /home/qa/.config/autostart/xenadmin-qa.desktop <<'DESKTOP'
+[Desktop Entry]
+Type=Application
+Name=XenAdmin qualification
+Exec=gnome-terminal -- /usr/local/bin/xenadmin-qa-check
+DESKTOP
+cat > /usr/local/bin/xenadmin-qa-check <<'CHECK'
+#!/bin/bash
+set -Eeuo pipefail
+trap 'echo "FAIL: desktop qualification command failed"; exec bash -i' ERR
+mkdir -p "$HOME/qa-evidence"
+exec > >(tee -a "$HOME/qa-evidence/desktop-check.log") 2>&1
+date -u
+cat /etc/rocky-release
+printf 'Boot ID: '; cat /proc/sys/kernel/random/boot_id
+printf 'SELinux: '; getenforce
+nmcli device status
+xenadmin-rocky --version
+rpm -q xenadmin-rocky python3-tkinter
+test -s /usr/share/xenadmin-rocky/docs/RECOVERY.md && echo 'PASS: installed offline help'
+xenadmin-rocky-recovery --help >/dev/null && echo 'PASS: installed recovery command'
+gsettings set org.gnome.desktop.session idle-delay 0
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+xenadmin-rocky &
+printf '\nDesktop qualification session ready. Installer log:\n'
+sudo tail -n 8 /var/log/xenadmin-qa-install.log
+exec bash -i
+CHECK
+chmod 755 /usr/local/bin/xenadmin-qa-check
+chown -R qa:qa /home/qa/.config
+restorecon -RF /home/qa/.config /usr/local/bin/xenadmin-qa-check /etc/gdm
+systemctl set-default graphical.target
+%end

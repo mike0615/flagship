@@ -19,10 +19,12 @@ approved media procedure. Authenticate the source/release and compare SHA-256
 against a separately trusted manifest. Checksums shipped beside files detect
 corruption, not a malicious replacement of both files and manifest.
 
-Extract in a staging directory, review PACKAGES.tsv and run:
+Use the exact archive filename for the release you transferred. This example
+uses the current dev.4 build. Extract in a staging directory, review PACKAGES.tsv
+and run:
 
 ```sh
-tar -xzf xenadmin-rocky-airgap-el9-x86_64-1.0.0.dev3.tar.gz
+tar -xzf xenadmin-rocky-airgap-el9-x86_64-1.0.0.dev4.tar.gz
 cd airgap
 sha256sum -c SHA256SUMS
 sudo ./install-offline.sh

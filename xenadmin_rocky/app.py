@@ -28,6 +28,7 @@ class Application:
         self.root = root
         self.journal = journal or OperationJournal()
         self.device_panels = []
+        self.consoles = []
         self.workflow_label = 'Workflow'
         self.client = None
         self.records = {}
@@ -42,7 +43,9 @@ class Application:
         self.workflow_stop = None
         self.last_workflow_report = None
         root.title('XenAdmin Rocky — ' + __version__)
-        root.geometry('1200x760')
+        width = min(1200, max(640, root.winfo_screenwidth()-40))
+        height = min(760, max(480, root.winfo_screenheight()-100))
+        root.geometry(f'{width}x{height}')
         menu = tk.Menu(root)
         tools = tk.Menu(menu, tearoff=False)
         tools.add_command(label='Stop workflow monitoring', command=self.stop_workflow)
@@ -53,14 +56,22 @@ class Application:
         root.configure(menu=menu)
         toolbar = ttk.Frame(root, padding=6)
         toolbar.pack(fill='x')
+        self.buttonbar = ttk.Frame(toolbar)
+        self.buttonbar.pack(fill='x')
+        self.toolbar_buttons = []
+        self.toolbar_columns = None
         for label, command in [('Connect', self.connect), ('Disconnect', self.disconnect),
                                ('Refresh', self.refresh), ('New VM', self.new_vm),
-                               ('CPU / memory', self.hardware), ('Devices', self.manage_devices), ('Export inventory', self.export),
+                               ('CPU / memory', self.hardware), ('Devices', self.manage_devices), ('Console', self.open_console), ('Export inventory', self.export),
                                ('Help', self.help)]:
-            ttk.Button(toolbar, text=label, command=command).pack(side='left', padx=3)
+            self.toolbar_buttons.append(ttk.Button(self.buttonbar, text=label, command=command))
+        self.buttonbar.bind('<Configure>', lambda event: self.layout_toolbar(event.width))
+        self.layout_toolbar(width-12)
+        filterbar = ttk.Frame(toolbar)
+        filterbar.pack(fill='x', pady=(4, 0))
         self.search = tk.StringVar()
-        ttk.Entry(toolbar, textvariable=self.search).pack(side='right')
-        ttk.Label(toolbar, text='Filter inventory:').pack(side='right')
+        ttk.Label(filterbar, text='Filter inventory:').pack(side='left')
+        ttk.Entry(filterbar, textvariable=self.search).pack(side='left', fill='x', expand=True)
         self.search.trace_add('write', lambda *_: self.populate())
         split = ttk.Panedwindow(root, orient='horizontal')
         split.pack(fill='both', expand=True)
@@ -84,7 +95,7 @@ class Application:
             self.tabs.add(frame, text=title)
             self.views[title] = view
         actions = ttk.Frame(right, padding=6)
-        actions.pack(fill='x')
+        actions.pack(side='bottom', fill='x', before=self.tabs)
         for index, (label, action) in enumerate([
                 ('Start', 'start'), ('Shut down', 'clean_shutdown'),
                 ('Reboot', 'clean_reboot'), ('Pause', 'pause'), ('Unpause', 'unpause'),
@@ -95,11 +106,31 @@ class Application:
             ttk.Button(actions, text=label, command=lambda a=action: self.action(a)).grid(
                 row=index // 5, column=index % 5, sticky='ew', padx=2, pady=2)
         self.status = tk.StringVar(value='Disconnected. Connect to a pool coordinator using HTTPS.')
-        ttk.Label(root, textvariable=self.status, padding=6).pack(fill='x')
+        ttk.Label(root, textvariable=self.status, padding=6).pack(side='bottom', fill='x', before=split)
         self.tree.bind('<<TreeviewSelect>>', lambda *_: self.show())
         root.protocol('WM_DELETE_WINDOW', self.close)
+        root.bind('<Destroy>', self.cancel_timers, add='+')
         root.after(100, self.poll)
         root.after(3000, self.poll_tasks)
+        root.update_idletasks()
+
+    def cancel_timers(self, event):
+        if event.widget is not self.root: return
+        # Destroying a Tk window removes callback commands but leaves timers in
+        # the interpreter's queue unless cancelled (also affects embedded use).
+        for timer in self.root.tk.call('after', 'info'):
+            try: self.root.after_cancel(timer)
+            except tk.TclError: pass
+
+    def layout_toolbar(self, width):
+        requested = max(button.winfo_reqwidth()+6 for button in self.toolbar_buttons)
+        columns = max(1, min(len(self.toolbar_buttons), width//requested))
+        if columns == self.toolbar_columns: return
+        self.toolbar_columns = columns
+        for index in range(len(self.toolbar_buttons)):
+            self.buttonbar.columnconfigure(index, weight=1 if index < columns else 0)
+        for index, button in enumerate(self.toolbar_buttons):
+            button.grid(row=index//columns, column=index%columns, padx=3, pady=2, sticky='ew')
 
     def submit(self, work, done, label, mutation=False, completion='completed'):
         if self.busy or self.closing:
@@ -224,6 +255,8 @@ class Application:
         if not self.client:
             return
         client = self.client
+        for console in self.consoles: console.close()
+        self.consoles = []
         def work():
             try:
                 client.logout()
@@ -433,6 +466,20 @@ class Application:
         self.journal.workflow(report)
         self.workflow_updates.put(report)
 
+    def open_console(self):
+        if self.busy or not self.client: return
+        selected = self.selected()
+        if not selected or selected[0] != 'VM':
+            messagebox.showinfo('Select VM', 'Select a running VM to open its console.')
+            return
+        from .console_window import ConsoleWindow
+        self.consoles = [c for c in self.consoles if c.window.winfo_exists()]
+        for console in self.consoles:
+            if console.vm == selected[1] and console.client is self.client:
+                console.window.lift()
+                return
+        self.consoles.append(ConsoleWindow(self, selected[1]))
+
     def manage_devices(self):
         if self.busy or not self.client:
             return
@@ -548,6 +595,8 @@ class Application:
             messagebox.showinfo('Operation in progress', 'Wait for the current operation before closing.')
             return
         self.closing = True
+        for console in self.consoles: console.close()
+        self.consoles = []
         if self.client:
             client = self.client
             self.client = None
