@@ -6,9 +6,9 @@ Development status. This record must be updated with evidence, not assumptions.
 |---|---|
 | Targeted Windows source architectural review | Completed; SOURCE_ANALYSIS.md |
 | Native implementation and feature-gap inventory | Initial implementation; FEATURE_MATRIX.md |
-| Unit/security regression tests | Pending evidence |
-| Rocky 9 RPM build | Pending |
-| Rocky 10 RPM build | Pending |
+| Unit/security regression tests | 20 passing local tests, including real TLS/XML-RPC and Tk behavior |
+| Rocky 9 RPM build | Built initial candidate; final help packaging fix pending rebuild |
+| Rocky 10 RPM build | Built initial candidate; final help packaging fix pending rebuild |
 | Rocky 9 clean disconnected desktop installation | Pending |
 | Rocky 10 clean disconnected desktop installation | Pending |
 | Reboot and desktop launcher/help | Pending |

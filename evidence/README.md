@@ -7,3 +7,10 @@ Xvfb on the builder; does not prove interactive behavior or real pool management
 Live test host read-only SSH probe on November 14, 2026 returned
 `Permission denied (publickey,password)`. No host changes were made. Approved
 access is needed for live qualification; packaging work can continue independently.
+
+Initial Rocky 10 disconnected install using a forced transaction of every bundled
+RPM failed on reverse dependencies of installed base packages. This is retained
+in offline-container-el10-initial-failure.txt. A local DNF repository fixed that
+resolution issue on both majors. The next checks exposed missing help when the
+container's default tsflags=nodocs suppressed RPM %doc files. Help is now installed
+as application data as well; rebuild and rerun are required before qualification.

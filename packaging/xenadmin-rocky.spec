@@ -25,6 +25,8 @@ This development build is not qualified for production use.
 %install
 mkdir -p %{buildroot}%{_datadir}/%{name}/xenadmin_rocky
 cp xenadmin_rocky/*.py %{buildroot}%{_datadir}/%{name}/xenadmin_rocky/
+mkdir -p %{buildroot}%{_datadir}/%{name}/docs
+cp docs/*.md %{buildroot}%{_datadir}/%{name}/docs/
 mkdir -p %{buildroot}%{_bindir} %{buildroot}%{_datadir}/applications
 install -m 0755 packaging/xenadmin-rocky %{buildroot}%{_bindir}/xenadmin-rocky
 install -m 0644 packaging/xenadmin-rocky.desktop %{buildroot}%{_datadir}/applications/
