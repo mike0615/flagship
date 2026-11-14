@@ -28,6 +28,7 @@ class Application:
         self.root = root
         self.journal = journal or OperationJournal()
         self.device_panels = []
+        self.consoles = []
         self.workflow_label = 'Workflow'
         self.client = None
         self.records = {}
@@ -55,7 +56,7 @@ class Application:
         toolbar.pack(fill='x')
         for label, command in [('Connect', self.connect), ('Disconnect', self.disconnect),
                                ('Refresh', self.refresh), ('New VM', self.new_vm),
-                               ('CPU / memory', self.hardware), ('Devices', self.manage_devices), ('Export inventory', self.export),
+                               ('CPU / memory', self.hardware), ('Devices', self.manage_devices), ('Console', self.open_console), ('Export inventory', self.export),
                                ('Help', self.help)]:
             ttk.Button(toolbar, text=label, command=command).pack(side='left', padx=3)
         self.search = tk.StringVar()
@@ -224,6 +225,8 @@ class Application:
         if not self.client:
             return
         client = self.client
+        for console in self.consoles: console.close()
+        self.consoles = []
         def work():
             try:
                 client.logout()
@@ -433,6 +436,20 @@ class Application:
         self.journal.workflow(report)
         self.workflow_updates.put(report)
 
+    def open_console(self):
+        if self.busy or not self.client: return
+        selected = self.selected()
+        if not selected or selected[0] != 'VM':
+            messagebox.showinfo('Select VM', 'Select a running VM to open its console.')
+            return
+        from .console_window import ConsoleWindow
+        self.consoles = [c for c in self.consoles if c.window.winfo_exists()]
+        for console in self.consoles:
+            if console.vm == selected[1] and console.client is self.client:
+                console.window.lift()
+                return
+        self.consoles.append(ConsoleWindow(self, selected[1]))
+
     def manage_devices(self):
         if self.busy or not self.client:
             return
@@ -548,6 +565,8 @@ class Application:
             messagebox.showinfo('Operation in progress', 'Wait for the current operation before closing.')
             return
         self.closing = True
+        for console in self.consoles: console.close()
+        self.consoles = []
         if self.client:
             client = self.client
             self.client = None

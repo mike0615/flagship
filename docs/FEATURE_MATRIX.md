@@ -22,7 +22,7 @@ See QUALIFICATION.md for the evidence boundary.
 | Disk, ISO, VIF editing | Add/attach/grow/rename/detach/delete disks, DVD/ISO lifecycle, NIC add/move/connect/remove | Live cold disk/DVD/NIC checks passed; guest hotplug, advanced QoS/slots/MAC edits, specialized devices and storage migration |
 | SR/network creation | Not implemented | Validated creation wizards |
 | XVA/OVF import and export | Not implemented | Streaming transfer and task/error handling |
-| Embedded VNC/RDP console | Not implemented | Authenticated console tunnel and viewer |
+| Embedded VNC/RDP console | Development-source TLS console viewer, raw/CopyRect/resize and opt-in input; not in dev.3 RPMs | Live firmware handshake/pixels/input transmission passed; interactive guest input, installer, RDP and advanced viewer features remain |
 | Performance graphs | Not implemented | RRD collection and graph UI |
 | Host updates, HA, DR, WLB | Not implemented | Dedicated workflows and entitlement tests |
 | Cross-pool migration | Not implemented | Transfer networks and credential boundaries |

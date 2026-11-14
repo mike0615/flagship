@@ -1,0 +1,39 @@
+# VM console (development source)
+
+Console support is on the development branch and is not included in dev.3 RPMs.
+Select a running VM, then Console. A separate scrollable window opens in view-only
+mode. Enable keyboard and mouse to send input; click inside the guest display.
+Disable control or move focus away to release tracked keys and pointer buttons.
+Send Ctrl+Alt+Delete is available only while control is enabled. Close console
+leaves the guest running. Disconnecting the pool closes its console windows.
+There is no automatic reconnect: inspect the error, close and reopen the console.
+
+The native viewer uses the API session through HTTPS CONNECT to the selected VM's
+resident host. Certificate-chain and hostname verification remain mandatory.
+Trust the appropriate CA for every pool host; no plaintext or redirect fallback
+exists. Member hosts must be reachable directly from the desktop. The session is
+sent as an HTTP cookie, never placed in a URL or saved. Console input and pixels
+are not journaled. Clipboard synchronization is disabled.
+
+The current viewer supports RFB 3.3/3.8 with raw pixels, CopyRect and desktop resize
+up to 4096 by 4096. It requests shared access rather than evicting other operators.
+Compressed encodings, guest RDP, fullscreen/scaling, clipboard transfer and QEMU
+extended scancodes remain future work. Raw updates may use substantial bandwidth.
+A halted VM has no active graphical console: start it first. A pool permission
+failure or a separate VNC authentication requirement stops the connection.
+
+## Evidence and limits
+
+135 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
+resize, input opt-in, modifier/button release, old-client isolation, TLS failure,
+HTTP refusal, destination/ownership checks and bounded malformed protocol data.
+A dedicated firmware-only VM on XCP-ng 8.3/XAPI 26.1.11 passed authenticated RFB
+handshake, actual framebuffer receipt and input transmission. That test did not
+prove guest response to input, interactive installer operation or a booted Rocky
+desktop. The live harness is `qa/live_protocol_smoke.py --console`; it requires
+explicit creation authorization and a fresh private state directory. Cleanup uses
+the separately reviewed, UUID-scoped `qa/cleanup_protocol.py` harness.
+
+Protocol references: [XAPI consoles](https://xapi-project.github.io/xen-api/consoles.html)
+and [RFB specification](https://www.rfc-editor.org/rfc/rfc6143). Windows behavior was
+compared with XenAdmin ConsoleView/XSVNCScreen.cs and XenModel/Network/HTTPHelper.cs.
