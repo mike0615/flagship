@@ -4,13 +4,16 @@ Native Linux desktop management client inspired by XCP-ng Center 25.04.
 Targets Rocky Linux 9 and 10 desktops. Public project maintained by Mike Anderson;
 not an official XCP-ng or XenServer product.
 
-**Status: development tree 1.0.0.dev2; dev.1 is the published candidate. No qualified v1.0 release yet.**
+**Status: development candidate 1.0.0.dev2. No qualified v1.0 release yet.**
 A successful RPM build is not proof of working pool management or an offline install.
-Candidate downloads are published under GitHub Releases; use the matching Rocky major.
+Get the [dev.2 candidate downloads](https://github.com/mike0615/xenadmin-rocky/releases/tag/v1.0.0-dev.2); use the matching Rocky major.
 See [qualification status](docs/QUALIFICATION.md) and [feature matrix](docs/FEATURE_MATRIX.md).
 
 The interface uses a resource tree, inventory tabs and VM action buttons. Python/Tk
 and the standard library replace WinForms, .NET Framework, COM and Windows installers.
+The creation wizard supports installer templates and installed-template disk copies,
+selected storage/network/ISO, confirmed task outcomes and recovery reports. A
+halted-VM editor provides vCPU and fixed-memory settings.
 TLS certificate and hostname verification are mandatory; passwords are not saved.
 
 ## Run from source
