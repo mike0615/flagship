@@ -15,6 +15,7 @@ test_refuses_foreign_console_and_stopped_vm (test_console.ConsoleTests) ... ok
 test_rejects_credential_forwarding_targets (test_console.ConsoleTests) ... ok
 test_tls_failure_sends_no_session (test_console.ConsoleTests) ... ok
 test_tunnel_preserves_buffered_frame_and_cookie_not_url (test_console.ConsoleTests) ... ok
+test_cad_preserves_a_modifier_already_held_by_operator (test_console_window.ConsoleWindowTests) ... ok
 test_default_view_only_and_explicit_control_events (test_console_window.ConsoleWindowTests) ... ok
 test_error_is_visible_and_disables_control (test_console_window.ConsoleWindowTests) ... ok
 test_focus_release_clears_buttons_and_modifiers (test_console_window.ConsoleWindowTests) ... ok
@@ -136,6 +137,6 @@ test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTest
 test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 136 tests in 2.901s
+Ran 137 tests in 2.946s
 
 OK

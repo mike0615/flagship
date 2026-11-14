@@ -147,8 +147,9 @@ class ConsoleWindow:
 
     def cad(self):
         if not self.active(): return
-        for keysym in (0xffe3, 0xffe9, 0xffff): self.enqueue('key', keysym, True)
-        for keysym in (0xffff, 0xffe9, 0xffe3): self.enqueue('key', keysym, False)
+        additions = [key for key in (0xffe3, 0xffe9, 0xffff) if key not in self.pressed]
+        for keysym in additions: self.enqueue('key', keysym, True)
+        for keysym in reversed(additions): self.enqueue('key', keysym, False)
 
     def draw(self, event):
         kind, *args = event

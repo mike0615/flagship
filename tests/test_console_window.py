@@ -75,6 +75,16 @@ class ConsoleWindowTests(unittest.TestCase):
         self.assertFalse(view.window.winfo_exists())
         self.assertFalse(view.pressed)
 
+    def test_cad_preserves_a_modifier_already_held_by_operator(self):
+        view = self.viewer
+        view.control.set(True)
+        view.pressed = {0xffe3}
+        view.cad()
+        events = [view.inputs.get_nowait() for _ in range(view.inputs.qsize())]
+        self.assertEqual(events, [('key', (0xffe9, True)), ('key', (0xffff, True)),
+                                  ('key', (0xffff, False)), ('key', (0xffe9, False))])
+        self.assertEqual(view.pressed, {0xffe3})
+
     def test_error_is_visible_and_disables_control(self):
         self.viewer.control.set(True)
         self.viewer.draw(('error', 'ConsoleError'))

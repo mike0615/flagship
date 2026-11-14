@@ -17,6 +17,8 @@ def main():
     for name in ('endpoint', 'username', 'ca-file', 'state-file', 'output'):
         p.add_argument('--'+name, required=True)
     p.add_argument('--key', type=lambda value: int(value, 0), action='append', default=[])
+    p.add_argument('--chord', action='append', default=[], help='Comma-separated X11 keysyms held together, then released')
+    p.add_argument('--text', default='', help='Nonsecret QA shell text only; arguments are visible to local process listings')
     args = p.parse_args()
     state = json.loads(Path(args.state_file).read_text())
     if state['endpoint'] != args.endpoint or not state['prefix'].startswith('xenadmin-qa-'):
@@ -37,6 +39,16 @@ def main():
         width, height = rfb.handshake()
         pixels = bytearray(width*height*3)
         received = False
+        for chord in args.chord:
+            keys = [int(value, 0) for value in chord.split(',')]
+            for key in keys: rfb.key(key, True)
+            for key in reversed(keys): rfb.key(key, False)
+            time.sleep(.3)  # Allow a guest VT switch before sending shell text.
+        for char in args.text:
+            code = ord(char)
+            key = 0xff0d if char == '\n' else code if code < 256 else 0x01000000 | code
+            rfb.key(key, True); rfb.key(key, False)
+            time.sleep(.02)
         for key in args.key:
             rfb.key(key, True); rfb.key(key, False)
         tunnel.connection.settimeout(5)

@@ -41,8 +41,10 @@ The current template/builder is validated for RHEL9 Kickstart syntax, not RHEL10
 Transfer the seed with authenticated SSH to a dedicated ISO SR, compare SHA-256
 before and after transfer, scan that SR, and attach it as a secondary DVD while
 the QA VM is halted. The Rocky DVD must have an earlier device position than the
-seed: this firmware boots only its first CD drive. Keep the seed after the
-original DVD (for example original slot 3, seed slot 4). XAPI HVM boot order `cd`
+seed: this firmware boots only its first CD drive. Keep both CD drives inside
+the emulated IDE range: original DVD slot 1 and seed slot 3, with disk slot 0.
+Slot 4 was accepted by XAPI but was invisible to this installer guest. Do not
+interpret server-side attachment metadata as proof of guest device visibility. XAPI HVM boot order `cd`
 means hard disk then CD; `dc` means CD then hard disk. An empty disk falls through
 to the Rocky DVD; after installation, it boots from its installed disk.
 

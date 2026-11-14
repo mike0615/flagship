@@ -24,13 +24,14 @@ failure or a separate VNC authentication requirement stops the connection.
 
 ## Evidence and limits
 
-136 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
+137 local checks pass, including framebuffer pixel colours, overlapping CopyRect,
 resize, input opt-in, modifier/button release, old-client isolation, TLS failure,
 HTTP refusal, destination/ownership checks and bounded malformed protocol data.
 A dedicated firmware-only VM on XCP-ng 8.3/XAPI 26.1.11 passed authenticated RFB
-handshake, actual framebuffer receipt and input transmission. That test did not
-prove guest response to input, interactive installer operation or a booted Rocky
-desktop. The live harness is `qa/live_protocol_smoke.py --console`; it requires
+handshake, actual framebuffer receipt and input transmission. That firmware test did not prove guest response to input or a booted Rocky
+desktop. A later dedicated Rocky 9.6 installer guest accepted a VT switch and
+shell commands through the native RFB path; its replies were captured privately.
+An installed desktop and complete interactive operator journey remain pending. The live harness is `qa/live_protocol_smoke.py --console`; it requires
 explicit creation authorization and a fresh private state directory. Cleanup uses
 the separately reviewed, UUID-scoped `qa/cleanup_protocol.py` harness.
 
