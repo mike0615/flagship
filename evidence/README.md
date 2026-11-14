@@ -40,7 +40,10 @@ source archives combine the retained dev.1 baseline with changed/new SRPM deltas
 `device-recovery-tests.txt` records 117 passing dev.3 checks, including stateful
 simulated disk/DVD/NIC operations, refused unplug/delete paths, private durable
 journals, process-exit recovery, storage-write failures, UUID inspection over
-verified HTTPS, cancellation requests and GUI confirmations. No live pool success
-is claimed. The dev.3 installed fixture also checks the standalone recovery launcher
+verified HTTPS, cancellation requests and GUI confirmations. Live XCP-ng results and explicit limits are in `LIVE_PROTOCOL.md`. The dev.3 installed fixture also checks the standalone recovery launcher
 without inherited PYTHONPATH or DISPLAY so source-tree imports cannot mask packaging
 errors. Booted/independent operator qualification remains open.
+
+`dev3-offline-el9.txt` / `dev3-offline-el10.txt` record disconnected installations;
+`dev3-installed-gui-el9.txt` / `dev3-installed-gui-el10.txt` record the installed
+GUI, help, durable history and independent headless launcher smoke on both majors.
