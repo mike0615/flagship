@@ -61,3 +61,37 @@ Disconnect requests session logout. Wait for the current network operation befor
 closing. Logout does not cancel running server tasks. If the host is unreachable,
 its session may remain until the server expires it. No credentials are remembered
 for the next launch. See OPERATIONS.md for recovery and INSTALL.md for removal.
+
+## Create a virtual machine (development tree after dev.1)
+
+Choose New VM. Select a halted template, name, vCPU count, memory in MiB, writable
+storage repository, network, and optional ISO. The disk size applies to installer
+templates without allocated data disks. Installed-template disks are copied to the
+selected SR with their contents and existing sizes; the disk-size entry does not
+resize them. The new VM receives one NIC on the selected network. Additional
+NICs and disk/device editing are separate work still under development.
+
+Review the summary before choosing Create. No server changes occur during form
+entry or review. Start after creation is optional and defaults off. The workflow
+waits for each asynchronous task to succeed before continuing. For offline guest
+installation, select an ISO already available on the pool's ISO repository.
+The client does not download operating system installation media.
+
+If monitoring must stop, choose Tools → Stop workflow monitoring. This stops further
+client workflow steps; an already submitted server task may continue. The client
+does not guess whether a timed-out mutation succeeded and never replays it.
+On failure, retain the recovery information and use Tools → Save workflow report.
+It contains created resource/task references and must be treated as infrastructure
+metadata. Inspect those objects through trusted pool administration before retrying
+or deleting anything. No automatic cleanup is attempted after an uncertain result.
+
+## Edit CPU and memory (development tree after dev.1)
+
+Select a halted, ordinary VM and choose CPU / memory. Enter the vCPU count and
+fixed memory size in MiB, then confirm. Maximum/startup vCPUs are set to the same
+count; dynamic minimum/maximum memory are set to the fixed size while preserving
+the server's static minimum. Running VMs, snapshots and templates are rejected.
+The server remains responsible for capacity, permissions and license restrictions.
+A failed sequence may have applied earlier settings: save the workflow report,
+refresh and inspect the VM before deciding how to recover. Dynamic memory ranges
+and live CPU changes are not yet exposed by this editor.

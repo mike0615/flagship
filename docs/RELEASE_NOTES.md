@@ -1,10 +1,17 @@
 # Release notes
 
-## Unreleased after dev.1
+## 1.0.0.dev2 — development candidate, November 14, 2026
 
 Submitted task tracking now distinguishes server-confirmed outcomes from submission.
 Monitoring pauses on connection/session errors; mutations are never replayed.
-29 local API/TLS/task/desktop checks pass. These changes are not included in the dev.1 RPMs.
+51 local API/TLS/task/provisioning/desktop checks pass. New VM review/provisioning,
+selected SR/network/ISO, installed-template disk copy, recovery reports and halted
+VM CPU/fixed-memory configuration are implemented. XAPI integers are encoded as
+decimal strings and references are opaque. Outputs are isolated by app version.
+These changes are not included in the published dev.1 RPMs. Both dev.2 RPMs
+passed disconnected container installation, installed New VM review and offline
+help checks. GitHub CI tests and both Rocky builds passed. Live hypervisor and
+booted desktop qualification remain open.
 
 
 ## 1.0.0.dev1 — development candidate, November 14, 2026

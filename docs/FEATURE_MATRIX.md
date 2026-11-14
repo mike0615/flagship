@@ -17,8 +17,8 @@ See QUALIFICATION.md for the evidence boundary.
 | Delete VM record | Confirmed async submission, disks retained | Disk lifecycle cleanup wizard |
 | Tasks and alerts | Submitted-task progress/outcomes; pool inventory display | Live qualification, persistent history, cancel and alert actions |
 | Inventory export | Local JSON, selected credential fields redacted | Review metadata before sharing |
-| New VM wizard | Not implemented | Template, SR, disks, network, provisioning |
-| CPU/memory editing | Not exposed | Validated resource editor |
+| New VM wizard | Template clone/copy, selected SR, disk, one NIC, optional ISO/start | Live provisioning, additional NICs/disks and advanced installation options |
+| CPU/memory editing | Halted VM vCPU and fixed-memory editor | Live qualification, dynamic memory and live CPU controls |
 | Disk, ISO, VIF editing | Not implemented | Full device lifecycle |
 | SR/network creation | Not implemented | Validated creation wizards |
 | XVA/OVF import and export | Not implemented | Streaming transfer and task/error handling |

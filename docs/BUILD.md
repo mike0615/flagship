@@ -13,7 +13,7 @@ candidate. Current scripts target x86_64 builders and bundles.
 ./scripts/build-airgap.sh 10
 ```
 
-Build outputs, SRPMs, checksums and dependency bundles go under dist/el9 and dist/el10.
+Build outputs, SRPMs, checksums and dependency bundles go under dist/<application-version>/el9 and dist/<application-version>/el10.
 They are excluded from Git. Each bundle contains local RPMs, license metadata,
 offline installer, help files, build OS identity and file checksums. Build on the
 same Rocky major as the target; never mix dependency sets across majors.
@@ -38,3 +38,14 @@ network-disabled container installation checks. Collect corresponding dependency
 SRPMs using `./scripts/collect-dependency-sources.sh 9` and the equivalent for 10.
 Source archives can be large (the Rocky 10 Noto font SRPM alone is about 1 GB);
 retain them with the binary bundles for offline source access.
+
+Build output is isolated by application version (currently 1.0.0.dev2) so a new
+candidate does not overwrite published dev.1 artifacts. CI uploads the complete
+versioned dist tree for its Rocky matrix job.
+
+For incremental development source distribution, `collect-source-delta.sh 9
+/path/to/authenticated/baseline-sources` collects only source RPMs absent from that
+baseline and verifies exact filename coverage. Its SOURCE-COVERAGE.tsv identifies
+baseline versus delta sources with SHA-256 values. Retain the authenticated baseline
+archive alongside the delta; the delta alone is not a complete source set. Use the
+full collector for a self-contained consolidated source archive.

@@ -4,7 +4,7 @@ set -euo pipefail
 root=$(cd -- "$(dirname -- "$0")/.." && pwd)
 major=${1:?Usage: collect-dependency-sources.sh 9|10}
 case "$major" in 9|10) ;; *) exit 2;; esac
-out="$root/dist/el$major"
+source "$root/scripts/common.sh"
 mkdir -p "$out/dependency-sources"
 rpm -qp --qf '%{NAME}\t%{SOURCERPM}\n' "$out"/airgap/rpms/*.rpm > "$out/dependency-sources/BINARY_TO_SOURCE.tsv"
 test -s "$out/dependency-sources/BINARY_TO_SOURCE.tsv"
@@ -18,4 +18,4 @@ podman run --rm -v "$out/dependency-sources:/sources:Z" \
     '
 cp "$out"/*.src.rpm "$out/dependency-sources/"
 (cd "$out/dependency-sources" && sha256sum ./*.rpm BINARY_TO_SOURCE.tsv > SHA256SUMS)
-tar -czf "$out/xenadmin-rocky-dependency-sources-el$major-dev1.tar.gz" -C "$out" dependency-sources
+tar -czf "$out/xenadmin-rocky-dependency-sources-el$major-$app_version.tar.gz" -C "$out" dependency-sources

@@ -4,11 +4,14 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 from pathlib import Path
 import queue
+import threading
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog, filedialog
 from . import __version__
 from .api import Client, APIError
 from .tasks import TaskTracker
+from .workflows import Provisioner, WorkflowError, configure_hardware, MiB, stage_label
+from .wizard import NewVMDialog
 
 
 def safe_record(value):
@@ -32,14 +35,24 @@ class Application:
         self.items = {}
         self.jobs = ThreadPoolExecutor(max_workers=1)
         self.results = queue.Queue()
+        self.workflow_updates = queue.Queue()
         self.busy = False
         self.closing = False
+        self.workflow_stop = None
+        self.last_workflow_report = None
         root.title('XenAdmin Rocky — ' + __version__)
         root.geometry('1200x760')
+        menu = tk.Menu(root)
+        tools = tk.Menu(menu, tearoff=False)
+        tools.add_command(label='Stop workflow monitoring', command=self.stop_workflow)
+        tools.add_command(label='Save workflow report', command=self.save_workflow_report)
+        menu.add_cascade(label='Tools', menu=tools)
+        root.configure(menu=menu)
         toolbar = ttk.Frame(root, padding=6)
         toolbar.pack(fill='x')
         for label, command in [('Connect', self.connect), ('Disconnect', self.disconnect),
-                               ('Refresh', self.refresh), ('Export inventory', self.export),
+                               ('Refresh', self.refresh), ('New VM', self.new_vm),
+                               ('CPU / memory', self.hardware), ('Export inventory', self.export),
                                ('Help', self.help)]:
             ttk.Button(toolbar, text=label, command=command).pack(side='left', padx=3)
         self.search = tk.StringVar()
@@ -95,6 +108,20 @@ class Application:
         future.add_done_callback(lambda f: self.results.put((f, done)))
 
     def poll(self):
+        latest = None
+        while True:
+            try:
+                latest = self.workflow_updates.get_nowait()
+            except queue.Empty:
+                break
+        if latest:
+            self.last_workflow_report = latest
+            self.status.set('VM creation: ' + latest.get('label', latest['stage']))
+            for task in latest['tasks']:
+                self.records.setdefault('task', {})[task['task']] = {
+                    'name_label': stage_label(task['method']), 'status': task['status'],
+                    'progress': task.get('progress', 0)}
+            self.show()
         try:
             future, done = self.results.get_nowait()
         except queue.Empty:
@@ -107,10 +134,18 @@ class Application:
             except Exception as exc:
                 # Do not display transport tracebacks, RPC arguments or session tokens.
                 self.status.set('Operation failed: ' + (str(exc) if isinstance(exc, APIError) else type(exc).__name__))
-                messagebox.showerror('Operation failed', str(exc) if isinstance(exc, ValueError)
-                                     else 'The server or connection rejected the operation. '
-                                     'Check TLS trust, coordinator address, permissions and current state. '
-                                     'Refresh before retrying a mutation.')
+                if isinstance(exc, WorkflowError):
+                    self.last_workflow_report = {'stage': exc.stage, 'reason': exc.reason,
+                                                 'resources': exc.resources, 'tasks': exc.tasks}
+                self.workflow_stop = None
+                error_message = (str(exc) if isinstance(exc, ValueError) else
+                    'The server or connection rejected the operation. Check TLS trust, coordinator address, '
+                    'permissions and current state. Refresh before retrying a mutation.')
+                if isinstance(exc, WorkflowError):
+                    error_message = (stage_label(exc.stage) + ': ' + exc.reason +
+                        '\n\nPartial resources or server tasks may remain. Use Tools → Save workflow report, '
+                        'then inspect the recorded objects before retrying. No automatic cleanup was attempted.')
+                messagebox.showerror('Operation failed', error_message)
         self.root.after(100, self.poll)
 
     def connect(self):
@@ -299,6 +334,69 @@ class Application:
             else:
                 self.status.set(tracker.summary().split('\n')[-1])
         self.submit(work, done, 'Checking submitted task status…')
+
+    def new_vm(self):
+        if self.client and not self.busy:
+            NewVMDialog(self)
+
+    def start_provisioning(self, plan):
+        if not self.client or self.busy:
+            return
+        self.last_workflow_report = None
+        self.workflow_stop = threading.Event()
+        provisioner = Provisioner(self.client, self.workflow_stop, progress=self.workflow_updates.put)
+        def done(report):
+            self.workflow_stop = None
+            self.last_workflow_report = report
+            messagebox.showinfo('Virtual machine created', plan.name + ' was created. Refresh inventory to inspect its configuration.')
+            self.refresh()
+        self.submit(lambda: provisioner.create(plan), done, 'Creating VM; Tools can stop monitoring without cancelling server tasks…')
+
+    def stop_workflow(self):
+        if self.workflow_stop:
+            self.workflow_stop.set()
+            self.status.set('Stop requested. Current server work may continue; wait for the recovery report.')
+
+    def save_workflow_report(self):
+        if not self.last_workflow_report:
+            messagebox.showinfo('Workflow report', 'No creation/configuration report is available yet.')
+            return
+        path = filedialog.asksaveasfilename(defaultextension='.json', filetypes=[('JSON', '*.json')])
+        if path:
+            try:
+                Path(path).write_text(json.dumps(self.last_workflow_report, indent=2) + '\n')
+            except OSError:
+                messagebox.showerror('Save failed', 'Cannot write the selected report file.')
+
+    def hardware(self):
+        if self.busy or not self.client:
+            return
+        selected = self.selected()
+        if not selected or selected[0] != 'VM':
+            messagebox.showinfo('Select VM', 'Select a halted VM first.')
+            return
+        _, ref = selected
+        record = self.records['VM'][ref]
+        if (record.get('power_state') != 'Halted' or record.get('is_a_template') or
+                record.get('is_a_snapshot') or record.get('is_control_domain')):
+            messagebox.showwarning('Hardware settings', 'Select a halted ordinary VM for CPU/memory changes.')
+            return
+        cpus = simpledialog.askinteger('VM vCPUs', 'Startup and maximum vCPU count:',
+            initialvalue=int(record.get('VCPUs_at_startup', 1)), minvalue=1, maxvalue=1024)
+        if cpus is None:
+            return
+        memory = simpledialog.askinteger('VM memory', 'Fixed memory (MiB); minimum and maximum will be equal:',
+            initialvalue=max(128, int(record.get('memory_dynamic_max', 2048 * MiB)) // MiB),
+            minvalue=128, maxvalue=1048576)
+        if memory is None or not messagebox.askyesno('Confirm hardware changes',
+                'Set {} vCPUs and {} MiB fixed memory? The VM must be halted. Partial changes are reported if a step fails.'.format(cpus, memory)):
+            return
+        client = self.client
+        def done(_):
+            self.last_workflow_report = {'resources': {'VM': ref}, 'cpus': cpus, 'memory_mib': memory}
+            self.refresh()
+        self.last_workflow_report = None
+        self.submit(lambda: configure_hardware(client, ref, cpus, memory), done, 'Updating VM hardware…')
 
     def export(self):
         if not self.records:

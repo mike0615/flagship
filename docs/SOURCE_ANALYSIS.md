@@ -47,3 +47,12 @@ of a native or offline-qualified release; it has not been modified or made publi
 The VM reference specifies clone followed by provision for template creation.
 Import/export and console connections have separate HTTP protocols; a VM RPC
 alone does not implement those features. Feature status must reflect that distinction.
+
+The next native creation workflow follows `CreateVMAction.cs`: copy installed
+custom templates to a selected SR, remove the template provisioning `disks` entry
+when explicitly creating storage, provision, and replace the new VM's inherited
+VIFs with the chosen networking. Partial failures retain references instead of
+attempting speculative deletion. `ChangeVCPUSettingsAction` ordering is mirrored
+when reducing vCPUs (startup before maximum). The XML-RPC wire reference also
+requires decimal-string integer encoding and opaque references; regression checks
+cover values above XML-RPC int32 and non-OpaqueRef-shaped task references.

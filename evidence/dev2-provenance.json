@@ -1,0 +1,26 @@
+{
+  "9": {
+    "source_commit": "7b2486354b7b90941612ac68803307f25c241624",
+    "native_modules_match": {
+      "xenadmin_rocky/__init__.py": true,
+      "xenadmin_rocky/api.py": true,
+      "xenadmin_rocky/__main__.py": true,
+      "xenadmin_rocky/app.py": true,
+      "xenadmin_rocky/tasks.py": true,
+      "xenadmin_rocky/workflows.py": true,
+      "xenadmin_rocky/wizard.py": true
+    }
+  },
+  "10": {
+    "source_commit": "7b2486354b7b90941612ac68803307f25c241624",
+    "native_modules_match": {
+      "xenadmin_rocky/__init__.py": true,
+      "xenadmin_rocky/api.py": true,
+      "xenadmin_rocky/__main__.py": true,
+      "xenadmin_rocky/app.py": true,
+      "xenadmin_rocky/tasks.py": true,
+      "xenadmin_rocky/workflows.py": true,
+      "xenadmin_rocky/wizard.py": true
+    }
+  }
+}

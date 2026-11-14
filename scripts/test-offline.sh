@@ -4,7 +4,8 @@ set -euo pipefail
 root=$(cd -- "$(dirname -- "$0")/.." && pwd)
 major=${1:?Usage: test-offline.sh 9|10}
 case "$major" in 9|10) ;; *) exit 2;; esac
-podman run --rm --network=none -v "$root/dist/el$major/airgap:/bundle:ro,Z" \
+source "$root/scripts/common.sh"
+podman run --rm --network=none -v "$out/airgap:/bundle:ro,Z" \
     "quay.io/rockylinux/rockylinux:$major" bash -euc '
     cd /bundle
     bash install-offline.sh

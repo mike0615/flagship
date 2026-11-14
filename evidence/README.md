@@ -21,3 +21,18 @@ launcher files present. installed-gui-el9.txt and installed-gui-el10.txt additio
 show the installed RPM GUI creating a window under the builder's isolated Xvfb
 Unix socket with the container network still disabled. These do not test reboot,
 interactive desktop menus, guest management or an independent operator.
+
+`provisioning-tests.txt` records 51 passing local checks for the dev.2 development
+tree. It includes a stateful simulated pool exercising creation from installer and
+installed templates, preservation of the source template, partial-failure reports,
+CPU ordering, GUI review/confirmation, and real HTTPS large-integer encoding.
+The simulation does not prove any live host workflow. dev.1 package evidence above
+remains specific to the dev.1 release, not proof of dev.2 offline installation.
+
+dev2-offline-el9.txt / dev2-offline-el10.txt record successful fresh network-disabled
+installs of 1.0.0-0.2.dev2. dev2-installed-gui-el9.txt / el10.txt also exercise the
+installed New VM review and built-in help using synthetic records and no pool
+connection. The reproducible fixture is evidence/fixtures/dev2_installed_gui.py.
+dev2-provenance.json compares all native modules with both RPM source archives;
+dev2-source-closure.json confirms exact corresponding source coverage. dev.2
+source archives combine the retained dev.1 baseline with changed/new SRPM deltas.
