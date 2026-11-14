@@ -1,5 +1,12 @@
 # Release notes
 
+## Unreleased after dev.1
+
+Submitted task tracking now distinguishes server-confirmed outcomes from submission.
+Monitoring pauses on connection/session errors; mutations are never replayed.
+29 local API/TLS/task/desktop checks pass. These changes are not included in the dev.1 RPMs.
+
+
 ## 1.0.0.dev1 — development candidate, November 14, 2026
 
 Initial native Python/Tk client, HTTPS XAPI transport, mandatory certificate

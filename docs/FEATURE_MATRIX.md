@@ -15,7 +15,7 @@ See QUALIFICATION.md for the evidence boundary.
 | Rename | Synchronous setter | Live permission/state tests |
 | Same-pool migration | Async submission with host selection | Live migration and compatibility |
 | Delete VM record | Confirmed async submission, disks retained | Disk lifecycle cleanup wizard |
-| Tasks and alerts | Inventory display, manual refresh | Automatic progress/history and alert actions |
+| Tasks and alerts | Submitted-task progress/outcomes; pool inventory display | Live qualification, persistent history, cancel and alert actions |
 | Inventory export | Local JSON, selected credential fields redacted | Review metadata before sharing |
 | New VM wizard | Not implemented | Template, SR, disks, network, provisioning |
 | CPU/memory editing | Not exposed | Validated resource editor |

@@ -49,3 +49,22 @@ class DesktopTests(unittest.TestCase):
     def test_filter_no_match_is_empty(self):
         self.app.search.set('does-not-exist')
         self.assertEqual(self.app.items, {})
+
+    def test_task_monitor_pauses_on_session_loss_without_resubmitting(self):
+        from xenadmin_rocky.api import APIError
+        self.app.tracker.add('OpaqueRef:task', 'start', 'Test guest')
+        self.app.client.call.side_effect = APIError(['SESSION_INVALID'])
+        self.app.submit = lambda work, done, label: done(work())
+        self.app.poll_tasks()
+        self.assertTrue(self.app.monitor_paused)
+        self.assertIn('paused', self.app.status.get())
+        self.app.poll_tasks()
+        self.app.client.call.assert_called_once_with('task.get_record', 'OpaqueRef:task')
+        self.app.client.vm_action.assert_not_called()
+
+    def test_task_success_is_visible_in_tasks_view(self):
+        self.app.tracker.add('OpaqueRef:task', 'start', 'Test guest')
+        self.app.client.call.return_value = {'status': 'success', 'progress': '1'}
+        self.app.submit = lambda work, done, label: done(work())
+        self.app.poll_tasks()
+        self.assertIn('success (100%)', self.app.views['Tasks'].get('1.0', 'end'))

@@ -43,6 +43,9 @@ it deliberately leaves disks, which may need separately reviewed storage cleanup
 
 Expected result: submission returns and inventory refreshes. A returned task is
 not proof of success. Open Tasks, refresh and inspect status, progress and error_info.
+Tasks submitted by this session are checked every three seconds, and confirmed
+outcomes appear in Tasks. A connection/session error pauses monitoring until a
+successful refresh or reconnection. Other pool tasks require a manual refresh.
 Pending tasks may outlive this application. On a disconnect, inspect task and VM
 state before retrying; the client never automatically retries a mutation.
 

@@ -8,6 +8,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog, filedialog
 from . import __version__
 from .api import Client, APIError
+from .tasks import TaskTracker
 
 
 def safe_record(value):
@@ -26,6 +27,8 @@ class Application:
         self.root = root
         self.client = None
         self.records = {}
+        self.tracker = TaskTracker()
+        self.monitor_paused = False
         self.items = {}
         self.jobs = ThreadPoolExecutor(max_workers=1)
         self.results = queue.Queue()
@@ -80,6 +83,7 @@ class Application:
         self.tree.bind('<<TreeviewSelect>>', lambda *_: self.show())
         root.protocol('WM_DELETE_WINDOW', self.close)
         root.after(100, self.poll)
+        root.after(3000, self.poll_tasks)
 
     def submit(self, work, done, label):
         if self.busy or self.closing:
@@ -159,6 +163,7 @@ class Application:
         client = self.client
         def done(_):
             self.client = None
+            self.tracker = TaskTracker()
             self.records = {}
             self.populate()
             self.show()
@@ -170,6 +175,7 @@ class Application:
             return
         def done(result):
             self.records, errors = result
+            self.monitor_paused = False
             self.populate()
             self.show()
             self.status.set(self.warning(errors))
@@ -220,6 +226,8 @@ class Application:
         for title, view in self.views.items():
             view.configure(state='normal')
             view.delete('1.0', 'end')
+            if title == 'Tasks' and self.tracker.tasks:
+                view.insert('end', self.tracker.summary() + '\n\nPool task records:\n')
             view.insert('end', json.dumps(safe_record(related[title]), indent=2, default=str))
             view.configure(state='disabled')
 
@@ -260,9 +268,37 @@ class Application:
             return
         client = self.client
         def done(task):
-            self.status.set('Operation submitted. Refresh Tasks to check completion; submission is not success.')
+            if action.startswith('set_'):
+                self.status.set('Property updated by server.')
+            else:
+                self.tracker.add(task, action, record.get('name_label', 'VM'))
+                self.status.set('Task submitted. Completion will be monitored in Tasks.')
             self.refresh()
         self.submit(lambda: client.vm_action(ref, action, *args), done, 'Submitting ' + action + '…')
+
+    def poll_tasks(self):
+        self.root.after(3000, self.poll_tasks)
+        if self.closing or self.busy or self.monitor_paused or not self.client or not self.tracker.pending:
+            return
+        client = self.client
+        tracker = self.tracker
+        def work():
+            try:
+                return tracker.poll(client), None
+            except Exception as exc:
+                return {}, str(exc) if isinstance(exc, APIError) else type(exc).__name__
+        def done(result):
+            if self.client is not client:
+                return
+            records, error = result
+            self.records.setdefault('task', {}).update(records)
+            self.show()
+            if error:
+                self.monitor_paused = True
+                self.status.set('Task monitoring paused: ' + error + '. Reconnect or refresh; inspect state before retrying.')
+            else:
+                self.status.set(tracker.summary().split('\n')[-1])
+        self.submit(work, done, 'Checking submitted task status…')
 
     def export(self):
         if not self.records:
