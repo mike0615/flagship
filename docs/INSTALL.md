@@ -10,7 +10,7 @@ access; it is not installed or needed at runtime. A desktop environment itself i
 GNOME/KDE or turn a minimal server into a workstation.
 
 For the published dev.1 candidate, use its attached documentation and original
-archive names. The current source build targets dev.2, which is not yet a stable release.
+archive names. The current source build targets dev.2, which is a development candidate, not a stable release.
 
 ## Transfer and install
 
@@ -55,3 +55,19 @@ sudo dnf --disablerepo='*' remove xenadmin-rocky
 
 Review DNF's transaction before confirming. Removing the client does not remove
 VMs, undo host changes or cancel tasks. There is no saved credential store.
+
+## Corresponding source set for dev.2
+
+Runtime installation needs the matching binary airgap archive only. To retain a
+complete offline source set, also transfer the dev.1 dependency-source archive for
+the same Rocky major and the dev.2 source-delta archive, plus the native source
+archive. The delta contains the dev.2 application SRPM and changed dependency
+SRPMs. Rocky 9 glibc and tzdata differ from the earlier bundle; the recorded exact
+versions, rather than package names alone, determine source coverage.
+
+`DEPENDENCY-SOURCES.json` attached to dev.2 maps every bundled binary RPM to its
+exact source RPM, source SHA-256 and archive download. Baseline archive links point
+to the retained dev.1 release; delta links point to dev.2. Transfer both archives
+before disconnecting. Extract into separate directories and consult the map rather
+than assuming a baseline source version matches a newer binary. These archives
+are not needed to run the installed application.

@@ -42,3 +42,10 @@ retain them with the binary bundles for offline source access.
 Build output is isolated by application version (currently 1.0.0.dev2) so a new
 candidate does not overwrite published dev.1 artifacts. CI uploads the complete
 versioned dist tree for its Rocky matrix job.
+
+For incremental development source distribution, `collect-source-delta.sh 9
+/path/to/authenticated/baseline-sources` collects only source RPMs absent from that
+baseline and verifies exact filename coverage. Its SOURCE-COVERAGE.tsv identifies
+baseline versus delta sources with SHA-256 values. Retain the authenticated baseline
+archive alongside the delta; the delta alone is not a complete source set. Use the
+full collector for a self-contained consolidated source archive.
