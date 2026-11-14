@@ -53,7 +53,7 @@ class ConsoleWindow:
         self.worker = threading.Thread(target=self.receive, args=(connector,), daemon=True)
         self.window.update_idletasks()
         self.worker.start()
-        self.window.after(25, self.poll)
+        self.poll_timer = self.window.after(25, self.poll)
 
     def emit(self, event):
         while not self.stop.is_set():
@@ -175,6 +175,7 @@ class ConsoleWindow:
             self.status.set('Console stopped: ' + args[0] + '. Close and reopen to reconnect.')
 
     def poll(self):
+        self.poll_timer = None
         if not self.window.winfo_exists(): return
         if self.app.client is not self.client:
             self.close()
@@ -182,11 +183,15 @@ class ConsoleWindow:
         for _ in range(8):
             try: self.draw(self.frames.get_nowait())
             except queue.Empty: break
-        self.window.after(25, self.poll)
+        self.poll_timer = self.window.after(25, self.poll)
 
     def close(self):
         self.release()
         self.stop.set()
+        if self.poll_timer is not None:
+            try: self.window.after_cancel(self.poll_timer)
+            except tk.TclError: pass
+            self.poll_timer = None
         with self.lock:
             if self.tunnel: self.tunnel.close(); self.tunnel = None
         if self.window.winfo_exists(): self.window.destroy()

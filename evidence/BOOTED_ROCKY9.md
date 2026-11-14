@@ -33,7 +33,7 @@ first rendered seed.
 
 A small-window layout issue in dev.3 was observed. Console-branch source now fits
 the display, wraps toolbar actions, reserves action/status space and cleans up Tk
-timers; 140 local checks pass at a 1024x768 client display. These changes are not
+timers; 141 local checks pass at a 1024x768 client display. These changes are not
 in dev.3 RPMs. The published dev.3 release notes carry the layout advisory.
 
 Not established: installed-guest pool login/workflows, guest tools or guest-aware
