@@ -1,6 +1,6 @@
 Name:           xenadmin-rocky
 Version:        1.0.0
-Release:        0.2.dev2%{?dist}
+Release:        0.3.dev3%{?dist}
 Summary:        Native Linux desktop management client for XAPI pools
 License:        BSD-2-Clause
 URL:            https://github.com/mike0615/xenadmin-rocky
@@ -29,16 +29,20 @@ mkdir -p %{buildroot}%{_datadir}/%{name}/docs
 cp docs/*.md %{buildroot}%{_datadir}/%{name}/docs/
 mkdir -p %{buildroot}%{_bindir} %{buildroot}%{_datadir}/applications
 install -m 0755 packaging/xenadmin-rocky %{buildroot}%{_bindir}/xenadmin-rocky
+install -m 0755 packaging/xenadmin-rocky-recovery %{buildroot}%{_bindir}/xenadmin-rocky-recovery
 install -m 0644 packaging/xenadmin-rocky.desktop %{buildroot}%{_datadir}/applications/
 
 %files
 %license LICENSE upstream/LICENSE.xcp-ng
 %doc README.md SOURCE_COMMIT docs/*.md
 %{_bindir}/xenadmin-rocky
+%{_bindir}/xenadmin-rocky-recovery
 %{_datadir}/applications/xenadmin-rocky.desktop
 %{_datadir}/%{name}/
 
 %changelog
+* Sat Nov 14 2026 Mike Anderson <mike0615@users.noreply.github.com> - 1.0.0-0.3.dev3
+- Device management, durable operation journals, UUID recovery and indexed help.
 * Sat Nov 14 2026 Mike Anderson <mike0615@users.noreply.github.com> - 1.0.0-0.2.dev2
 - VM creation, hardware configuration, task monitoring and XAPI wire corrections.
 * Sat Nov 14 2026 Mike Anderson <mike0615@users.noreply.github.com> - 1.0.0-0.1.dev1

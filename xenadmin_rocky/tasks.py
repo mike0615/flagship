@@ -47,3 +47,15 @@ class TaskTracker:
             task['target'], task['operation'], task['status'], task['progress'],
             ' [' + task['error_code'] + ']' if task['error_code'] else '')
             for task in self.tasks.values())
+
+
+def request_cancellation(client, ref):
+    record = client.call('task.get_record', ref)
+    if record.get('status') == 'cancelling':
+        return {'resources': {'task': ref}, 'status': 'cancelling'}
+    if record.get('status') != 'pending':
+        raise ValueError('This task has already finished; no cancellation was submitted')
+    if 'cancel' not in record.get('allowed_operations', []):
+        raise ValueError('The server does not allow cancellation of this task')
+    client.call('task.cancel', ref)
+    return {'resources': {'task': ref}, 'status': 'cancellation_requested'}

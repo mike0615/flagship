@@ -10,8 +10,10 @@ podman run --rm --network=none -v "$out/airgap:/bundle:ro,Z" \
     cd /bundle
     bash install-offline.sh
     xenadmin-rocky --version
+    xenadmin-rocky-recovery --help
     python3 -c "import tkinter; print(tkinter.TkVersion)"
     test -s /usr/share/xenadmin-rocky/docs/USER_GUIDE.md
+    test -s /usr/share/xenadmin-rocky/docs/RECOVERY.md
     test -s /usr/share/applications/xenadmin-rocky.desktop
     rpm -q xenadmin-rocky python3-tkinter
     echo "PASS: network-disabled install, imports, help and launcher files"

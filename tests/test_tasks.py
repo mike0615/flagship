@@ -57,3 +57,34 @@ class TaskTests(unittest.TestCase):
     def test_task_reference_is_opaque(self):
         self.tracker.add('server-task-42', 'snapshot', 'guest')
         self.assertIn('server-task-42', self.tracker.tasks)
+
+    def test_cancellation_request_does_not_claim_task_cancelled(self):
+        from xenadmin_rocky.tasks import request_cancellation
+        client = Mock()
+        client.call.side_effect = [{'status': 'pending', 'allowed_operations': ['cancel']}, '']
+        report = request_cancellation(client, 'server-task')
+        self.assertEqual(report['status'], 'cancellation_requested')
+        self.assertEqual(client.call.call_args.args, ('task.cancel', 'server-task'))
+
+    def test_finished_task_is_not_cancelled(self):
+        from xenadmin_rocky.tasks import request_cancellation
+        client = Mock()
+        client.call.return_value = {'status': 'success', 'allowed_operations': []}
+        with self.assertRaises(ValueError):
+            request_cancellation(client, 'server-task')
+        client.call.assert_called_once_with('task.get_record', 'server-task')
+
+    def test_non_cancellable_task_is_not_submitted(self):
+        from xenadmin_rocky.tasks import request_cancellation
+        client = Mock()
+        client.call.return_value = {'status': 'pending', 'allowed_operations': []}
+        with self.assertRaises(ValueError):
+            request_cancellation(client, 'server-task')
+        client.call.assert_called_once()
+
+    def test_already_cancelling_task_is_not_requested_again(self):
+        from xenadmin_rocky.tasks import request_cancellation
+        client = Mock()
+        client.call.return_value = {'status': 'cancelling', 'allowed_operations': []}
+        self.assertEqual(request_cancellation(client, 'server-task')['status'], 'cancelling')
+        client.call.assert_called_once()

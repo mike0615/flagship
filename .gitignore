@@ -8,3 +8,7 @@ dist/
 *.iso
 
 build-rpm.*/
+
+# Runtime operation journals contain private infrastructure metadata.
+operations-*.jsonl
+journals/

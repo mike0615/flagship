@@ -28,7 +28,7 @@ class Pool:
     def task(self, result=''):
         self.counter += 1
         ref = 'task-' + str(self.counter)  # Deliberately no OpaqueRef prefix.
-        self.tasks[ref] = {'status': 'success', 'result': '<value><string>' + result + '</string></value>' if result else ''}
+        self.tasks[ref] = {'status': 'success', 'result': '<value>' + result + '</value>' if result else ''}
         return ref
 
     def call(self, method, *args):
@@ -52,7 +52,7 @@ class Pool:
             return self.vifs[args[0]]
         if method in ('Async.VM.clone', 'Async.VM.copy'):
             self.vms['new-vm'] = copy.deepcopy(self.vms['template'])
-            self.vms['new-vm'].update(uuid='new-uuid', is_a_template=False, name_label=args[1], VIFs=['new-vif'])
+            self.vms['new-vm'].update(uuid='new-uuid', is_a_template=True, name_label=args[1], VIFs=['new-vif'])
             self.vifs['new-vif'] = {'VM': 'new-vm', 'network': 'old-network'}
             if self.vms['new-vm']['VBDs']:
                 self.vbds['copied-disk'] = dict(self.vbds['source-disk'], VM='new-vm', VDI='copied-data')
@@ -70,6 +70,8 @@ class Pool:
             self.vms[args[0]]['other_config'] = dict(args[1])
             return ''
         if method == 'Async.VM.provision':
+            assert self.vms[args[0]]['is_a_template'], 'XAPI only provisions templates'
+            self.vms[args[0]]['is_a_template'] = False
             assert 'disks' not in self.vms[args[0]]['other_config']
             return self.task()
         if method == 'VM.get_allowed_VBD_devices':
@@ -207,6 +209,7 @@ class WorkflowTests(unittest.TestCase):
     def test_reference_result_is_opaque(self):
         self.assertEqual(task_reference('<value><string>server-result-17</string></value>'), 'server-result-17')
         self.assertEqual(task_reference('server-result-18'), 'server-result-18')
+        self.assertEqual(task_reference('<value>server-result-19</value>'), 'server-result-19')
         with self.assertRaises(ValueError):
             task_reference('<value><string>OpaqueRef:NULL</string></value>')
         with self.assertRaises(ValueError):

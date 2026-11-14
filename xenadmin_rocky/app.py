@@ -9,25 +9,26 @@ import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog, filedialog
 from . import __version__
 from .api import Client, APIError
-from .tasks import TaskTracker
+from .tasks import TaskTracker, request_cancellation
 from .workflows import Provisioner, WorkflowError, configure_hardware, MiB, stage_label
 from .wizard import NewVMDialog
+from .journal import OperationJournal, JournalError, save_json_private
+from .history import HistoryDialog
+from .devices import DeviceManager
+from .dialogs import choose_resource
+from .redaction import safe_record
+from .recovery import inspect_by_uuid
+from .help import HelpDialog
+from .journal import OBJECT_CLASSES
 
-
-def safe_record(value):
-    """Avoid exposing opaque session/console tokens in inventory exports."""
-    if isinstance(value, dict):
-        return {k: ('[redacted]' if any(s in k.lower() for s in
-                ('password', 'secret', 'session', 'token', 'location')) else safe_record(v))
-                for k, v in value.items()}
-    if isinstance(value, list):
-        return [safe_record(v) for v in value]
-    return value
 
 
 class Application:
-    def __init__(self, root):
+    def __init__(self, root, journal=None):
         self.root = root
+        self.journal = journal or OperationJournal()
+        self.device_panels = []
+        self.workflow_label = 'Workflow'
         self.client = None
         self.records = {}
         self.tracker = TaskTracker()
@@ -46,13 +47,15 @@ class Application:
         tools = tk.Menu(menu, tearoff=False)
         tools.add_command(label='Stop workflow monitoring', command=self.stop_workflow)
         tools.add_command(label='Save workflow report', command=self.save_workflow_report)
+        tools.add_command(label='Operation history / recovery', command=lambda: HistoryDialog(self.root, self.journal, self.inspect_object))
+        tools.add_command(label='Request task cancellation…', command=self.cancel_task)
         menu.add_cascade(label='Tools', menu=tools)
         root.configure(menu=menu)
         toolbar = ttk.Frame(root, padding=6)
         toolbar.pack(fill='x')
         for label, command in [('Connect', self.connect), ('Disconnect', self.disconnect),
                                ('Refresh', self.refresh), ('New VM', self.new_vm),
-                               ('CPU / memory', self.hardware), ('Export inventory', self.export),
+                               ('CPU / memory', self.hardware), ('Devices', self.manage_devices), ('Export inventory', self.export),
                                ('Help', self.help)]:
             ttk.Button(toolbar, text=label, command=command).pack(side='left', padx=3)
         self.search = tk.StringVar()
@@ -98,13 +101,35 @@ class Application:
         root.after(100, self.poll)
         root.after(3000, self.poll_tasks)
 
-    def submit(self, work, done, label):
+    def submit(self, work, done, label, mutation=False, completion='completed'):
         if self.busy or self.closing:
             messagebox.showinfo('Operation in progress', 'Wait for the current operation to finish.')
             return
         self.busy = True
         self.status.set(label)
-        future = self.jobs.submit(work)
+        def run():
+            if not mutation:
+                return work()
+            endpoint = getattr(self.client, 'endpoint', None)
+            self.journal.begin(label, endpoint)
+            try:
+                value = work()
+            except Exception as exc:
+                report = ({'stage': exc.stage, 'resources': exc.resources, 'tasks': exc.tasks}
+                          if isinstance(exc, WorkflowError) else None)
+                try:
+                    self.journal.finish('interrupted_or_failed', report=report, error=exc)
+                except JournalError:
+                    pass  # Preserve the original result/uncertainty and recovery references.
+                raise
+            try:
+                self.journal.finish(completion, report=value if isinstance(value, dict) else None)
+            except JournalError:
+                error = JournalError('Server work returned, but its final journal record could not be saved. Inspect the pool before retrying.')
+                error.report = value if isinstance(value, dict) else {'returned_reference': value}
+                raise error from None
+            return value
+        future = self.jobs.submit(run)
         future.add_done_callback(lambda f: self.results.put((f, done)))
 
     def poll(self):
@@ -116,7 +141,7 @@ class Application:
                 break
         if latest:
             self.last_workflow_report = latest
-            self.status.set('VM creation: ' + latest.get('label', latest['stage']))
+            self.status.set(latest.get('operation', 'Workflow') + ': ' + latest.get('label', latest['stage']))
             for task in latest['tasks']:
                 self.records.setdefault('task', {})[task['task']] = {
                     'name_label': stage_label(task['method']), 'status': task['status'],
@@ -137,6 +162,8 @@ class Application:
                 if isinstance(exc, WorkflowError):
                     self.last_workflow_report = {'stage': exc.stage, 'reason': exc.reason,
                                                  'resources': exc.resources, 'tasks': exc.tasks}
+                if isinstance(exc, JournalError) and hasattr(exc, 'report'):
+                    self.last_workflow_report = exc.report
                 self.workflow_stop = None
                 error_message = (str(exc) if isinstance(exc, ValueError) else
                     'The server or connection rejected the operation. Check TLS trust, coordinator address, '
@@ -166,7 +193,7 @@ class Application:
             endpoint, username, password, ca = [e.get() for e in fields.values()]
             dialog.destroy()
             def work():
-                client = Client(endpoint, ca or None)
+                client = Client(endpoint, ca or None, journal=self.journal)
                 try:
                     client.login(username, password)
                     records, errors = client.inventory()
@@ -182,7 +209,8 @@ class Application:
             def done(result):
                 self.client, self.records, errors = result
                 self.populate()
-                self.status.set('Connected. ' + self.warning(errors))
+                self.root.title('XenAdmin Rocky — ' + __version__ + ' — ' + self.client.endpoint)
+                self.status.set('Connected to ' + self.client.endpoint + '. ' + self.warning(errors))
             self.submit(work, done, 'Connecting…')
         ttk.Button(dialog, text='Connect', command=accept).grid(row=4, column=1, pady=8)
         dialog.transient(self.root)
@@ -196,14 +224,28 @@ class Application:
         if not self.client:
             return
         client = self.client
-        def done(_):
+        def work():
+            try:
+                client.logout()
+                return False
+            except Exception:
+                return True
+        def done(unconfirmed):
             self.client = None
             self.tracker = TaskTracker()
             self.records = {}
+            self.last_workflow_report = None
+            self.workflow_stop = None
+            self.monitor_paused = False
             self.populate()
             self.show()
-            self.status.set('Disconnected.')
-        self.submit(client.logout, done, 'Disconnecting…')
+            for panel in self.device_panels:
+                if panel.window.winfo_exists():
+                    panel.window.destroy()
+            self.device_panels = []
+            self.root.title('XenAdmin Rocky — ' + __version__)
+            self.status.set('Disconnected; remote logout was not confirmed.' if unconfirmed else 'Disconnected.')
+        self.submit(work, done, 'Disconnecting…')
 
     def refresh(self):
         if not self.client:
@@ -214,6 +256,9 @@ class Application:
             self.populate()
             self.show()
             self.status.set(self.warning(errors))
+            self.device_panels = [panel for panel in self.device_panels if panel.window.winfo_exists()]
+            for panel in self.device_panels:
+                panel.reload()
         self.submit(self.client.inventory, done, 'Refreshing inventory…')
 
     def populate(self):
@@ -288,16 +333,13 @@ class Application:
             args = [name.strip()]
         elif action == 'pool_migrate':
             hosts = self.records.get('host', {})
-            choices = '\n'.join(v.get('name_label', '') + ' — ' + k for k, v in hosts.items())
-            target = simpledialog.askstring('Destination host', 'Enter destination host reference:\n' + choices)
-            if target is None:
-                return
-            if target not in hosts:
-                messagebox.showerror('Invalid host', 'Choose a host reference from this pool.')
+            ok, target = choose_resource(self.root, 'Destination host', hosts)
+            if not ok:
                 return
             args = [target, {}]
+        destination = ('Destination: ' + hosts[target].get('name_label', target) + '\n') if action == 'pool_migrate' else ''
         if not messagebox.askyesno('Confirm operation',
-                action + ' on ' + record.get('name_label', ref) + '?\n'
+                action + ' on ' + record.get('name_label', ref) + '?\n' + destination +
                 'This changes the server. Delete VM record leaves virtual disks on storage. '
                 'Force off may lose guest data.'):
             return
@@ -309,7 +351,8 @@ class Application:
                 self.tracker.add(task, action, record.get('name_label', 'VM'))
                 self.status.set('Task submitted. Completion will be monitored in Tasks.')
             self.refresh()
-        self.submit(lambda: client.vm_action(ref, action, *args), done, 'Submitting ' + action + '…')
+        self.submit(lambda: client.vm_action(ref, action, *args), done, 'Submitting ' + action + '…', mutation=True,
+                    completion='completed' if action.startswith('set_') else 'submitted')
 
     def poll_tasks(self):
         self.root.after(3000, self.poll_tasks)
@@ -335,6 +378,90 @@ class Application:
                 self.status.set(tracker.summary().split('\n')[-1])
         self.submit(work, done, 'Checking submitted task status…')
 
+    def inspect_object(self):
+        if self.busy or not self.client:
+            messagebox.showinfo('Connect first', 'Connect to the correct pool and wait for its current operation to finish.')
+            return
+        ok, kind = choose_resource(self.root, 'Recorded object type', {kind: {'name_label': kind} for kind in OBJECT_CLASSES})
+        if not ok:
+            return
+        object_uuid = simpledialog.askstring('Recorded object UUID', 'Enter the UUID from history or the server inventory.\nDo not paste an old opaque reference:')
+        if object_uuid is None:
+            return
+        client = self.client
+        def done(report):
+            window = tk.Toplevel(self.root)
+            window.title('Read-only object inspection — ' + client.endpoint)
+            text = tk.Text(window, width=110, height=32, wrap='word')
+            text.pack(fill='both', expand=True)
+            text.insert('end', json.dumps(report, indent=2))
+            text.configure(state='disabled')
+        self.submit(lambda: inspect_by_uuid(client, kind, object_uuid), done, 'Inspecting object by UUID…')
+
+    def cancel_task(self):
+        if not self.client:
+            return
+        if self.busy:
+            messagebox.showinfo('Operation in progress', 'For a creation/device workflow, stop monitoring first, then request cancellation of its server task.')
+            return
+        candidates = {ref: task for ref, task in self.records.get('task', {}).items()
+                      if task.get('status') in ('pending', 'cancelling') and 'cancel' in task.get('allowed_operations', [])}
+        for ref, task in self.tracker.tasks.items():
+            if task.get('status') in ('pending', 'cancelling'):
+                candidates.setdefault(ref, {'name_label': task['operation'] + ' — ' + task['target']})
+        if self.last_workflow_report:
+            for task in self.last_workflow_report.get('tasks', []):
+                if task.get('status') in ('pending', 'cancelling'):
+                    candidates.setdefault(task['task'], {'name_label': stage_label(task['method'])})
+        ok, ref = choose_resource(self.root, 'Task to request cancellation', candidates)
+        if not ok or not messagebox.askyesno('Request cancellation',
+                'Request cancellation of ' + candidates[ref].get('name_label', 'this task') + '?\n'
+                'The task may finish normally or take time to cancel. This does not roll back earlier workflow steps.'):
+            return
+        client = self.client
+        def done(report):
+            self.last_workflow_report = report
+            if ref not in self.tracker.tasks or self.tracker.tasks[ref]['status'] in self.tracker.terminal:
+                self.tracker.add(ref, 'Cancellation requested', candidates[ref].get('name_label', 'Task'))
+            self.monitor_paused = False
+            self.status.set('Cancellation requested; Tasks will show the actual server outcome.')
+        self.submit(lambda: request_cancellation(client, ref), done, 'Requesting task cancellation…',
+                    mutation=True, completion='submitted')
+
+    def publish_workflow_progress(self, report):
+        report = dict(report, operation=self.workflow_label)
+        self.journal.workflow(report)
+        self.workflow_updates.put(report)
+
+    def manage_devices(self):
+        if self.busy or not self.client:
+            return
+        selected = self.selected()
+        if not selected or selected[0] != 'VM':
+            messagebox.showinfo('Select VM', 'Select an ordinary VM first.')
+            return
+        record = self.records.get('VM', {}).get(selected[1], {})
+        if record.get('is_a_template') or record.get('is_a_snapshot') or record.get('is_control_domain'):
+            messagebox.showwarning('Select VM', 'Choose an ordinary VM for device management.')
+            return
+        from .device_panel import DevicePanel
+        panel = DevicePanel(self, selected[1])
+        self.device_panels.append(panel)
+
+    def start_device_operation(self, action, vm, options):
+        if self.busy or not self.client:
+            messagebox.showinfo('Operation in progress', 'Wait for the current operation before changing devices.')
+            return
+        self.workflow_label = 'Device management'
+        self.workflow_stop = threading.Event()
+        self.last_workflow_report = None
+        manager = DeviceManager(self.client, self.workflow_stop, progress=self.publish_workflow_progress)
+        def done(report):
+            self.workflow_stop = None
+            self.last_workflow_report = report
+            self.refresh()
+        self.submit(lambda: manager.execute(action, vm, **options), done, 'Updating VM devices…', mutation=True)
+
     def new_vm(self):
         if self.client and not self.busy:
             NewVMDialog(self)
@@ -344,13 +471,14 @@ class Application:
             return
         self.last_workflow_report = None
         self.workflow_stop = threading.Event()
-        provisioner = Provisioner(self.client, self.workflow_stop, progress=self.workflow_updates.put)
+        self.workflow_label = 'VM creation'
+        provisioner = Provisioner(self.client, self.workflow_stop, progress=self.publish_workflow_progress)
         def done(report):
             self.workflow_stop = None
             self.last_workflow_report = report
             messagebox.showinfo('Virtual machine created', plan.name + ' was created. Refresh inventory to inspect its configuration.')
             self.refresh()
-        self.submit(lambda: provisioner.create(plan), done, 'Creating VM; Tools can stop monitoring without cancelling server tasks…')
+        self.submit(lambda: provisioner.create(plan), done, 'Creating VM; Tools can stop monitoring without cancelling server tasks…', mutation=True)
 
     def stop_workflow(self):
         if self.workflow_stop:
@@ -364,7 +492,7 @@ class Application:
         path = filedialog.asksaveasfilename(defaultextension='.json', filetypes=[('JSON', '*.json')])
         if path:
             try:
-                Path(path).write_text(json.dumps(self.last_workflow_report, indent=2) + '\n')
+                save_json_private(path, self.last_workflow_report)
             except OSError:
                 messagebox.showerror('Save failed', 'Cannot write the selected report file.')
 
@@ -396,7 +524,7 @@ class Application:
             self.last_workflow_report = {'resources': {'VM': ref}, 'cpus': cpus, 'memory_mib': memory}
             self.refresh()
         self.last_workflow_report = None
-        self.submit(lambda: configure_hardware(client, ref, cpus, memory), done, 'Updating VM hardware…')
+        self.submit(lambda: configure_hardware(client, ref, cpus, memory), done, 'Updating VM hardware…', mutation=True)
 
     def export(self):
         if not self.records:
@@ -404,21 +532,16 @@ class Application:
         path = filedialog.asksaveasfilename(defaultextension='.json', filetypes=[('JSON', '*.json')])
         if path:
             try:
-                Path(path).write_text(json.dumps(safe_record(self.records), indent=2, default=str) + '\n')
+                save_json_private(path, safe_record(self.records))
                 self.status.set('Inventory exported. Review infrastructure metadata before sharing.')
             except OSError:
                 messagebox.showerror('Export failed', 'Cannot write the selected file.')
 
     def help(self):
-        help_path = Path(__file__).resolve().parent.parent / 'docs' / 'USER_GUIDE.md'
-        if not help_path.exists():
-            help_path = Path('/usr/share/doc/xenadmin-rocky/USER_GUIDE.md')
-        window = tk.Toplevel(self.root)
-        window.title('XenAdmin Rocky Help')
-        text = tk.Text(window, wrap='word', width=100, height=35)
-        text.pack(fill='both', expand=True)
-        text.insert('end', help_path.read_text() if help_path.exists() else 'Help files missing. Reinstall the RPM.')
-        text.configure(state='disabled')
+        directory = Path(__file__).resolve().parent.parent / 'docs'
+        if not directory.is_dir():
+            directory = Path('/usr/share/doc/xenadmin-rocky')
+        return HelpDialog(self.root, directory)
 
     def close(self):
         if self.busy:
@@ -430,6 +553,7 @@ class Application:
             self.client = None
             self.jobs.submit(client.logout)
         self.jobs.shutdown(wait=False)
+        self.journal.close()
         self.root.destroy()
 
 

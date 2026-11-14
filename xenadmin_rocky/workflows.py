@@ -3,12 +3,11 @@ from dataclasses import dataclass
 import json
 import threading
 import time
-import xml.etree.ElementTree as ET
 from .api import APIError
+from .protocol import NULL, decode_reference_result as task_reference
 
 MiB = 1024**2
 GiB = 1024**3
-NULL = 'OpaqueRef:NULL'
 
 
 def stage_label(stage):
@@ -22,13 +21,21 @@ def stage_label(stage):
               'Async.VM.provision': 'Provisioning VM', 'VM.provision': 'Provisioning VM',
               'Async.VDI.create': 'Creating virtual disk', 'VDI.create': 'Creating virtual disk',
               'Async.VBD.create': 'Connecting virtual disk or media', 'VBD.create': 'Connecting virtual disk or media',
-              'Async.VIF.destroy': 'Replacing inherited network adapters', 'VIF.destroy': 'Replacing inherited network adapters',
+              'Async.VIF.destroy': 'Removing network adapter', 'VIF.destroy': 'Removing network adapter',
               'Async.VIF.create': 'Adding network adapter', 'VIF.create': 'Adding network adapter',
               'Async.VBD.eject': 'Ejecting existing media', 'VBD.eject': 'Ejecting existing media',
               'Async.VBD.insert': 'Attaching installation media', 'VBD.insert': 'Attaching installation media',
               'Async.VM.start': 'Starting VM', 'VM.start': 'Starting VM',
               'Configure CPU and memory': 'Configuring CPU and memory'}
-    return labels.get(method, 'Checking provisioning state')
+    device_labels = {'VBD.plug': 'Connecting disk/DVD device', 'VBD.unplug': 'Disconnecting disk/DVD device',
+                     'VBD.destroy': 'Removing disk/DVD connection', 'VDI.destroy': 'Deleting disk data',
+                     'VDI.resize': 'Growing virtual disk', 'VDI.resize_online': 'Growing virtual disk',
+                     'VDI.set_name_label': 'Renaming virtual disk', 'VIF.move': 'Changing adapter network',
+                     'VIF.plug': 'Connecting network adapter', 'VIF.unplug': 'Disconnecting network adapter',
+                     'VM.get_allowed_VBD_devices': 'Finding free disk/DVD position',
+                     'VM.get_allowed_VIF_devices': 'Finding free network adapter position'}
+    labels.update(device_labels)
+    return labels.get(method.removeprefix('Async.'), labels.get(method, 'Checking workflow state'))
 
 
 class WorkflowError(RuntimeError):
@@ -66,19 +73,6 @@ class VMPlan:
             if type(value) is not int or not low <= value <= high:
                 raise ValueError('{} must be between {} and {}'.format(label, low, high))
 
-
-def task_reference(result):
-    if not isinstance(result, str) or not result or result == NULL:
-        raise ValueError('Task did not return an object reference')
-    if result.lstrip().startswith('<'):
-        if len(result) > 65536 or '<!DOCTYPE' in result.upper() or '<!ENTITY' in result.upper():
-            raise ValueError('Invalid task result XML')
-        node = ET.fromstring(result)
-        strings = list(node.iter('string'))
-        if len(strings) != 1 or not strings[0].text or strings[0].text == NULL:
-            raise ValueError('Task did not return one object reference')
-        return strings[0].text
-    return result
 
 
 def configure_hardware(client, vm, cpus, memory_mib, checkpoint=lambda: None):
@@ -193,17 +187,17 @@ class Provisioner:
             if vm == plan.template or (template.get('uuid') and cloned.get('uuid') == template['uuid']):
                 raise ValueError('Server returned the source VM; refusing to change it')
             self.resources['VM'] = vm
-            if cloned.get('is_a_template'):
-                self.call('VM.set_is_a_template', vm, False)
-            self.stage = 'Configure CPU and memory'
-            self.announce()
-            configure_hardware(self.client, vm, plan.cpus, plan.memory_mib, self.checkpoint)
             config = dict(cloned.get('other_config', {}))
             config.pop('disks', None)  # Explicit storage below; avoid template's default SR.
             if plan.iso:
                 config['install-repository'] = 'cdrom'
             self.call('VM.set_other_config', vm, config)
+            # XAPI requires a template here and converts it into a VM on success.
+            # Clearing is_a_template before provision leaves a partial unusable clone.
             self.async_call('VM.provision', vm)
+            self.stage = 'Configure CPU and memory'
+            self.announce()
+            configure_hardware(self.client, vm, plan.cpus, plan.memory_mib, self.checkpoint)
             if not installed:
                 vdi = self.async_call('VDI.create', {
                     'name_label': plan.name.strip() + ' disk', 'name_description': '',
@@ -211,6 +205,7 @@ class Provisioner:
                     'sharable': False, 'read_only': False, 'other_config': {},
                     'xenstore_data': {}, 'sm_config': {}}, reference=True)
                 self.resources['VDI'] = vdi
+                self.call('VDI.get_record', vdi)
                 self.add_vbd(vm, vdi, 'Disk')
             fresh = self.call('VM.get_record', vm)
             # Only the new VM's inherited VIFs are replaced, as upstream does.

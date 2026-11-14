@@ -10,7 +10,7 @@ access; it is not installed or needed at runtime. A desktop environment itself i
 GNOME/KDE or turn a minimal server into a workstation.
 
 For the published dev.1 candidate, use its attached documentation and original
-archive names. The current source build targets dev.2, which is a development candidate, not a stable release.
+archive names. The current source build targets dev.3, which is a development candidate, not a stable release.
 
 ## Transfer and install
 
@@ -22,7 +22,7 @@ corruption, not a malicious replacement of both files and manifest.
 Extract in a staging directory, review PACKAGES.tsv and run:
 
 ```sh
-tar -xzf xenadmin-rocky-airgap-el9-x86_64-1.0.0.dev2.tar.gz
+tar -xzf xenadmin-rocky-airgap-el9-x86_64-1.0.0.dev3.tar.gz
 cd airgap
 sha256sum -c SHA256SUMS
 sudo ./install-offline.sh
@@ -71,3 +71,8 @@ to the retained dev.1 release; delta links point to dev.2. Transfer both archive
 before disconnecting. Extract into separate directories and consult the map rather
 than assuming a baseline source version matches a newer binary. These archives
 are not needed to run the installed application.
+
+Application upgrades/removal preserve private operation journals under the user
+state directory. Retain them for recovery; see RECOVERY.md before exporting or
+manually retiring them. dev.3 runtime packaging is under verification; use a
+published candidate and its matching attached instructions for installation.

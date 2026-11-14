@@ -1,6 +1,25 @@
 # Release notes
 
+## 1.0.0.dev3 — in development
+
+Disk/DVD/NIC management, separate detach versus permanent disk deletion, private
+fsync operation journals, recovery/history after restart, UUID inspection in GUI
+and headless CLI, cancellation requests, named-host migration selection, and an
+indexed offline help viewer. Explicit JSON exports use private permissions.
+117 local checks pass. Both RPM builds and remote CI passed; fresh disconnected
+installations and installed GUI/help/recovery checks passed on Rocky 9 and 10
+containers. These container checks do not qualify booted Rocky desktops.
+Live XCP-ng provisioning, cold devices and firmware power-state checks now pass;
+see `evidence/LIVE_PROTOCOL.md`. Full Windows parity and booted Rocky desktop /
+independent-operator qualification remain open. Journals never replay changes or guarantee automatic rollback.
+
 ## 1.0.0.dev2 — development candidate, November 14, 2026
+
+**Known provisioning defects found during subsequent live testing:** implicit XML-RPC
+string task results were rejected after a successful clone; template conversion
+also occurred before provisioning. A failed attempt can leave a halted partial
+clone. Inspect existing tasks/resources before retrying. Both defects are corrected
+in dev.3 source; dev.2 RPMs remain affected.
 
 Submitted task tracking now distinguishes server-confirmed outcomes from submission.
 Monitoring pauses on connection/session errors; mutations are never replayed.
