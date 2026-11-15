@@ -1,3 +1,0 @@
-#!/bin/sh
-export PYTHONPATH=/usr/share/xenadmin-rocky
-exec /usr/bin/python3 -m xenadmin_rocky "$@"

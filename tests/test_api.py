@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
-from xenadmin_rocky.api import Client, APIError, Transport
-from xenadmin_rocky.app import safe_record
+from flagship.api import Client, APIError, Transport
+from flagship.app import safe_record
 
 
 class ClientTests(unittest.TestCase):

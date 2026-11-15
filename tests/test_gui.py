@@ -3,7 +3,7 @@ import os
 import tkinter as tk
 import unittest
 from unittest.mock import Mock, patch
-from xenadmin_rocky.app import Application
+from flagship.app import Application
 
 
 @unittest.skipUnless(os.environ.get('DISPLAY'), 'requires X display (use xvfb-run)')
@@ -30,13 +30,13 @@ class DesktopTests(unittest.TestCase):
         self.assertIn('disk-1', self.app.views['Storage'].get('1.0', 'end'))
         self.assertIn('Test guest', self.app.views['General'].get('1.0', 'end'))
 
-    @patch('xenadmin_rocky.app.messagebox.showwarning')
+    @patch('flagship.app.messagebox.showwarning')
     def test_disallowed_operation_never_reaches_server(self, warning):
         self.app.action('hard_shutdown')
         warning.assert_called_once()
         self.app.client.vm_action.assert_not_called()
 
-    @patch('xenadmin_rocky.app.messagebox.askyesno', return_value=False)
+    @patch('flagship.app.messagebox.askyesno', return_value=False)
     def test_declining_confirmation_never_reaches_server(self, confirm):
         self.app.action('start')
         confirm.assert_called_once()
@@ -51,7 +51,7 @@ class DesktopTests(unittest.TestCase):
         self.assertEqual(self.app.items, {})
 
     def test_task_monitor_pauses_on_session_loss_without_resubmitting(self):
-        from xenadmin_rocky.api import APIError
+        from flagship.api import APIError
         self.app.tracker.add('OpaqueRef:task', 'start', 'Test guest')
         self.app.client.call.side_effect = APIError(['SESSION_INVALID'])
         self.app.submit = lambda work, done, label: done(work())
@@ -70,7 +70,7 @@ class DesktopTests(unittest.TestCase):
         self.assertIn('success (100%)', self.app.views['Tasks'].get('1.0', 'end'))
 
     def prepare_wizard(self):
-        from xenadmin_rocky.wizard import NewVMDialog
+        from flagship.wizard import NewVMDialog
         self.app.records['VM']['template'] = {'name_label': 'Template', 'is_a_template': True}
         self.app.records['SR'] = {'sr': {'name_label': 'Storage', 'allowed_operations': ['vdi_create']}}
         self.app.records['network'] = {'network': {'name_label': 'Network'}}
@@ -86,7 +86,7 @@ class DesktopTests(unittest.TestCase):
         dialog.create()
         self.app.start_provisioning.assert_called_once_with(dialog.plan)
 
-    @patch('xenadmin_rocky.wizard.messagebox.showerror')
+    @patch('flagship.wizard.messagebox.showerror')
     def test_invalid_creation_form_cannot_submit(self, error):
         dialog = self.prepare_wizard()
         dialog.values['Memory (MiB)'].set('0')
@@ -97,7 +97,7 @@ class DesktopTests(unittest.TestCase):
         self.app.start_provisioning.assert_not_called()
         dialog.window.destroy()
 
-    @patch('xenadmin_rocky.wizard.messagebox.showinfo')
+    @patch('flagship.wizard.messagebox.showinfo')
     def test_busy_monitor_does_not_discard_reviewed_creation_plan(self, info):
         dialog = self.prepare_wizard()
         dialog.review()
@@ -110,8 +110,8 @@ class DesktopTests(unittest.TestCase):
         dialog.create()
         self.app.start_provisioning.assert_called_once()
 
-    @patch('xenadmin_rocky.app.simpledialog.askinteger')
-    @patch('xenadmin_rocky.app.messagebox.showwarning')
+    @patch('flagship.app.simpledialog.askinteger')
+    @patch('flagship.app.messagebox.showwarning')
     def test_running_vm_hardware_editor_never_requests_changes(self, warning, ask):
         self.app.records['VM']['vm-1']['power_state'] = 'Running'
         self.app.hardware()
@@ -119,10 +119,10 @@ class DesktopTests(unittest.TestCase):
         ask.assert_not_called()
         self.app.client.call.assert_not_called()
 
-    @patch('xenadmin_rocky.app.messagebox.showerror')
+    @patch('flagship.app.messagebox.showerror')
     def test_failed_workflow_retains_complete_report_without_oversized_dialog(self, error):
         from concurrent.futures import Future
-        from xenadmin_rocky.workflows import WorkflowError
+        from flagship.workflows import WorkflowError
         tasks = [{'task': 'task-' + str(n), 'status': 'success'} for n in range(30)]
         failure = WorkflowError('VM.provision', 'INJECTED_FAILURE', {'VM': 'created-vm'}, tasks)
         future = Future()
@@ -134,8 +134,8 @@ class DesktopTests(unittest.TestCase):
         self.assertIn('Save workflow report', error.call_args.args[1])
         self.assertLess(len(error.call_args.args[1]), 600)
 
-    @patch('xenadmin_rocky.app.choose_resource', return_value=(True, 'task'))
-    @patch('xenadmin_rocky.app.messagebox.askyesno', return_value=False)
+    @patch('flagship.app.choose_resource', return_value=(True, 'task'))
+    @patch('flagship.app.messagebox.askyesno', return_value=False)
     def test_declined_task_cancellation_never_submits(self, confirm, choose):
         self.app.records['task'] = {'task': {'name_label': 'Example task', 'status': 'pending', 'allowed_operations': ['cancel']}}
         self.app.submit = Mock()
@@ -144,8 +144,8 @@ class DesktopTests(unittest.TestCase):
         self.app.submit.assert_not_called()
         self.app.client.call.assert_not_called()
 
-    @patch('xenadmin_rocky.app.choose_resource', return_value=(True, 'host-1'))
-    @patch('xenadmin_rocky.app.messagebox.askyesno', return_value=True)
+    @patch('flagship.app.choose_resource', return_value=(True, 'host-1'))
+    @patch('flagship.app.messagebox.askyesno', return_value=True)
     def test_migration_uses_named_host_selector_and_reviews_destination(self, confirm, choose):
         self.app.records['VM']['vm-1']['allowed_operations'].append('pool_migrate')
         self.app.submit = Mock()

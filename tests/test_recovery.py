@@ -5,8 +5,8 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import Mock
-from xenadmin_rocky.recovery import inspect_by_uuid
-from xenadmin_rocky.journal import OperationJournal
+from flagship.recovery import inspect_by_uuid
+from flagship.journal import OperationJournal
 
 OBJECT_UUID = '00000000-0000-4000-8000-000000000001'
 
@@ -31,7 +31,7 @@ class RecoveryTests(unittest.TestCase):
     def test_headless_cli_help_imports_without_display(self):
         environment = dict(os.environ)
         environment.pop('DISPLAY', None)
-        result = subprocess.run([sys.executable, '-m', 'xenadmin_rocky.recovery', '--help'],
+        result = subprocess.run([sys.executable, '-m', 'flagship.recovery', '--help'],
                                 env=environment, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('inspect', result.stdout)
@@ -41,7 +41,7 @@ class RecoveryTests(unittest.TestCase):
             journal = OperationJournal(directory)
             journal.intent('Async.VM.start')
             journal.close()
-            result = subprocess.run([sys.executable, '-m', 'xenadmin_rocky.recovery', 'history', '--directory', directory],
+            result = subprocess.run([sys.executable, '-m', 'flagship.recovery', 'history', '--directory', directory],
                                     capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('no_recorded_outcome', result.stdout)

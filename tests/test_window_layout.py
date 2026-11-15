@@ -3,8 +3,8 @@ from pathlib import Path
 import tempfile
 import tkinter as tk
 import unittest
-from xenadmin_rocky.app import Application
-from xenadmin_rocky.journal import OperationJournal
+from flagship.app import Application
+from flagship.journal import OperationJournal
 
 
 @unittest.skipUnless(os.environ.get('DISPLAY'), 'requires X display')

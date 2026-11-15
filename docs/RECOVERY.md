@@ -13,11 +13,13 @@ Choose Tools → Operation history / recovery. This works without a pool connect
 and opens records from previous application runs. The default directory is:
 
 ```text
-~/.local/state/xenadmin-rocky/journals/
+~/.local/state/flagship/journals/
 ```
 
 If XDG_STATE_HOME is an absolute path, the directory is
-`$XDG_STATE_HOME/xenadmin-rocky/journals/`. Files are named
+`$XDG_STATE_HOME/flagship/journals/`. After upgrading from XenAdmin Rocky,
+Flagship copies the old journals here on first run and leaves the originals in
+`~/.local/state/xenadmin-rocky/journals/`. Files are named
 `operations-<random-id>.jsonl`. The directory is owner-only (0700), files are
 owner-readable/writable (0600), and records are flushed with fsync. Use persistent
 local storage for this directory. These are ordinary private files, not a
@@ -76,8 +78,8 @@ RPC methods. Run inspection from an interactive terminal; passwords are prompted
 with getpass and are not command-line/environment options.
 
 ```sh
-xenadmin-rocky-recovery history --output private-history.json
-xenadmin-rocky-recovery inspect \
+flagship-recovery history --output private-history.json
+flagship-recovery inspect \
   --endpoint https://pool.example.internal --username readonly-admin \
   --ca-file /path/to/trusted-ca.pem --kind VM \
   --uuid 00000000-0000-4000-8000-000000000001 \
@@ -112,5 +114,5 @@ pending. The task can still finish normally, fail or take time to cancel. Tasks
 shows the actual outcome. Earlier successful workflow steps are not undone.
 
 When running directly from the source directory instead of an installed RPM, use
-`python3 -m xenadmin_rocky.recovery` in place of `xenadmin-rocky-recovery`. The RPM
+`python3 -m flagship.recovery` in place of `flagship-recovery` (`python3 -m xenadmin_rocky.recovery` and the `xenadmin-rocky-recovery` symlink still work). The RPM
 launcher supplies the installed module path and works from any working directory.

@@ -2,8 +2,8 @@
 import copy
 import threading
 import unittest
-from xenadmin_rocky.api import APIError, wire_value
-from xenadmin_rocky.workflows import (VMPlan, Provisioner, WorkflowError,
+from flagship.api import APIError, wire_value
+from flagship.workflows import (VMPlan, Provisioner, WorkflowError,
                                       configure_hardware, task_reference, MiB, GiB)
 
 

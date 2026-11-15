@@ -1,8 +1,8 @@
 import copy
 import unittest
-from xenadmin_rocky.api import APIError
-from xenadmin_rocky.devices import DeviceManager
-from xenadmin_rocky.workflows import WorkflowError, GiB, NULL
+from flagship.api import APIError
+from flagship.devices import DeviceManager
+from flagship.workflows import WorkflowError, GiB, NULL
 from test_workflows import Pool
 
 

@@ -38,9 +38,9 @@ def safe_report(report):
 class OperationJournal:
     def __init__(self, directory=None):
         if directory is None:
-            base = os.environ.get('XDG_STATE_HOME', '')
-            base = Path(base) if base and Path(base).is_absolute() else Path.home() / '.local/state'
-            directory = base / 'xenadmin-rocky/journals'
+            from .migrate import journal_dir, migrate_legacy
+            migrate_legacy()
+            directory = journal_dir()
         self.directory = Path(directory)
         self.path = None
         self.fd = None

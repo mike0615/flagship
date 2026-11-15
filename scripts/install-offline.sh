@@ -15,6 +15,6 @@ if [[ ${VERSION_ID%%.*} != "$bundle_major" || $(uname -m) != x86_64 ]]; then
 fi
 # The app candidate is unsigned; authenticate the bundle before this local transaction.
 # Upstream dependency signatures may be verified separately with Rocky trusted keys.
-dnf --disablerepo='*' --repofrompath="xenadmin-offline,file://$PWD/rpms" \
-    --setopt=xenadmin-offline.gpgcheck=0 --setopt=localpkg_gpgcheck=0 \
-    install -y xenadmin-rocky
+dnf --disablerepo='*' --repofrompath="flagship-offline,file://$PWD/rpms" \
+    --setopt=flagship-offline.gpgcheck=0 --setopt=localpkg_gpgcheck=0 \
+    install -y flagship

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
-from xenadmin_rocky.tasks import TaskTracker
-from xenadmin_rocky.api import APIError
+from flagship.tasks import TaskTracker
+from flagship.api import APIError
 
 
 class TaskTests(unittest.TestCase):
@@ -59,7 +59,7 @@ class TaskTests(unittest.TestCase):
         self.assertIn('server-task-42', self.tracker.tasks)
 
     def test_cancellation_request_does_not_claim_task_cancelled(self):
-        from xenadmin_rocky.tasks import request_cancellation
+        from flagship.tasks import request_cancellation
         client = Mock()
         client.call.side_effect = [{'status': 'pending', 'allowed_operations': ['cancel']}, '']
         report = request_cancellation(client, 'server-task')
@@ -67,7 +67,7 @@ class TaskTests(unittest.TestCase):
         self.assertEqual(client.call.call_args.args, ('task.cancel', 'server-task'))
 
     def test_finished_task_is_not_cancelled(self):
-        from xenadmin_rocky.tasks import request_cancellation
+        from flagship.tasks import request_cancellation
         client = Mock()
         client.call.return_value = {'status': 'success', 'allowed_operations': []}
         with self.assertRaises(ValueError):
@@ -75,7 +75,7 @@ class TaskTests(unittest.TestCase):
         client.call.assert_called_once_with('task.get_record', 'server-task')
 
     def test_non_cancellable_task_is_not_submitted(self):
-        from xenadmin_rocky.tasks import request_cancellation
+        from flagship.tasks import request_cancellation
         client = Mock()
         client.call.return_value = {'status': 'pending', 'allowed_operations': []}
         with self.assertRaises(ValueError):
@@ -83,7 +83,7 @@ class TaskTests(unittest.TestCase):
         client.call.assert_called_once()
 
     def test_already_cancelling_task_is_not_requested_again(self):
-        from xenadmin_rocky.tasks import request_cancellation
+        from flagship.tasks import request_cancellation
         client = Mock()
         client.call.return_value = {'status': 'cancelling', 'allowed_operations': []}
         self.assertEqual(request_cancellation(client, 'server-task')['status'], 'cancelling')

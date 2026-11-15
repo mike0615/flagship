@@ -9,7 +9,7 @@ import re
 import shlex
 import stat
 import subprocess
-from xenadmin_rocky.journal import save_json_private
+from flagship.journal import save_json_private
 
 
 def main():

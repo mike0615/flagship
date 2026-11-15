@@ -9,8 +9,8 @@ client. The matching dependency-source archive is supplied separately for offlin
 access; it is not installed or needed at runtime. A desktop environment itself is a prerequisite; the bundle does not install
 GNOME/KDE or turn a minimal server into a workstation.
 
-For the published dev.1 candidate, use its attached documentation and original
-archive names. The current source build targets dev.3, which is a development candidate, not a stable release.
+For a previously published XenAdmin Rocky candidate, use its attached documentation and original
+archive names. The current source build targets Flagship 1.1.0.dev1, which is a development candidate, not a stable release.
 
 ## Transfer and install
 
@@ -20,16 +20,16 @@ against a separately trusted manifest. Checksums shipped beside files detect
 corruption, not a malicious replacement of both files and manifest.
 
 Use the exact archive filename for the release you transferred. This example
-uses the current dev.4 build. Extract in a staging directory, review PACKAGES.tsv
+uses the current Flagship 1.1.0.dev1 build. Extract in a staging directory, review PACKAGES.tsv
 and run:
 
 ```sh
-tar -xzf xenadmin-rocky-airgap-el9-x86_64-1.0.0.dev4.tar.gz
+tar -xzf flagship-airgap-el9-x86_64-1.1.0.dev1.tar.gz
 cd airgap
 sha256sum -c SHA256SUMS
 sudo ./install-offline.sh
-xenadmin-rocky --version
-xenadmin-rocky
+flagship --version
+flagship
 ```
 
 Use the el10 archive on Rocky 10. DNF is invoked with every repository disabled;
@@ -49,10 +49,18 @@ Do not mark an installation validated if any dependency was fetched externally.
 ## Upgrade and remove
 
 Retain the previous RPM and matching dependency bundle before upgrading. Install
-a new authenticated bundle with its offline installer. To remove the client:
+a new authenticated bundle with its offline installer.
+
+Upgrading from XenAdmin Rocky: installing the Flagship package replaces
+`xenadmin-rocky` (`Obsoletes:` / `Provides:`). The `xenadmin-rocky` and
+`xenadmin-rocky-recovery` commands remain as symlinks. On first run Flagship
+copies `~/.local/state/xenadmin-rocky` (and `~/.config/xenadmin-rocky` if
+present) to the new Flagship locations and leaves the originals in place.
+
+To remove the client:
 
 ```sh
-sudo dnf --disablerepo='*' remove xenadmin-rocky
+sudo dnf --disablerepo='*' remove flagship
 ```
 
 Review DNF's transaction before confirming. Removing the client does not remove
@@ -76,5 +84,5 @@ are not needed to run the installed application.
 
 Application upgrades/removal preserve private operation journals under the user
 state directory. Retain them for recovery; see RECOVERY.md before exporting or
-manually retiring them. dev.3 runtime packaging is under verification; use a
+manually retiring them. 1.1.0.dev1 runtime packaging is under verification; use a
 published candidate and its matching attached instructions for installation.

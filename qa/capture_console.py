@@ -9,9 +9,9 @@ import socket
 import sys
 from types import SimpleNamespace
 import time
-from xenadmin_rocky.api import Client
-from xenadmin_rocky.console import open_console
-from xenadmin_rocky.rfb import RFB
+from flagship.api import Client
+from flagship.console import open_console
+from flagship.rfb import RFB
 
 
 def capture(c, state, guest, args):

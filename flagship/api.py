@@ -78,7 +78,7 @@ class Client:
 
     def login(self, username, password):
         self.session = self._rpc('session.login_with_password', username, password,
-                                 '1.0', 'xenadmin-rocky')
+                                 '1.0', 'flagship')
 
     def call(self, name, *args):
         if not self.session:

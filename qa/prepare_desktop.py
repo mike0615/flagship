@@ -5,9 +5,9 @@ from datetime import datetime, timezone
 import getpass
 from pathlib import Path
 import uuid
-from xenadmin_rocky.api import Client
-from xenadmin_rocky.journal import OperationJournal, save_json_private
-from xenadmin_rocky.workflows import Provisioner, VMPlan, GiB
+from flagship.api import Client
+from flagship.journal import OperationJournal, save_json_private
+from flagship.workflows import Provisioner, VMPlan, GiB
 
 
 def main():

@@ -1,8 +1,8 @@
 import io
 import struct
 import unittest
-from xenadmin_rocky.console import ConsoleError
-from xenadmin_rocky.rfb import RFB
+from flagship.console import ConsoleError
+from flagship.rfb import RFB
 
 
 class Wire:

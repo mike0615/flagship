@@ -5,10 +5,10 @@ import getpass
 import json
 from pathlib import Path
 import tkinter as tk
-from xenadmin_rocky.api import Client
-from xenadmin_rocky.app import Application
-from xenadmin_rocky.console_window import ConsoleWindow
-from xenadmin_rocky.journal import OperationJournal
+from flagship.api import Client
+from flagship.app import Application
+from flagship.console_window import ConsoleWindow
+from flagship.journal import OperationJournal
 
 
 def main():

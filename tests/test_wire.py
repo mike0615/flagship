@@ -7,7 +7,7 @@ import tempfile
 import threading
 import unittest
 from xmlrpc.server import SimpleXMLRPCServer
-from xenadmin_rocky.api import Client, APIError
+from flagship.api import Client, APIError
 
 
 @unittest.skipUnless(shutil.which('openssl'), 'openssl is required for ephemeral test certificates')
@@ -87,7 +87,7 @@ class WireTests(unittest.TestCase):
         client.logout()
 
     def test_recovery_uuid_inspection_crosses_verified_https(self):
-        from xenadmin_rocky.recovery import inspect_by_uuid
+        from flagship.recovery import inspect_by_uuid
         client = Client('https://localhost:' + str(self.port), str(self.cert))
         client.login('test-user', 'test-only-password')
         report = inspect_by_uuid(client, 'VM', '00000000-0000-4000-8000-000000000001')

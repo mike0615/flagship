@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <title>Flagship</title>
+  <rect x="4" y="4" width="120" height="120" rx="18" fill="#1f4e79"/>
+  <!-- hull -->
+  <path d="M22 96 C34 108, 94 108, 106 96 L96 96 C88 102, 40 102, 32 96 Z" fill="#0d2d4a"/>
+  <path d="M26 96 C36 104, 92 104, 102 96 L94 96 C86 100, 42 100, 34 96 Z" fill="#f2c14e"/>
+  <!-- mast -->
+  <rect x="62" y="26" width="5" height="72" rx="1.5" fill="#e8eef4"/>
+  <!-- pennant -->
+  <path d="M67 28 L112 44 L67 58 Z" fill="#f2c14e"/>
+  <path d="M67 30 L106 44 L67 56 Z" fill="#f7d56a"/>
+  <circle cx="76" cy="44" r="4" fill="#1f4e79"/>
+  <!-- water line -->
+  <path d="M18 108 C38 102, 58 112, 78 106 S108 102, 114 108" fill="none" stroke="#8fb4d4" stroke-width="3" stroke-linecap="round"/>
+</svg>

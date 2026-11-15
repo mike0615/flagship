@@ -1,5 +1,5 @@
 import unittest
-from xenadmin_rocky.protocol import decode_reference_result
+from flagship.protocol import decode_reference_result
 
 
 class ProtocolTests(unittest.TestCase):

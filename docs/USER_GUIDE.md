@@ -1,9 +1,11 @@
-# XenAdmin Rocky user guide
+# Flagship user guide
 
 ## Start and connect
 
-Launch XenAdmin Rocky from the desktop menu or run `xenadmin-rocky`.
-Use a graphical Rocky Linux session. Click Connect and enter the HTTPS address
+Launch Flagship from the desktop menu or run `flagship`.
+(`xenadmin-rocky` still works; it is a compatibility symlink.)
+Use a graphical Rocky Linux session. Press F1 for Help, or open Help ▸ About Flagship
+for the version, license and project link. Click Connect and enter the HTTPS address
 of the pool coordinator, such as `https://pool.example.internal`. Enter your
 XAPI username and password. Passwords remain in process memory while connecting
 and are not saved to disk. Use an account with the permissions needed for your task.

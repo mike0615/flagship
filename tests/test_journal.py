@@ -7,8 +7,8 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import Mock, patch
-from xenadmin_rocky.api import Client, APIError
-from xenadmin_rocky.journal import OperationJournal, JournalError, recovery_needed
+from flagship.api import Client, APIError
+from flagship.journal import OperationJournal, JournalError, recovery_needed
 
 
 class JournalTests(unittest.TestCase):
@@ -142,7 +142,7 @@ class JournalTests(unittest.TestCase):
         self.assertEqual(recovery_needed(records)[0]['state'], 'no_recorded_outcome')
 
     def test_process_exit_after_intent_preserves_recovery_record(self):
-        code = ('import os; from xenadmin_rocky.journal import OperationJournal; '
+        code = ('import os; from flagship.journal import OperationJournal; '
                 'j=OperationJournal(' + repr(str(self.directory)) + '); '
                 'j.intent("Async.VM.start"); os._exit(17)')
         result = subprocess.run([sys.executable, '-c', code])
@@ -180,7 +180,7 @@ class JournalTests(unittest.TestCase):
 
     def test_complete_device_workflow_records_uuid_and_confirmed_tasks(self):
         from test_devices import DevicePool
-        from xenadmin_rocky.devices import DeviceManager
+        from flagship.devices import DeviceManager
         pool = DevicePool(running=True)
         self.client._rpc = lambda method, session, *args: pool.call(method, *args)
         self.journal.begin('Add disk', self.client.endpoint)
@@ -194,14 +194,14 @@ class JournalTests(unittest.TestCase):
         self.assertTrue(pool.vbds[report['resources']['VBD']]['currently_attached'])
 
     def test_fsync_failure_before_request_blocks_server_changes(self):
-        with patch('xenadmin_rocky.journal.os.fsync', side_effect=OSError('simulated disk failure')):
+        with patch('flagship.journal.os.fsync', side_effect=OSError('simulated disk failure')):
             with self.assertRaises(JournalError):
                 self.client.call('Async.VM.start', 'vm', False, False)
         self.client._rpc.assert_not_called()
         self.assertTrue(self.journal.failed)
 
     def test_explicit_export_is_private_even_when_replacing_permissive_file(self):
-        from xenadmin_rocky.journal import save_json_private
+        from flagship.journal import save_json_private
         destination = Path(self.temp.name) / 'export.json'
         destination.write_text('old')
         destination.chmod(0o644)
@@ -210,7 +210,7 @@ class JournalTests(unittest.TestCase):
         self.assertEqual(json.loads(destination.read_text())['resources']['VM'], 'vm')
 
     def test_explicit_export_refuses_symlink_without_modifying_target(self):
-        from xenadmin_rocky.journal import save_json_private
+        from flagship.journal import save_json_private
         target = Path(self.temp.name) / 'original'
         target.write_text('keep')
         link = Path(self.temp.name) / 'export.json'
@@ -221,8 +221,8 @@ class JournalTests(unittest.TestCase):
 
     def test_inventory_export_handles_xmlrpc_timestamps(self):
         from xmlrpc.client import DateTime
-        from xenadmin_rocky.journal import save_json_private
-        from xenadmin_rocky.redaction import safe_record
+        from flagship.journal import save_json_private
+        from flagship.redaction import safe_record
         destination = Path(self.temp.name) / 'inventory.json'
         save_json_private(destination, safe_record({'created': DateTime('20261114T12:00:00')}))
         self.assertEqual(json.loads(destination.read_text())['created'], '20261114T12:00:00')

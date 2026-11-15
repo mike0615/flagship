@@ -5,7 +5,7 @@ They are not product installation commands. Keep state directories private and
 outside Git; credentials are prompted and are not accepted through arguments.
 Use the tested pool's trusted CA file. Never disable TLS verification.
 Run from the checkout root with `export PYTHONPATH="$PWD"` before invoking tools
-that import `xenadmin_rocky`.
+that import `flagship`.
 
 `live_protocol_smoke.py --execute` creates isolated networks and a firmware VM,
 tests provisioning/devices/power states and retains an exact UUID manifest.

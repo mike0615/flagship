@@ -1,2 +1,2 @@
-from .app import main
+from flagship.app import main
 main()

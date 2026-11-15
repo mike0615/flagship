@@ -7,7 +7,7 @@ import queue
 import threading
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog, filedialog
-from . import __version__
+from . import APP_NAME, __version__
 from .api import Client, APIError
 from .tasks import TaskTracker, request_cancellation
 from .workflows import Provisioner, WorkflowError, configure_hardware, MiB, stage_label
@@ -18,7 +18,7 @@ from .devices import DeviceManager
 from .dialogs import choose_resource
 from .redaction import safe_record
 from .recovery import inspect_by_uuid
-from .help import HelpDialog
+from .help import AboutDialog, HelpDialog, docs_directory
 from .journal import OBJECT_CLASSES
 
 
@@ -42,7 +42,7 @@ class Application:
         self.closing = False
         self.workflow_stop = None
         self.last_workflow_report = None
-        root.title('XenAdmin Rocky — ' + __version__)
+        root.title(APP_NAME + ' — ' + __version__)
         width = min(1200, max(640, root.winfo_screenwidth()-40))
         height = min(760, max(480, root.winfo_screenheight()-100))
         root.geometry(f'{width}x{height}')
@@ -53,7 +53,12 @@ class Application:
         tools.add_command(label='Operation history / recovery', command=lambda: HistoryDialog(self.root, self.journal, self.inspect_object))
         tools.add_command(label='Request task cancellation…', command=self.cancel_task)
         menu.add_cascade(label='Tools', menu=tools)
+        help_menu = tk.Menu(menu, tearoff=False)
+        help_menu.add_command(label='Flagship Help', command=self.help, accelerator='F1')
+        help_menu.add_command(label='About Flagship', command=self.about)
+        menu.add_cascade(label='Help', menu=help_menu)
         root.configure(menu=menu)
+        root.bind('<F1>', lambda _event: self.help())
         toolbar = ttk.Frame(root, padding=6)
         toolbar.pack(fill='x')
         self.buttonbar = ttk.Frame(toolbar)
@@ -240,7 +245,7 @@ class Application:
             def done(result):
                 self.client, self.records, errors = result
                 self.populate()
-                self.root.title('XenAdmin Rocky — ' + __version__ + ' — ' + self.client.endpoint)
+                self.root.title(APP_NAME + ' — ' + __version__ + ' — ' + self.client.endpoint)
                 self.status.set('Connected to ' + self.client.endpoint + '. ' + self.warning(errors))
             self.submit(work, done, 'Connecting…')
         ttk.Button(dialog, text='Connect', command=accept).grid(row=4, column=1, pady=8)
@@ -276,7 +281,7 @@ class Application:
                 if panel.window.winfo_exists():
                     panel.window.destroy()
             self.device_panels = []
-            self.root.title('XenAdmin Rocky — ' + __version__)
+            self.root.title(APP_NAME + ' — ' + __version__)
             self.status.set('Disconnected; remote logout was not confirmed.' if unconfirmed else 'Disconnected.')
         self.submit(work, done, 'Disconnecting…')
 
@@ -585,10 +590,10 @@ class Application:
                 messagebox.showerror('Export failed', 'Cannot write the selected file.')
 
     def help(self):
-        directory = Path(__file__).resolve().parent.parent / 'docs'
-        if not directory.is_dir():
-            directory = Path('/usr/share/doc/xenadmin-rocky')
-        return HelpDialog(self.root, directory)
+        return HelpDialog(self.root, docs_directory())
+
+    def about(self):
+        return AboutDialog(self.root)
 
     def close(self):
         if self.busy:
@@ -607,10 +612,12 @@ class Application:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Native Rocky Linux XAPI desktop client')
-    parser.add_argument('--version', action='version', version=__version__)
+    parser = argparse.ArgumentParser(prog='flagship', description='Flagship — native Rocky Linux XAPI desktop client')
+    parser.add_argument('--version', action='version', version='%s %s' % (APP_NAME, __version__))
     parser.add_argument('--smoke-test', action='store_true', help='Create UI, then exit; requires a display')
     args = parser.parse_args()
+    from .migrate import migrate_legacy
+    migrate_legacy()
     root = tk.Tk()
     Application(root)
     if args.smoke_test:

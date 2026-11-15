@@ -2,6 +2,11 @@
 
 Development status. This record must be updated with evidence, not assumptions.
 
+Flagship 1.1.0.dev1 is the rebrand of the XenAdmin Rocky 1.0.0.dev4 development
+tree (package, commands, icon, journals and documentation). Historical rows
+below keep the candidate names under which the evidence was collected. The
+rename itself does not qualify a stable v1.0.
+
 | Gate | Status |
 |---|---|
 | Targeted Windows source architectural review | Completed; SOURCE_ANALYSIS.md |

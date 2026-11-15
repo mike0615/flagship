@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Flagship
+GenericName=XAPI pool manager
+Comment=Manage XAPI hosts and virtual machines (formerly XenAdmin Rocky)
+Exec=flagship
+Icon=flagship
+Terminal=false
+Categories=System;RemoteAccess;
+Keywords=XAPI;XCP;Xen;XenServer;XenAdmin;Flagship;VM;
+StartupNotify=true

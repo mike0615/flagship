@@ -6,10 +6,10 @@ import getpass
 from pathlib import Path
 import time
 import uuid
-from xenadmin_rocky.api import Client, APIError
-from xenadmin_rocky.devices import DeviceManager
-from xenadmin_rocky.journal import OperationJournal, save_json_private
-from xenadmin_rocky.workflows import Provisioner, VMPlan, WorkflowError, GiB, NULL
+from flagship.api import Client, APIError
+from flagship.devices import DeviceManager
+from flagship.journal import OperationJournal, save_json_private
+from flagship.workflows import Provisioner, VMPlan, WorkflowError, GiB, NULL
 
 
 def main():
@@ -139,8 +139,8 @@ def main():
             check('live VM '+operation+' -> '+expected, own_vm(vm)['power_state']==expected)
             if operation == 'start' and args.console:
                 stage = 'verified console tunnel and framebuffer'
-                from xenadmin_rocky.console import open_console
-                from xenadmin_rocky.rfb import RFB
+                from flagship.console import open_console
+                from flagship.rfb import RFB
                 tunnel = open_console(client, vm)
                 try:
                     console = RFB(tunnel)

@@ -4,10 +4,10 @@ import argparse
 import getpass
 import json
 from pathlib import Path
-from xenadmin_rocky.api import Client, APIError
-from xenadmin_rocky.journal import OperationJournal, save_json_private
-from xenadmin_rocky.protocol import decode_reference_result, NULL
-from xenadmin_rocky.workflows import Provisioner
+from flagship.api import Client, APIError
+from flagship.journal import OperationJournal, save_json_private
+from flagship.protocol import decode_reference_result, NULL
+from flagship.workflows import Provisioner
 
 
 def main():

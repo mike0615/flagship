@@ -11,11 +11,11 @@ test -s "$out/dependency-sources/BINARY_TO_SOURCE.tsv"
 podman run --rm -v "$out/dependency-sources:/sources:Z" \
     "quay.io/rockylinux/rockylinux:$major" bash -euc '
     dnf --disablerepo="*" --enablerepo=baseos --enablerepo=appstream install -y dnf-plugins-core
-    mapfile -t specs < <(cut -f2 /sources/BINARY_TO_SOURCE.tsv | grep -v "^xenadmin-rocky-" | sed "s/\.src\.rpm$//" | sort -u)
+    mapfile -t specs < <(cut -f2 /sources/BINARY_TO_SOURCE.tsv | grep -v "^flagship-" | sed "s/\.src\.rpm$//" | sort -u)
     test "${#specs[@]}" -gt 0
     dnf --disablerepo="*" --enablerepo=baseos-source --enablerepo=appstream-source \
         download --source --destdir=/sources "${specs[@]}"
     '
 cp "$out"/*.src.rpm "$out/dependency-sources/"
 (cd "$out/dependency-sources" && sha256sum ./*.rpm BINARY_TO_SOURCE.tsv > SHA256SUMS)
-tar -czf "$out/xenadmin-rocky-dependency-sources-el$major-$app_version.tar.gz" -C "$out" dependency-sources
+tar -czf "$out/flagship-dependency-sources-el$major-$app_version.tar.gz" -C "$out" dependency-sources

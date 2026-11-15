@@ -1,5 +1,27 @@
 # Release notes
 
+## 1.1.0.dev1 — Flagship rename, November 15, 2026
+
+Renamed from XenAdmin Rocky to Flagship to align with the Anderson Computer
+cyber chief toolset (Skiff, Sonar, Porthole). The RPM is now `flagship`; the
+commands are `flagship` and `flagship-recovery`. `xenadmin-rocky` and
+`xenadmin-rocky-recovery` remain as compatibility symlinks. dnf upgrades
+replace `xenadmin-rocky` through `Obsoletes:` / `Provides:`.
+
+On first run, if `~/.local/state/flagship` does not already exist, Flagship
+copies `~/.local/state/xenadmin-rocky` (operation journals) and
+`~/.config/xenadmin-rocky` if present, and leaves the originals untouched.
+
+Help ▸ Flagship Help (F1) and Help ▸ About Flagship show the name, version,
+toolset membership, project page, BSD 2-Clause license and credits. The
+Python package is `flagship`; `python3 -m xenadmin_rocky` still starts the
+client.
+
+This is a development candidate, not a qualified v1.0. The rebrand does not
+by itself close outstanding qualification gates recorded for the XenAdmin
+Rocky 1.0.0.dev4 tree.
+
+
 ## 1.0.0.dev4 — in development
 
 Authenticated native RFB console window, opt-in keyboard/mouse input, full repaint

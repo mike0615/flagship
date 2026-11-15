@@ -2,7 +2,7 @@ import io
 import ssl
 import unittest
 from unittest.mock import Mock, patch
-from xenadmin_rocky.console import ConsoleError, console_target, open_console
+from flagship.console import ConsoleError, console_target, open_console
 
 
 class ConsoleTests(unittest.TestCase):
@@ -51,7 +51,7 @@ class ConsoleTests(unittest.TestCase):
         self.client.ssl_context.wrap_socket.return_value = connection
         return connection
 
-    @patch('xenadmin_rocky.console.socket.create_connection')
+    @patch('flagship.console.socket.create_connection')
     def test_tunnel_preserves_buffered_frame_and_cookie_not_url(self, connect):
         connection = self.socket(b'HTTP/1.1 200 OK\r\nServer: xapi\r\n\r\nRFB 003.008\n')
         tunnel = open_console(self.client, 'vm')
@@ -63,7 +63,7 @@ class ConsoleTests(unittest.TestCase):
         tunnel.close()
         connection.close.assert_called_once()
 
-    @patch('xenadmin_rocky.console.socket.create_connection')
+    @patch('flagship.console.socket.create_connection')
     def test_refused_or_oversized_response_never_retried_or_exposed(self, connect):
         for response in (b'HTTP/1.1 302 private-session\r\n\r\n',
                          b'HTTP/1.1 403 private-session\r\n\r\n',
@@ -75,7 +75,7 @@ class ConsoleTests(unittest.TestCase):
             connection.close.assert_called_once()
         self.assertEqual(connect.call_count, 3)
 
-    @patch('xenadmin_rocky.console.socket.create_connection')
+    @patch('flagship.console.socket.create_connection')
     def test_tls_failure_sends_no_session(self, connect):
         self.client.ssl_context.wrap_socket.side_effect = ssl.SSLCertVerificationError('untrusted')
         with self.assertRaises(ssl.SSLCertVerificationError): open_console(self.client, 'vm')

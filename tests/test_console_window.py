@@ -3,7 +3,7 @@ import tkinter as tk
 import unittest
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
-from xenadmin_rocky.console_window import ConsoleWindow
+from flagship.console_window import ConsoleWindow
 
 
 @unittest.skipUnless(os.environ.get('DISPLAY'), 'requires X display')
@@ -12,7 +12,7 @@ class ConsoleWindowTests(unittest.TestCase):
         self.root = tk.Tk()
         self.root.withdraw()
         self.app = SimpleNamespace(root=self.root, client=object(), records={'VM': {'vm': {'name_label': 'Test'}}})
-        with patch('xenadmin_rocky.console_window.threading.Thread.start'):
+        with patch('flagship.console_window.threading.Thread.start'):
             self.viewer = ConsoleWindow(self.app, 'vm')
         self.viewer.rfb = Mock()
 

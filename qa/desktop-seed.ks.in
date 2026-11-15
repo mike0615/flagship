@@ -58,13 +58,15 @@ cat /etc/rocky-release
 printf 'Boot ID: '; cat /proc/sys/kernel/random/boot_id
 printf 'SELinux: '; getenforce
 nmcli device status
+flagship --version
 xenadmin-rocky --version
-rpm -q xenadmin-rocky python3-tkinter
-test -s /usr/share/xenadmin-rocky/docs/RECOVERY.md && echo 'PASS: installed offline help'
-xenadmin-rocky-recovery --help >/dev/null && echo 'PASS: installed recovery command'
+rpm -q flagship python3-tkinter
+test -L /usr/bin/xenadmin-rocky && test -L /usr/bin/xenadmin-rocky-recovery
+test -s /usr/share/flagship/docs/RECOVERY.md && echo 'PASS: installed offline help'
+flagship-recovery --help >/dev/null && echo 'PASS: installed recovery command'
 gsettings set org.gnome.desktop.session idle-delay 0
 gsettings set org.gnome.desktop.screensaver lock-enabled false
-xenadmin-rocky &
+flagship &
 printf '\nDesktop qualification session ready. Installer log:\n'
 sudo tail -n 8 /var/log/xenadmin-qa-install.log
 exec bash -i

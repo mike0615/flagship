@@ -19,7 +19,7 @@ offline installer, help files, build OS identity and file checksums. Build on th
 same Rocky major as the target; never mix dependency sets across majors.
 
 Run unit tests using `python3 -m unittest discover -s tests -v`. For GUI construction
-use `xvfb-run -a python3 -m xenadmin_rocky --smoke-test` where available.
+use `xvfb-run -a python3 -m flagship --smoke-test` where available.
 A GUI smoke test is not a hypervisor workflow test.
 
 After changes, rebuild both bundles and perform the qualification checklist on
@@ -39,7 +39,7 @@ SRPMs using `./scripts/collect-dependency-sources.sh 9` and the equivalent for 1
 Source archives can be large (the Rocky 10 Noto font SRPM alone is about 1 GB);
 retain them with the binary bundles for offline source access.
 
-Build output is isolated by application version (currently 1.0.0.dev4) so a new
+Build output is isolated by application version (currently 1.1.0.dev1) so a new
 candidate does not overwrite published dev.1 artifacts. CI uploads the complete
 versioned dist tree for its Rocky matrix job.
 

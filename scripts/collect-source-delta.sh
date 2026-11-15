@@ -38,4 +38,4 @@ while IFS= read -r name; do
     fi
 done < "$delta/REQUIRED_SOURCES"
 (cd "$delta" && sha256sum ./*.rpm REQUIRED_SOURCES NEEDED_SPECS SOURCE-COVERAGE.tsv > SHA256SUMS)
-tar -czf "$out/xenadmin-rocky-source-delta-el$major-$app_version.tar.gz" -C "$out" source-delta
+tar -czf "$out/flagship-source-delta-el$major-$app_version.tar.gz" -C "$out" source-delta
