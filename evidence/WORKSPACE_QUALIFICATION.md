@@ -15,3 +15,5 @@ payload hashes are in the published RELEASE_SOURCE.json and SHA256SUMS.
 This remains a development prerelease with the compatibility boundaries described
 in docs/PORTABLE_IMAGES.md. AppStream supplies qemu-img and virt-viewer on both
 Rocky majors. No Wine, pip downloads or browser-hosted UI is involved.
+
+Local builds from `b54c2c38a432cf906e7e006d118a151c2054da4c` passed installed native GUI and all 233 tests on both Rocky 9.8 and 10.2 with networking disabled. See workspace-build-el{9,10}.txt, workspace-offline-el{9,10}.txt, workspace-installed-el{9,10}.txt and workspace-provenance.json. These logs include native qemu-img and virt-viewer dependencies.

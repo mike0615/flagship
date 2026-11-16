@@ -1,0 +1,1346 @@
+STEP 1/2: FROM quay.io/rockylinux/rockylinux:10
+STEP 2/2: RUN dnf --disablerepo='*' --enablerepo=baseos --enablerepo=appstream install -y openssl && dnf clean all
+--> Using cache 058fddddae9f6941f00b4702b0f758e14c6dbcd57d9dfb62b190a79394fec670
+COMMIT localhost/flagship-center-qa:10
+--> 058fddddae9f
+Successfully tagged localhost/flagship-center-qa:10
+058fddddae9f6941f00b4702b0f758e14c6dbcd57d9dfb62b190a79394fec670
+./BUILD_OS_RELEASE: OK
+./LICENSE: OK
+./PACKAGES.tsv: OK
+./docs/BUILD.md: OK
+./docs/CENTER_INTERFACE.md: OK
+./docs/CONSOLE.md: OK
+./docs/FEATURE_MATRIX.md: OK
+./docs/INSTALL.md: OK
+./docs/OPERATIONS.md: OK
+./docs/PORTABLE_IMAGES.md: OK
+./docs/QUALIFICATION.md: OK
+./docs/RECOVERY.md: OK
+./docs/RELEASE_NOTES.md: OK
+./docs/ROADMAP.md: OK
+./docs/SOURCE_ANALYSIS.md: OK
+./docs/TLS_CERTIFICATES.md: OK
+./docs/USER_GUIDE.md: OK
+./install-offline.sh: OK
+./rpms/ModemManager-glib-1.22.0-7.el10.x86_64.rpm: OK
+./rpms/adwaita-cursor-theme-46.0-3.el10.noarch.rpm: OK
+./rpms/adwaita-icon-theme-46.0-3.el10.noarch.rpm: OK
+./rpms/alsa-lib-1.2.16.1-1.el10.x86_64.rpm: OK
+./rpms/alternatives-1.30-2.el10.x86_64.rpm: OK
+./rpms/at-spi2-atk-2.56.1-1.el10.x86_64.rpm: OK
+./rpms/at-spi2-core-2.56.1-1.el10.x86_64.rpm: OK
+./rpms/atk-2.56.1-1.el10.x86_64.rpm: OK
+./rpms/audit-libs-4.2.1-3.el10.x86_64.rpm: OK
+./rpms/authselect-1.5.3-1.el10.x86_64.rpm: OK
+./rpms/authselect-libs-1.5.3-1.el10.x86_64.rpm: OK
+./rpms/avahi-glib-0.9~rc2-3.el10.x86_64.rpm: OK
+./rpms/avahi-libs-0.9~rc2-3.el10.x86_64.rpm: OK
+./rpms/basesystem-11-22.el10.noarch.rpm: OK
+./rpms/bash-5.2.26-6.el10.x86_64.rpm: OK
+./rpms/bluez-libs-5.87+1.git30db66dc971b-1.el10.x86_64.rpm: OK
+./rpms/bzip2-libs-1.0.8-25.el10.x86_64.rpm: OK
+./rpms/ca-certificates-2026.2.92_v9.0.319-100.3.el10_2.noarch.rpm: OK
+./rpms/cairo-1.18.2-3.el10.x86_64.rpm: OK
+./rpms/cairo-gobject-1.18.2-3.el10.x86_64.rpm: OK
+./rpms/colord-libs-1.4.7-6.el10.x86_64.rpm: OK
+./rpms/coreutils-9.5-14.el10_3.x86_64.rpm: OK
+./rpms/coreutils-common-9.5-14.el10_3.x86_64.rpm: OK
+./rpms/cracklib-2.9.11-8.el10.x86_64.rpm: OK
+./rpms/cracklib-dicts-2.9.11-8.el10.x86_64.rpm: OK
+./rpms/crypto-policies-20260811-1.git4dcd294.el10.noarch.rpm: OK
+./rpms/cryptsetup-libs-2.8.6-2.el10.x86_64.rpm: OK
+./rpms/cups-filesystem-2.4.10-18.el10_2.noarch.rpm: OK
+./rpms/cups-libs-2.4.10-18.el10_2.x86_64.rpm: OK
+./rpms/cyrus-sasl-gssapi-2.1.28-30.el10_2.x86_64.rpm: OK
+./rpms/cyrus-sasl-lib-2.1.28-30.el10_2.x86_64.rpm: OK
+./rpms/dbus-1.14.10-6.el10.x86_64.rpm: OK
+./rpms/dbus-broker-36-5.el10_3.x86_64.rpm: OK
+./rpms/dbus-common-1.14.10-6.el10.noarch.rpm: OK
+./rpms/dbus-libs-1.14.10-6.el10.x86_64.rpm: OK
+./rpms/dconf-0.40.0-17.el10.x86_64.rpm: OK
+./rpms/default-fonts-core-sans-4.1-3.el10.noarch.rpm: OK
+./rpms/device-mapper-1.02.215-3.el10.x86_64.rpm: OK
+./rpms/device-mapper-libs-1.02.215-3.el10.x86_64.rpm: OK
+./rpms/diffutils-3.10-8.el10.x86_64.rpm: OK
+./rpms/duktape-2.7.0-10.el10.x86_64.rpm: OK
+./rpms/elfutils-debuginfod-client-0.195-1.el10.rocky.0.1.x86_64.rpm: OK
+./rpms/elfutils-default-yama-scope-0.195-1.el10.rocky.0.1.noarch.rpm: OK
+./rpms/elfutils-libelf-0.195-1.el10.rocky.0.1.x86_64.rpm: OK
+./rpms/elfutils-libs-0.195-1.el10.rocky.0.1.x86_64.rpm: OK
+./rpms/exempi-2.6.4-7.el10.x86_64.rpm: OK
+./rpms/exiv2-0.28.3-5.el10.x86_64.rpm: OK
+./rpms/exiv2-libs-0.28.3-5.el10.x86_64.rpm: OK
+./rpms/expat-2.7.3-2.el10_3.4.x86_64.rpm: OK
+./rpms/fdk-aac-free-2.0.0-15.el10.x86_64.rpm: OK
+./rpms/fftw-libs-single-3.3.11-1.el10.x86_64.rpm: OK
+./rpms/filesystem-3.18-17.el10.x86_64.rpm: OK
+./rpms/findutils-4.10.0-5.el10.x86_64.rpm: OK
+./rpms/flac-libs-1.4.3-6.el10.x86_64.rpm: OK
+./rpms/flagship-1.3.0-0.1.dev1.el10.noarch.rpm: OK
+./rpms/fontconfig-2.15.0-7.el10.x86_64.rpm: OK
+./rpms/fonts-filesystem-2.0.5-18.el10.noarch.rpm: OK
+./rpms/freetype-2.13.2-8.el10.x86_64.rpm: OK
+./rpms/fribidi-1.0.14-4.el10.x86_64.rpm: OK
+./rpms/fuse-common-3.16.2-5.el10.x86_64.rpm: OK
+./rpms/fuse3-3.16.2-5.el10.x86_64.rpm: OK
+./rpms/fuse3-libs-3.16.2-5.el10.x86_64.rpm: OK
+./rpms/gawk-5.3.0-7.el10.x86_64.rpm: OK
+./rpms/gawk-all-langpacks-5.3.0-7.el10.x86_64.rpm: OK
+./rpms/gdbm-1.23-14.el10.x86_64.rpm: OK
+./rpms/gdbm-libs-1.23-14.el10.x86_64.rpm: OK
+./rpms/gdk-pixbuf2-2.42.12-4.el10_1.5.x86_64.rpm: OK
+./rpms/gdk-pixbuf2-modules-2.42.12-4.el10_1.5.x86_64.rpm: OK
+./rpms/geoclue2-2.7.2-1.el10.x86_64.rpm: OK
+./rpms/giflib-5.2.1-25.el10_2.x86_64.rpm: OK
+./rpms/glib-networking-2.80.0-3.el10_3.4.x86_64.rpm: OK
+./rpms/glib2-2.80.4-22.el10_3.23.x86_64.rpm: OK
+./rpms/glibc-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/glibc-common-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/glibc-gconv-extra-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/glibc-minimal-langpack-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/gmp-6.2.1-12.el10.x86_64.rpm: OK
+./rpms/gnupg2-2.4.5-5.el10.x86_64.rpm: OK
+./rpms/gnutls-3.8.10-5.el10_2.x86_64.rpm: OK
+./rpms/gobject-introspection-1.79.1-7.el10.x86_64.rpm: OK
+./rpms/google-noto-fonts-common-20240401-5.el10.noarch.rpm: OK
+./rpms/google-noto-sans-vf-fonts-20240401-5.el10.noarch.rpm: OK
+./rpms/gpgme-1.23.2-6.el10.x86_64.rpm: OK
+./rpms/gpgmepp-1.23.2-6.el10.x86_64.rpm: OK
+./rpms/graphene-1.10.6-10.el10.x86_64.rpm: OK
+./rpms/graphite2-1.3.14-17.el10.x86_64.rpm: OK
+./rpms/grep-3.11-10.el10.x86_64.rpm: OK
+./rpms/gsettings-desktop-schemas-47.1-4.el10.x86_64.rpm: OK
+./rpms/gsm-1.0.22-8.el10.x86_64.rpm: OK
+./rpms/gstreamer1-1.26.7-5.el10_3.1.x86_64.rpm: OK
+./rpms/gstreamer1-plugins-base-1.26.7-4.el10_3.1.x86_64.rpm: OK
+./rpms/gtk-update-icon-cache-3.24.43-5.el10.x86_64.rpm: OK
+./rpms/gtk-vnc2-1.3.1-7.el10.x86_64.rpm: OK
+./rpms/gtk3-3.24.43-5.el10.x86_64.rpm: OK
+./rpms/gvnc-1.3.1-7.el10.x86_64.rpm: OK
+./rpms/gzip-1.13-4.el10_2.x86_64.rpm: OK
+./rpms/harfbuzz-8.4.0-6.el10.x86_64.rpm: OK
+./rpms/hicolor-icon-theme-0.17-20.el10.noarch.rpm: OK
+./rpms/hwdata-0.379-10.10.el10.noarch.rpm: OK
+./rpms/inih-58-3.el10.x86_64.rpm: OK
+./rpms/inih-cpp-58-3.el10.x86_64.rpm: OK
+./rpms/intel-vsc-firmware-20261026-23.5.el10_2.noarch.rpm: OK
+./rpms/iso-codes-4.16.0-6.el10.noarch.rpm: OK
+./rpms/jbigkit-libs-2.1-31.el10.x86_64.rpm: OK
+./rpms/json-c-0.18-3.el10.x86_64.rpm: OK
+./rpms/json-glib-1.8.0-5.el10.x86_64.rpm: OK
+./rpms/kbd-2.6.4-8.el10_2.x86_64.rpm: OK
+./rpms/kbd-legacy-2.6.4-8.el10_2.noarch.rpm: OK
+./rpms/kbd-misc-2.6.4-8.el10_2.noarch.rpm: OK
+./rpms/keyutils-libs-1.6.3-5.el10.x86_64.rpm: OK
+./rpms/kmod-31-13.el10.x86_64.rpm: OK
+./rpms/kmod-libs-31-13.el10.x86_64.rpm: OK
+./rpms/krb5-libs-1.21.3-11.el10_3.2.x86_64.rpm: OK
+./rpms/lame-libs-3.100-19.el10.x86_64.rpm: OK
+./rpms/lcms2-2.16-6.el10.x86_64.rpm: OK
+./rpms/libX11-1.8.13-1.el10_3.1.x86_64.rpm: OK
+./rpms/libX11-common-1.8.13-1.el10_3.1.noarch.rpm: OK
+./rpms/libX11-xcb-1.8.13-1.el10_3.1.x86_64.rpm: OK
+./rpms/libXau-1.0.11-8.el10.x86_64.rpm: OK
+./rpms/libXcomposite-0.4.6-5.el10.x86_64.rpm: OK
+./rpms/libXcursor-1.2.1-9.el10.x86_64.rpm: OK
+./rpms/libXdamage-1.1.6-5.el10.x86_64.rpm: OK
+./rpms/libXext-1.3.6-3.el10.x86_64.rpm: OK
+./rpms/libXfixes-6.0.1-5.el10.x86_64.rpm: OK
+./rpms/libXft-2.3.8-8.el10.x86_64.rpm: OK
+./rpms/libXi-1.8.1-7.el10_2.3.x86_64.rpm: OK
+./rpms/libXinerama-1.1.5-8.el10.x86_64.rpm: OK
+./rpms/libXrandr-1.5.4-5.el10.x86_64.rpm: OK
+./rpms/libXrender-0.9.11-8.el10_2.1.x86_64.rpm: OK
+./rpms/libXtst-1.2.4-8.el10_2.1.x86_64.rpm: OK
+./rpms/libXv-1.0.12-5.el10.x86_64.rpm: OK
+./rpms/libXxf86vm-1.1.5-8.el10.x86_64.rpm: OK
+./rpms/libacl-2.4.0-2.el10.x86_64.rpm: OK
+./rpms/libaio-0.3.112-1.el10.x86_64.rpm: OK
+./rpms/libarchive-3.7.7-11.el10_2.x86_64.rpm: OK
+./rpms/libassuan-2.5.6-6.el10.x86_64.rpm: OK
+./rpms/libasyncns-0.8-30.el10.x86_64.rpm: OK
+./rpms/libatomic-14.4.1-5.el10_3.x86_64.rpm: OK
+./rpms/libattr-2.6.0-2.el10.x86_64.rpm: OK
+./rpms/libblkid-2.40.2-23.el10_3.x86_64.rpm: OK
+./rpms/libbpf-1.7.0-2.el10.x86_64.rpm: OK
+./rpms/libbrotli-1.1.0-8.el10_2.1.x86_64.rpm: OK
+./rpms/libcamera-0.6.0-1.el10.x86_64.rpm: OK
+./rpms/libcamera-ipa-0.6.0-1.el10.x86_64.rpm: OK
+./rpms/libcanberra-0.30-37.el10.x86_64.rpm: OK
+./rpms/libcanberra-gtk3-0.30-37.el10.x86_64.rpm: OK
+./rpms/libcap-2.69-7.el10_1.1.x86_64.rpm: OK
+./rpms/libcap-ng-0.9.3-2.el10.x86_64.rpm: OK
+./rpms/libcbor-0.11.0-3.el10.x86_64.rpm: OK
+./rpms/libcom_err-1.47.1-5.el10.x86_64.rpm: OK
+./rpms/libcurl-8.12.1-6.el10.x86_64.rpm: OK
+./rpms/libdatrie-0.2.13-11.el10.x86_64.rpm: OK
+./rpms/libdex-0.8.1-1.el10.x86_64.rpm: OK
+./rpms/libdrm-2.4.128-1.el10.x86_64.rpm: OK
+./rpms/libeconf-0.6.2-4.el10.x86_64.rpm: OK
+./rpms/libedit-3.1-52.20230828cvs.el10.x86_64.rpm: OK
+./rpms/libepoxy-1.5.10-10.el10.x86_64.rpm: OK
+./rpms/libevent-2.1.13-1.el10_2.x86_64.rpm: OK
+./rpms/libexif-0.6.24-10.el10.x86_64.rpm: OK
+./rpms/libfdisk-2.40.2-23.el10_3.x86_64.rpm: OK
+./rpms/libffi-3.4.4-10.el10.x86_64.rpm: OK
+./rpms/libfido2-1.14.0-7.el10.x86_64.rpm: OK
+./rpms/libgcc-14.4.1-5.el10_3.x86_64.rpm: OK
+./rpms/libgcrypt-1.11.0-7.el10_2.x86_64.rpm: OK
+./rpms/libgexiv2-0.14.3-3.el10.x86_64.rpm: OK
+./rpms/libglvnd-1.7.0-7.el10.x86_64.rpm: OK
+./rpms/libglvnd-egl-1.7.0-7.el10.x86_64.rpm: OK
+./rpms/libglvnd-glx-1.7.0-7.el10.x86_64.rpm: OK
+./rpms/libgomp-14.4.1-5.el10_3.x86_64.rpm: OK
+./rpms/libgpg-error-1.50-2.el10.x86_64.rpm: OK
+./rpms/libgsf-1.14.53-2.el10.x86_64.rpm: OK
+./rpms/libgudev-238-7.el10.x86_64.rpm: OK
+./rpms/libgusb-0.4.9-4.el10.x86_64.rpm: OK
+./rpms/libgxps-0.3.2-11.el10.x86_64.rpm: OK
+./rpms/libicu-74.2-5.el10_0.x86_64.rpm: OK
+./rpms/libidn2-2.3.7-3.el10.x86_64.rpm: OK
+./rpms/libiptcdata-1.0.5-20.el10.x86_64.rpm: OK
+./rpms/libjpeg-turbo-3.0.2-4.el10.x86_64.rpm: OK
+./rpms/libksba-1.6.7-2.el10.x86_64.rpm: OK
+./rpms/liblc3-1.1.3-1.el10.x86_64.rpm: OK
+./rpms/libldac-2.0.2.3-17.el10.x86_64.rpm: OK
+./rpms/liblerc-4.0.0-8.el10.x86_64.rpm: OK
+./rpms/libmount-2.40.2-23.el10_3.x86_64.rpm: OK
+./rpms/libnghttp2-1.68.0-6.el10.x86_64.rpm: OK
+./rpms/libnl3-3.11.0-1.el10.x86_64.rpm: OK
+./rpms/libnotify-0.8.6-1.el10.x86_64.rpm: OK
+./rpms/libogg-1.3.5-10.el10.x86_64.rpm: OK
+./rpms/libosinfo-1.11.0-8.el10.x86_64.rpm: OK
+./rpms/libpciaccess-0.16-16.el10.x86_64.rpm: OK
+./rpms/libpng-1.6.40-11.el10_2.1.x86_64.rpm: OK
+./rpms/libportal-0.9.0-3.el10.x86_64.rpm: OK
+./rpms/libproxy-0.5.5-4.el10.x86_64.rpm: OK
+./rpms/libpsl-0.21.5-6.el10.x86_64.rpm: OK
+./rpms/libpwquality-1.4.5-13.el10.x86_64.rpm: OK
+./rpms/librsvg2-2.57.1-9.el10_3.10.x86_64.rpm: OK
+./rpms/libsbc-2.0-7.el10.x86_64.rpm: OK
+./rpms/libseccomp-2.5.6-1.el10.x86_64.rpm: OK
+./rpms/libselinux-3.11-2.el10.x86_64.rpm: OK
+./rpms/libsemanage-3.11-1.el10.x86_64.rpm: OK
+./rpms/libsepol-3.11-2.el10.x86_64.rpm: OK
+./rpms/libsmartcols-2.40.2-23.el10_3.x86_64.rpm: OK
+./rpms/libsndfile-1.2.2-7.el10.x86_64.rpm: OK
+./rpms/libsoup3-3.6.6-1.el10_3.9.x86_64.rpm: OK
+./rpms/libssh-0.12.2-2.el10.x86_64.rpm: OK
+./rpms/libssh-config-0.12.2-2.el10.noarch.rpm: OK
+./rpms/libstdc++-14.4.1-5.el10_3.x86_64.rpm: OK
+./rpms/libtasn1-4.20.0-5.el10_2.x86_64.rpm: OK
+./rpms/libtdb-1.4.15-100.el10.x86_64.rpm: OK
+./rpms/libthai-0.1.29-10.el10.x86_64.rpm: OK
+./rpms/libtheora-1.1.1-39.el10.x86_64.rpm: OK
+./rpms/libtiff-4.6.0-11.el10.x86_64.rpm: OK
+./rpms/libtirpc-1.3.5-1.el10.x86_64.rpm: OK
+./rpms/libtool-ltdl-2.4.7-14.el10.x86_64.rpm: OK
+./rpms/libtracker-sparql-3.7.3-4.el10.x86_64.rpm: OK
+./rpms/libunistring-1.1-10.el10.x86_64.rpm: OK
+./rpms/liburing-2.12-1.el10.x86_64.rpm: OK
+./rpms/libusb1-1.0.30-1.el10_2.x86_64.rpm: OK
+./rpms/libutempter-1.2.1-15.el10.x86_64.rpm: OK
+./rpms/libuuid-2.40.2-23.el10_3.x86_64.rpm: OK
+./rpms/libverto-0.3.2-10.el10.x86_64.rpm: OK
+./rpms/libvirt-client-12.5.0-4.1.el10_3.x86_64.rpm: OK
+./rpms/libvirt-glib-5.0.0-6.el10.x86_64.rpm: OK
+./rpms/libvirt-libs-12.5.0-4.1.el10_3.x86_64.rpm: OK
+./rpms/libvorbis-1.3.7-12.el10.x86_64.rpm: OK
+./rpms/libwayland-client-1.25.0-1.el10.x86_64.rpm: OK
+./rpms/libwayland-cursor-1.25.0-1.el10.x86_64.rpm: OK
+./rpms/libwayland-egl-1.25.0-1.el10.x86_64.rpm: OK
+./rpms/libwebp-1.3.2-10.el10.x86_64.rpm: OK
+./rpms/libwsman1-2.8.1-3.el10.x86_64.rpm: OK
+./rpms/libxcb-1.17.0-3.el10.x86_64.rpm: OK
+./rpms/libxcrypt-4.4.36-10.el10.x86_64.rpm: OK
+./rpms/libxkbcommon-1.7.0-4.el10.x86_64.rpm: OK
+./rpms/libxml2-2.12.5-15.el10_3.2.x86_64.rpm: OK
+./rpms/libxshmfence-1.3.2-5.el10.x86_64.rpm: OK
+./rpms/libxslt-1.1.39-9.el10.x86_64.rpm: OK
+./rpms/libyaml-0.2.5-16.el10.x86_64.rpm: OK
+./rpms/libzstd-1.5.5-9.el10.x86_64.rpm: OK
+./rpms/linux-firmware-whence-20261026-23.5.el10_2.noarch.rpm: OK
+./rpms/llvm-filesystem-22.1.8-1.el10.x86_64.rpm: OK
+./rpms/llvm-libs-22.1.8-1.el10.x86_64.rpm: OK
+./rpms/low-memory-monitor-2.1-12.el10.x86_64.rpm: OK
+./rpms/lua-libs-5.4.8-1.el10.x86_64.rpm: OK
+./rpms/lz4-libs-1.9.4-8.el10.x86_64.rpm: OK
+./rpms/mesa-dri-drivers-26.1.1-2.el10.x86_64.rpm: OK
+./rpms/mesa-filesystem-26.1.1-2.el10.x86_64.rpm: OK
+./rpms/mesa-libEGL-26.1.1-2.el10.x86_64.rpm: OK
+./rpms/mesa-libGL-26.1.1-2.el10.x86_64.rpm: OK
+./rpms/mesa-libgbm-26.1.1-2.el10.x86_64.rpm: OK
+./rpms/mpdecimal-2.5.1-12.el10.x86_64.rpm: OK
+./rpms/mpfr-4.2.1-8.el10.x86_64.rpm: OK
+./rpms/mpg123-libs-1.32.9-1.el10.x86_64.rpm: OK
+./rpms/ncurses-base-6.4-15.20240127.el10_1.noarch.rpm: OK
+./rpms/ncurses-libs-6.4-15.20240127.el10_1.x86_64.rpm: OK
+./rpms/npth-1.6-21.el10.x86_64.rpm: OK
+./rpms/nspr-4.39.0-5.el10_2.x86_64.rpm: OK
+./rpms/nss-3.124.0-5.el10_2.x86_64.rpm: OK
+./rpms/nss-softokn-3.124.0-5.el10_2.x86_64.rpm: OK
+./rpms/nss-softokn-freebl-3.124.0-5.el10_2.x86_64.rpm: OK
+./rpms/nss-sysinit-3.124.0-5.el10_2.x86_64.rpm: OK
+./rpms/nss-util-3.124.0-5.el10_2.x86_64.rpm: OK
+./rpms/numactl-libs-2.0.19-3.el10.x86_64.rpm: OK
+./rpms/openjpeg2-2.5.2-5.el10.x86_64.rpm: OK
+./rpms/openldap-2.6.13-1.el10.x86_64.rpm: OK
+./rpms/openssh-9.9p1-33.el10_3.rocky.0.1.x86_64.rpm: OK
+./rpms/openssh-clients-9.9p1-33.el10_3.rocky.0.1.x86_64.rpm: OK
+./rpms/openssl-fips-provider-3.5.9-1.el10_3.x86_64.rpm: OK
+./rpms/openssl-libs-3.5.9-1.el10_3.x86_64.rpm: OK
+./rpms/opus-1.4-6.el10.x86_64.rpm: OK
+./rpms/orc-0.4.39-2.el10.x86_64.rpm: OK
+./rpms/osinfo-db-20260812-1.el10.noarch.rpm: OK
+./rpms/osinfo-db-tools-1.11.0-8.el10.x86_64.rpm: OK
+./rpms/p11-kit-0.26.4-1.el10_2.x86_64.rpm: OK
+./rpms/p11-kit-trust-0.26.4-1.el10_2.x86_64.rpm: OK
+./rpms/pam-1.6.1-11.el10.x86_64.rpm: OK
+./rpms/pam-libs-1.6.1-11.el10.x86_64.rpm: OK
+./rpms/pango-1.54.0-4.el10.x86_64.rpm: OK
+./rpms/pcre2-10.44-1.5.el10_2.x86_64.rpm: OK
+./rpms/pcre2-syntax-10.44-1.5.el10_2.noarch.rpm: OK
+./rpms/pipewire-1.4.11-1.1.1.el10_3.x86_64.rpm: OK
+./rpms/pipewire-alsa-1.4.11-1.1.1.el10_3.x86_64.rpm: OK
+./rpms/pipewire-jack-audio-connection-kit-1.4.11-1.1.1.el10_3.x86_64.rpm: OK
+./rpms/pipewire-jack-audio-connection-kit-libs-1.4.11-1.1.1.el10_3.x86_64.rpm: OK
+./rpms/pipewire-libs-1.4.11-1.1.1.el10_3.x86_64.rpm: OK
+./rpms/pipewire-plugin-libcamera-1.4.11-1.1.1.el10_3.x86_64.rpm: OK
+./rpms/pipewire-pulseaudio-1.4.11-1.1.1.el10_3.x86_64.rpm: OK
+./rpms/pixman-0.43.4-2.el10.x86_64.rpm: OK
+./rpms/polkit-125-6.el10.x86_64.rpm: OK
+./rpms/polkit-libs-125-6.el10.x86_64.rpm: OK
+./rpms/polkit-pkla-compat-0.1-30.el10.x86_64.rpm: OK
+./rpms/poppler-24.02.0-10.el10.x86_64.rpm: OK
+./rpms/poppler-data-0.4.11-9.el10.noarch.rpm: OK
+./rpms/poppler-glib-24.02.0-10.el10.x86_64.rpm: OK
+./rpms/popt-1.19-8.el10.x86_64.rpm: OK
+./rpms/publicsuffix-list-dafsa-20240107-5.el10.noarch.rpm: OK
+./rpms/pulseaudio-libs-17.0-6.el10.x86_64.rpm: OK
+./rpms/python-unversioned-command-3.12.16-2.el10_3.noarch.rpm: OK
+./rpms/python3-3.12.16-2.el10_3.x86_64.rpm: OK
+./rpms/python3-libs-3.12.16-2.el10_3.x86_64.rpm: OK
+./rpms/python3-pip-wheel-23.3.2-11.el10_2.noarch.rpm: OK
+./rpms/python3-tkinter-3.12.16-2.el10_3.x86_64.rpm: OK
+./rpms/qemu-img-10.1.0-28.el10_3.1.x86_64.rpm: OK
+./rpms/readline-8.2-11.el10.x86_64.rpm: OK
+./rpms/redhat-mono-vf-fonts-4.1.0-1.el10.noarch.rpm: OK
+./rpms/redhat-text-vf-fonts-4.1.0-1.el10.noarch.rpm: OK
+./rpms/repodata/0ea3962633132a89fea4814691f0567ec79a2cfc176a9200b01b917f4ef19a55-filelists.xml.zst: OK
+./rpms/repodata/76b75122f1ba6ec3fe28f9d5c5cf9625bf859df90f19ed9f03ffcc898b2954ba-primary.xml.zst: OK
+./rpms/repodata/f694774e6973fa23290bc8882df4423e8b52a6c4db5d2b25381ce45014f42e33-other.xml.zst: OK
+./rpms/repodata/repomd.xml: OK
+./rpms/rocky-gpg-keys-10.3-1.0.el10.noarch.rpm: OK
+./rpms/rocky-release-10.3-1.0.el10.noarch.rpm: OK
+./rpms/rocky-repos-10.3-1.0.el10.noarch.rpm: OK
+./rpms/rsvg-pixbuf-loader-2.57.1-9.el10_3.10.x86_64.rpm: OK
+./rpms/rtkit-0.11-68.el10.x86_64.rpm: OK
+./rpms/sed-4.9-5.el10.x86_64.rpm: OK
+./rpms/setup-2.14.5-7.el10.noarch.rpm: OK
+./rpms/shadow-utils-4.15.0-13.el10.x86_64.rpm: OK
+./rpms/shared-mime-info-2.3-8.el10.x86_64.rpm: OK
+./rpms/sound-theme-freedesktop-0.8-23.el10.noarch.rpm: OK
+./rpms/spirv-tools-libs-2026.1-1.el10.x86_64.rpm: OK
+./rpms/sqlite-libs-3.46.1-6.el10_2.x86_64.rpm: OK
+./rpms/systemd-257-33.el10.rocky.0.1.x86_64.rpm: OK
+./rpms/systemd-libs-257-33.el10.rocky.0.1.x86_64.rpm: OK
+./rpms/systemd-pam-257-33.el10.rocky.0.1.x86_64.rpm: OK
+./rpms/systemd-udev-257-33.el10.rocky.0.1.x86_64.rpm: OK
+./rpms/tcl-8.6.13-4.el10.x86_64.rpm: OK
+./rpms/tk-8.6.13-5.el10.x86_64.rpm: OK
+./rpms/tpm2-tss-4.1.3-6.el10.x86_64.rpm: OK
+./rpms/tracker-3.7.3-4.el10.x86_64.rpm: OK
+./rpms/tracker-miners-3.7.4-1.el10.x86_64.rpm: OK
+./rpms/tzdata-2026f-1.el10_2.noarch.rpm: OK
+./rpms/upower-1.90.10-2.el10.x86_64.rpm: OK
+./rpms/upower-libs-1.90.10-2.el10.x86_64.rpm: OK
+./rpms/util-linux-2.40.2-23.el10_3.x86_64.rpm: OK
+./rpms/util-linux-core-2.40.2-23.el10_3.x86_64.rpm: OK
+./rpms/virt-viewer-11.0-10.el10.x86_64.rpm: OK
+./rpms/vte-profile-0.78.6-1.el10.x86_64.rpm: OK
+./rpms/vte291-0.78.6-1.el10.x86_64.rpm: OK
+./rpms/webrtc-audio-processing-1.3-5.el10.x86_64.rpm: OK
+./rpms/wireplumber-0.5.10-1.el10.x86_64.rpm: OK
+./rpms/wireplumber-libs-0.5.10-1.el10.x86_64.rpm: OK
+./rpms/xdg-desktop-portal-1.20.0-2.el10.x86_64.rpm: OK
+./rpms/xdg-desktop-portal-gtk-1.15.3-1.el10.x86_64.rpm: OK
+./rpms/xkeyboard-config-2.41-3.el10.noarch.rpm: OK
+./rpms/xml-common-0.6.3-65.el10.noarch.rpm: OK
+./rpms/xprop-1.2.7-3.el10.x86_64.rpm: OK
+./rpms/xz-libs-5.6.2-5.el10.x86_64.rpm: OK
+./rpms/zlib-ng-compat-2.2.3-3.el10_1.x86_64.rpm: OK
+Added flagship-offline repo from file:///bundle/rpms
+flagship-offline                                112 MB/s | 115 kB     00:00    
+Dependencies resolved.
+==========================================================================================
+ Package                     Arch    Version                       Repository         Size
+==========================================================================================
+Installing:
+ flagship                    noarch  1.3.0-0.1.dev1.el10           flagship-offline  299 k
+Upgrading:
+ cyrus-sasl-lib              x86_64  2.1.28-30.el10_2              flagship-offline  100 k
+ python3                     x86_64  3.12.16-2.el10_3              flagship-offline   28 k
+ python3-libs                x86_64  3.12.16-2.el10_3              flagship-offline  9.0 M
+Installing dependencies:
+ ModemManager-glib           x86_64  1.22.0-7.el10                 flagship-offline  324 k
+ adwaita-cursor-theme        noarch  46.0-3.el10                   flagship-offline  521 k
+ adwaita-icon-theme          noarch  46.0-3.el10                   flagship-offline  454 k
+ alsa-lib                    x86_64  1.2.16.1-1.el10               flagship-offline  528 k
+ at-spi2-atk                 x86_64  2.56.1-1.el10                 flagship-offline   87 k
+ at-spi2-core                x86_64  2.56.1-1.el10                 flagship-offline  390 k
+ atk                         x86_64  2.56.1-1.el10                 flagship-offline   80 k
+ avahi-glib                  x86_64  0.9~rc2-3.el10                flagship-offline   14 k
+ avahi-libs                  x86_64  0.9~rc2-3.el10                flagship-offline   67 k
+ bluez-libs                  x86_64  5.87+1.git30db66dc971b-1.el10 flagship-offline   81 k
+ cairo                       x86_64  1.18.2-3.el10                 flagship-offline  715 k
+ cairo-gobject               x86_64  1.18.2-3.el10                 flagship-offline   16 k
+ colord-libs                 x86_64  1.4.7-6.el10                  flagship-offline  232 k
+ cups-filesystem             noarch  1:2.4.10-18.el10_2            flagship-offline   11 k
+ cups-libs                   x86_64  1:2.4.10-18.el10_2            flagship-offline  260 k
+ cyrus-sasl-gssapi           x86_64  2.1.28-30.el10_2              flagship-offline   26 k
+ dbus                        x86_64  1:1.14.10-6.el10              flagship-offline  6.8 k
+ dbus-broker                 x86_64  36-5.el10_3                   flagship-offline  173 k
+ dbus-common                 noarch  1:1.14.10-6.el10              flagship-offline   14 k
+ dbus-libs                   x86_64  1:1.14.10-6.el10              flagship-offline  155 k
+ default-fonts-core-sans     noarch  4.1-3.el10                    flagship-offline   33 k
+ duktape                     x86_64  2.7.0-10.el10                 flagship-offline  169 k
+ exempi                      x86_64  2.6.4-7.el10                  flagship-offline  589 k
+ exiv2-libs                  x86_64  0.28.3-5.el10                 flagship-offline  903 k
+ fdk-aac-free                x86_64  2.0.0-15.el10                 flagship-offline  338 k
+ fftw-libs-single            x86_64  3.3.11-1.el10                 flagship-offline  1.1 M
+ flac-libs                   x86_64  1.4.3-6.el10                  flagship-offline  264 k
+ fontconfig                  x86_64  2.15.0-7.el10                 flagship-offline  273 k
+ fonts-filesystem            noarch  1:2.0.5-18.el10               flagship-offline  7.8 k
+ freetype                    x86_64  2.13.2-8.el10                 flagship-offline  408 k
+ fribidi                     x86_64  1.0.14-4.el10                 flagship-offline   92 k
+ fuse-common                 x86_64  3.16.2-5.el10                 flagship-offline  8.7 k
+ fuse3                       x86_64  3.16.2-5.el10                 flagship-offline   58 k
+ fuse3-libs                  x86_64  3.16.2-5.el10                 flagship-offline   94 k
+ gdk-pixbuf2                 x86_64  2.42.12-4.el10_1.5            flagship-offline  471 k
+ gdk-pixbuf2-modules         x86_64  2.42.12-4.el10_1.5            flagship-offline   27 k
+ geoclue2                    x86_64  2.7.2-1.el10                  flagship-offline  146 k
+ giflib                      x86_64  5.2.1-25.el10_2               flagship-offline   52 k
+ gnupg2                      x86_64  2.4.5-5.el10                  flagship-offline  2.7 M
+ gobject-introspection       x86_64  1.79.1-7.el10                 flagship-offline  105 k
+ google-noto-fonts-common    noarch  20240401-5.el10               flagship-offline   17 k
+ google-noto-sans-vf-fonts   noarch  20240401-5.el10               flagship-offline  593 k
+ gpgme                       x86_64  1.23.2-6.el10                 flagship-offline  218 k
+ gpgmepp                     x86_64  1.23.2-6.el10                 flagship-offline  140 k
+ graphene                    x86_64  1.10.6-10.el10                flagship-offline   61 k
+ graphite2                   x86_64  1.3.14-17.el10                flagship-offline   95 k
+ gsettings-desktop-schemas   x86_64  47.1-4.el10                   flagship-offline  788 k
+ gsm                         x86_64  1.0.22-8.el10                 flagship-offline   36 k
+ gstreamer1                  x86_64  1.26.7-5.el10_3.1             flagship-offline  1.7 M
+ gstreamer1-plugins-base     x86_64  1.26.7-4.el10_3.1             flagship-offline  2.3 M
+ gtk-update-icon-cache       x86_64  3.24.43-5.el10                flagship-offline   33 k
+ gtk-vnc2                    x86_64  1.3.1-7.el10                  flagship-offline   41 k
+ gtk3                        x86_64  3.24.43-5.el10                flagship-offline  5.6 M
+ gvnc                        x86_64  1.3.1-7.el10                  flagship-offline  108 k
+ harfbuzz                    x86_64  8.4.0-6.el10                  flagship-offline  1.0 M
+ hicolor-icon-theme          noarch  0.17-20.el10                  flagship-offline   66 k
+ hwdata                      noarch  0.379-10.10.el10              flagship-offline  1.7 M
+ inih                        x86_64  58-3.el10                     flagship-offline   18 k
+ inih-cpp                    x86_64  58-3.el10                     flagship-offline   19 k
+ iso-codes                   noarch  4.16.0-6.el10                 flagship-offline  3.6 M
+ jbigkit-libs                x86_64  2.1-31.el10                   flagship-offline   53 k
+ json-glib                   x86_64  1.8.0-5.el10                  flagship-offline  170 k
+ lame-libs                   x86_64  3.100-19.el10                 flagship-offline  338 k
+ lcms2                       x86_64  2.16-6.el10                   flagship-offline  181 k
+ libX11                      x86_64  1.8.13-1.el10_3.1             flagship-offline  651 k
+ libX11-common               noarch  1.8.13-1.el10_3.1             flagship-offline  144 k
+ libX11-xcb                  x86_64  1.8.13-1.el10_3.1             flagship-offline   10 k
+ libXau                      x86_64  1.0.11-8.el10                 flagship-offline   32 k
+ libXcomposite               x86_64  0.4.6-5.el10                  flagship-offline   24 k
+ libXcursor                  x86_64  1.2.1-9.el10                  flagship-offline   30 k
+ libXdamage                  x86_64  1.1.6-5.el10                  flagship-offline   23 k
+ libXext                     x86_64  1.3.6-3.el10                  flagship-offline   39 k
+ libXfixes                   x86_64  6.0.1-5.el10                  flagship-offline   19 k
+ libXft                      x86_64  2.3.8-8.el10                  flagship-offline   72 k
+ libXi                       x86_64  1.8.1-7.el10_2.3              flagship-offline   40 k
+ libXinerama                 x86_64  1.1.5-8.el10                  flagship-offline   14 k
+ libXrandr                   x86_64  1.5.4-5.el10                  flagship-offline   28 k
+ libXrender                  x86_64  0.9.11-8.el10_2.1             flagship-offline   27 k
+ libXtst                     x86_64  1.2.4-8.el10_2.1              flagship-offline   20 k
+ libXv                       x86_64  1.0.12-5.el10                 flagship-offline   19 k
+ libXxf86vm                  x86_64  1.1.5-8.el10                  flagship-offline   18 k
+ libaio                      x86_64  0.3.112-1.el10                flagship-offline   23 k
+ libassuan                   x86_64  2.5.6-6.el10                  flagship-offline   68 k
+ libasyncns                  x86_64  0.8-30.el10                   flagship-offline   30 k
+ libatomic                   x86_64  14.4.1-5.el10_3               flagship-offline   40 k
+ libbrotli                   x86_64  1.1.0-8.el10_2.1              flagship-offline  344 k
+ libcanberra                 x86_64  0.30-37.el10                  flagship-offline   87 k
+ libcbor                     x86_64  0.11.0-3.el10                 flagship-offline   33 k
+ libdatrie                   x86_64  0.2.13-11.el10                flagship-offline   32 k
+ libdex                      x86_64  0.8.1-1.el10                  flagship-offline   83 k
+ libdrm                      x86_64  2.4.128-1.el10                flagship-offline  161 k
+ libedit                     x86_64  3.1-52.20230828cvs.el10       flagship-offline  105 k
+ libepoxy                    x86_64  1.5.10-10.el10                flagship-offline  228 k
+ libexif                     x86_64  0.6.24-10.el10                flagship-offline  448 k
+ libfido2                    x86_64  1.14.0-7.el10                 flagship-offline   97 k
+ libgcrypt                   x86_64  1.11.0-7.el10_2               flagship-offline  586 k
+ libgexiv2                   x86_64  0.14.3-3.el10                 flagship-offline  105 k
+ libglvnd                    x86_64  1:1.7.0-7.el10                flagship-offline  115 k
+ libglvnd-egl                x86_64  1:1.7.0-7.el10                flagship-offline   36 k
+ libglvnd-glx                x86_64  1:1.7.0-7.el10                flagship-offline  131 k
+ libgpg-error                x86_64  1.50-2.el10                   flagship-offline  239 k
+ libgsf                      x86_64  1.14.53-2.el10                flagship-offline  259 k
+ libgudev                    x86_64  238-7.el10                    flagship-offline   35 k
+ libgusb                     x86_64  0.4.9-4.el10                  flagship-offline   66 k
+ libgxps                     x86_64  0.3.2-11.el10                 flagship-offline   77 k
+ libicu                      x86_64  74.2-5.el10_0                 flagship-offline   10 M
+ libiptcdata                 x86_64  1.0.5-20.el10                 flagship-offline   61 k
+ libjpeg-turbo               x86_64  3.0.2-4.el10                  flagship-offline  251 k
+ libksba                     x86_64  1.6.7-2.el10                  flagship-offline  158 k
+ liblc3                      x86_64  1.1.3-1.el10                  flagship-offline  104 k
+ libldac                     x86_64  2.0.2.3-17.el10               flagship-offline   41 k
+ liblerc                     x86_64  4.0.0-8.el10                  flagship-offline  218 k
+ libnl3                      x86_64  3.11.0-1.el10                 flagship-offline  357 k
+ libnotify                   x86_64  0.8.6-1.el10                  flagship-offline   52 k
+ libogg                      x86_64  2:1.3.5-10.el10               flagship-offline   33 k
+ libosinfo                   x86_64  1.11.0-8.el10                 flagship-offline  318 k
+ libpciaccess                x86_64  0.16-16.el10                  flagship-offline   27 k
+ libpng                      x86_64  2:1.6.40-11.el10_2.1          flagship-offline  120 k
+ libportal                   x86_64  0.9.0-3.el10                  flagship-offline   84 k
+ libproxy                    x86_64  0.5.5-4.el10                  flagship-offline   48 k
+ libpsl                      x86_64  0.21.5-6.el10                 flagship-offline   64 k
+ librsvg2                    x86_64  2.57.1-9.el10_3.10            flagship-offline  1.5 M
+ libsbc                      x86_64  2.0-7.el10                    flagship-offline   46 k
+ libseccomp                  x86_64  2.5.6-1.el10                  flagship-offline   70 k
+ libsndfile                  x86_64  1.2.2-7.el10                  flagship-offline  215 k
+ libsoup3                    x86_64  3.6.6-1.el10_3.9              flagship-offline  389 k
+ libssh                      x86_64  0.12.2-2.el10                 flagship-offline  279 k
+ libssh-config               noarch  0.12.2-2.el10                 flagship-offline  8.5 k
+ libtdb                      x86_64  1.4.15-100.el10               flagship-offline   54 k
+ libthai                     x86_64  0.1.29-10.el10                flagship-offline  214 k
+ libtheora                   x86_64  1:1.1.1-39.el10               flagship-offline  169 k
+ libtiff                     x86_64  4.6.0-11.el10                 flagship-offline  214 k
+ libtirpc                    x86_64  1.3.5-1.el10                  flagship-offline   94 k
+ libtool-ltdl                x86_64  2.4.7-14.el10                 flagship-offline   35 k
+ libtracker-sparql           x86_64  3.7.3-4.el10                  flagship-offline  377 k
+ liburing                    x86_64  2.12-1.el10                   flagship-offline   43 k
+ libvirt-client              x86_64  12.5.0-4.1.el10_3             flagship-offline  463 k
+ libvirt-glib                x86_64  5.0.0-6.el10                  flagship-offline   54 k
+ libvirt-libs                x86_64  12.5.0-4.1.el10_3             flagship-offline  5.9 M
+ libvorbis                   x86_64  1:1.3.7-12.el10               flagship-offline  188 k
+ libwayland-client           x86_64  1.25.0-1.el10                 flagship-offline   35 k
+ libwayland-cursor           x86_64  1.25.0-1.el10                 flagship-offline   19 k
+ libwayland-egl              x86_64  1.25.0-1.el10                 flagship-offline   12 k
+ libwebp                     x86_64  1.3.2-10.el10                 flagship-offline  287 k
+ libwsman1                   x86_64  2.8.1-3.el10                  flagship-offline  137 k
+ libxcb                      x86_64  1.17.0-3.el10                 flagship-offline  241 k
+ libxkbcommon                x86_64  1.7.0-4.el10                  flagship-offline  144 k
+ libxshmfence                x86_64  1.3.2-5.el10                  flagship-offline   12 k
+ libxslt                     x86_64  1.1.39-9.el10                 flagship-offline  189 k
+ llvm-filesystem             x86_64  22.1.8-1.el10                 flagship-offline   13 k
+ llvm-libs                   x86_64  22.1.8-1.el10                 flagship-offline   30 M
+ mesa-dri-drivers            x86_64  26.1.1-2.el10                 flagship-offline   11 M
+ mesa-filesystem             x86_64  26.1.1-2.el10                 flagship-offline   10 k
+ mesa-libEGL                 x86_64  26.1.1-2.el10                 flagship-offline  136 k
+ mesa-libGL                  x86_64  26.1.1-2.el10                 flagship-offline  135 k
+ mesa-libgbm                 x86_64  26.1.1-2.el10                 flagship-offline   16 k
+ mpg123-libs                 x86_64  1.32.9-1.el10                 flagship-offline  352 k
+ npth                        x86_64  1.6-21.el10                   flagship-offline   25 k
+ nspr                        x86_64  4.39.0-5.el10_2               flagship-offline  136 k
+ nss                         x86_64  3.124.0-5.el10_2              flagship-offline  743 k
+ nss-softokn                 x86_64  3.124.0-5.el10_2              flagship-offline  415 k
+ nss-softokn-freebl          x86_64  3.124.0-5.el10_2              flagship-offline  386 k
+ nss-sysinit                 x86_64  3.124.0-5.el10_2              flagship-offline   19 k
+ nss-util                    x86_64  3.124.0-5.el10_2              flagship-offline   86 k
+ numactl-libs                x86_64  2.0.19-3.el10                 flagship-offline   31 k
+ openjpeg2                   x86_64  2.5.2-5.el10                  flagship-offline  188 k
+ openssh                     x86_64  9.9p1-33.el10_3.rocky.0.1     flagship-offline  351 k
+ openssh-clients             x86_64  9.9p1-33.el10_3.rocky.0.1     flagship-offline  763 k
+ opus                        x86_64  1.4-6.el10                    flagship-offline  210 k
+ orc                         x86_64  0.4.39-2.el10                 flagship-offline  228 k
+ osinfo-db                   noarch  20260812-1.el10               flagship-offline  323 k
+ osinfo-db-tools             x86_64  1.11.0-8.el10                 flagship-offline   76 k
+ pango                       x86_64  1.54.0-4.el10                 flagship-offline  352 k
+ pipewire-libs               x86_64  1.4.11-1.1.1.el10_3           flagship-offline  2.4 M
+ pixman                      x86_64  0.43.4-2.el10                 flagship-offline  285 k
+ poppler                     x86_64  24.02.0-10.el10               flagship-offline  1.2 M
+ poppler-data                noarch  0.4.11-9.el10                 flagship-offline  2.0 M
+ poppler-glib                x86_64  24.02.0-10.el10               flagship-offline  190 k
+ publicsuffix-list-dafsa     noarch  20240107-5.el10               flagship-offline   58 k
+ pulseaudio-libs             x86_64  17.0-6.el10                   flagship-offline  706 k
+ python3-tkinter             x86_64  3.12.16-2.el10_3              flagship-offline  387 k
+ qemu-img                    x86_64  18:10.1.0-28.el10_3.1         flagship-offline  2.4 M
+ redhat-text-vf-fonts        noarch  4.1.0-1.el10                  flagship-offline  353 k
+ shared-mime-info            x86_64  2.3-8.el10                    flagship-offline  396 k
+ sound-theme-freedesktop     noarch  0.8-23.el10                   flagship-offline  384 k
+ spirv-tools-libs            x86_64  2026.1-1.el10                 flagship-offline  1.7 M
+ tcl                         x86_64  1:8.6.13-4.el10               flagship-offline  1.1 M
+ tk                          x86_64  1:8.6.13-5.el10               flagship-offline  1.6 M
+ tracker                     x86_64  3.7.3-4.el10                  flagship-offline  642 k
+ upower-libs                 x86_64  1.90.10-2.el10                flagship-offline   59 k
+ virt-viewer                 x86_64  11.0-10.el10                  flagship-offline  287 k
+ vte-profile                 x86_64  0.78.6-1.el10                 flagship-offline   26 k
+ vte291                      x86_64  0.78.6-1.el10                 flagship-offline  402 k
+ webrtc-audio-processing     x86_64  1.3-5.el10                    flagship-offline  526 k
+ xdg-desktop-portal          x86_64  1.20.0-2.el10                 flagship-offline  532 k
+ xkeyboard-config            noarch  2.41-3.el10                   flagship-offline  998 k
+ xml-common                  noarch  0.6.3-65.el10                 flagship-offline   31 k
+ xprop                       x86_64  1.2.7-3.el10                  flagship-offline   35 k
+Installing weak dependencies:
+ dconf                       x86_64  0.40.0-17.el10                flagship-offline  111 k
+ exiv2                       x86_64  0.28.3-5.el10                 flagship-offline  2.1 M
+ glib-networking             x86_64  2.80.0-3.el10_3.4             flagship-offline  185 k
+ libcanberra-gtk3            x86_64  0.30-37.el10                  flagship-offline   31 k
+ low-memory-monitor          x86_64  2.1-12.el10                   flagship-offline   34 k
+ redhat-mono-vf-fonts        noarch  4.1.0-1.el10                  flagship-offline  342 k
+ rsvg-pixbuf-loader          x86_64  2.57.1-9.el10_3.10            flagship-offline   13 k
+ tracker-miners              x86_64  3.7.4-1.el10                  flagship-offline  969 k
+ xdg-desktop-portal-gtk      x86_64  1.15.3-1.el10                 flagship-offline  147 k
+
+Transaction Summary
+==========================================================================================
+Install  208 Packages
+Upgrade    3 Packages
+
+Total size: 137 M
+Downloading Packages:
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : libpng-2:1.6.40-11.el10_2.1.x86_64                   1/214 
+  Installing       : nspr-4.39.0-5.el10_2.x86_64                          2/214 
+  Installing       : libjpeg-turbo-3.0.2-4.el10.x86_64                    3/214 
+  Installing       : json-glib-1.8.0-5.el10.x86_64                        4/214 
+  Installing       : libogg-2:1.3.5-10.el10.x86_64                        5/214 
+  Installing       : libgpg-error-1.50-2.el10.x86_64                      6/214 
+  Installing       : dbus-libs-1:1.14.10-6.el10.x86_64                    7/214 
+  Installing       : avahi-libs-0.9~rc2-3.el10.x86_64                     8/214 
+  Installing       : libvorbis-1:1.3.7-12.el10.x86_64                     9/214 
+  Installing       : nss-util-3.124.0-5.el10_2.x86_64                    10/214 
+  Installing       : libwayland-client-1.25.0-1.el10.x86_64              11/214 
+  Installing       : fonts-filesystem-1:2.0.5-18.el10.noarch             12/214 
+  Installing       : avahi-glib-0.9~rc2-3.el10.x86_64                    13/214 
+  Installing       : libassuan-2.5.6-6.el10.x86_64                       14/214 
+  Upgrading        : cyrus-sasl-lib-2.1.28-30.el10_2.x86_64              15/214 
+  Installing       : opus-1.4-6.el10.x86_64                              16/214 
+  Installing       : libicu-74.2-5.el10_0.x86_64                         17/214 
+  Installing       : libbrotli-1.1.0-8.el10_2.1.x86_64                   18/214 
+  Installing       : libX11-xcb-1.8.13-1.el10_3.1.x86_64                 19/214 
+  Installing       : lcms2-2.16-6.el10.x86_64                            20/214 
+  Installing       : hwdata-0.379-10.10.el10.noarch                      21/214 
+  Installing       : fribidi-1.0.14-4.el10.x86_64                        22/214 
+  Installing       : alsa-lib-1.2.16.1-1.el10.x86_64                     23/214 
+  Installing       : redhat-text-vf-fonts-4.1.0-1.el10.noarch            24/214 
+  Installing       : libwayland-cursor-1.25.0-1.el10.x86_64              25/214 
+  Installing       : libgcrypt-1.11.0-7.el10_2.x86_64                    26/214 
+  Running scriptlet: xml-common-0.6.3-65.el10.noarch                     27/214 
+  Installing       : xml-common-0.6.3-65.el10.noarch                     27/214 
+  Installing       : tcl-1:8.6.13-4.el10.x86_64                          28/214 
+  Installing       : numactl-libs-2.0.19-3.el10.x86_64                   29/214 
+  Installing       : libwayland-egl-1.25.0-1.el10.x86_64                 30/214 
+  Installing       : liburing-2.12-1.el10.x86_64                         31/214 
+  Installing       : libtool-ltdl-2.4.7-14.el10.x86_64                   32/214 
+  Installing       : libtdb-1.4.15-100.el10.x86_64                       33/214 
+  Installing       : libgudev-238-7.el10.x86_64                          34/214 
+  Installing       : libglvnd-1:1.7.0-7.el10.x86_64                      35/214 
+  Installing       : libedit-3.1-52.20230828cvs.el10.x86_64              36/214 
+  Installing       : fuse3-libs-3.16.2-5.el10.x86_64                     37/214 
+  Installing       : iso-codes-4.16.0-6.el10.noarch                      38/214 
+  Installing       : libpciaccess-0.16-16.el10.x86_64                    39/214 
+  Installing       : libdrm-2.4.128-1.el10.x86_64                        40/214 
+  Installing       : osinfo-db-20260812-1.el10.noarch                    41/214 
+  Installing       : cyrus-sasl-gssapi-2.1.28-30.el10_2.x86_64           42/214 
+  Installing       : redhat-mono-vf-fonts-4.1.0-1.el10.noarch            43/214 
+  Installing       : gsettings-desktop-schemas-47.1-4.el10.x86_64        44/214 
+  Installing       : nss-softokn-freebl-3.124.0-5.el10_2.x86_64          45/214 
+  Installing       : nss-softokn-3.124.0-5.el10_2.x86_64                 46/214 
+  Installing       : nss-3.124.0-5.el10_2.x86_64                         47/214 
+  Running scriptlet: nss-3.124.0-5.el10_2.x86_64                         47/214 
+  Installing       : nss-sysinit-3.124.0-5.el10_2.x86_64                 48/214 
+  Installing       : libksba-1.6.7-2.el10.x86_64                         49/214 
+  Installing       : flac-libs-1.4.3-6.el10.x86_64                       50/214 
+  Installing       : libtheora-1:1.1.1-39.el10.x86_64                    51/214 
+  Installing       : libgusb-0.4.9-4.el10.x86_64                         52/214 
+  Installing       : colord-libs-1.4.7-6.el10.x86_64                     53/214 
+  Installing       : xkeyboard-config-2.41-3.el10.noarch                 54/214 
+  Installing       : libxkbcommon-1.7.0-4.el10.x86_64                    55/214 
+  Installing       : webrtc-audio-processing-1.3-5.el10.x86_64           56/214 
+  Installing       : vte-profile-0.78.6-1.el10.x86_64                    57/214 
+  Installing       : spirv-tools-libs-2026.1-1.el10.x86_64               58/214 
+  Installing       : sound-theme-freedesktop-0.8-23.el10.noarch          59/214 
+  Running scriptlet: sound-theme-freedesktop-0.8-23.el10.noarch          59/214 
+  Installing       : shared-mime-info-2.3-8.el10.x86_64                  60/214 
+  Running scriptlet: shared-mime-info-2.3-8.el10.x86_64                  60/214 
+  Installing       : gdk-pixbuf2-2.42.12-4.el10_1.5.x86_64               61/214 
+  Installing       : gvnc-1.3.1-7.el10.x86_64                            62/214 
+  Installing       : gtk-update-icon-cache-3.24.43-5.el10.x86_64         63/214 
+  Installing       : libgsf-1.14.53-2.el10.x86_64                        64/214 
+  Installing       : libnotify-0.8.6-1.el10.x86_64                       65/214 
+  Installing       : publicsuffix-list-dafsa-20240107-5.el10.noarch      66/214 
+  Installing       : libpsl-0.21.5-6.el10.x86_64                         67/214 
+  Installing       : poppler-data-0.4.11-9.el10.noarch                   68/214 
+  Installing       : pixman-0.43.4-2.el10.x86_64                         69/214 
+  Installing       : orc-0.4.39-2.el10.x86_64                            70/214 
+  Installing       : openssh-9.9p1-33.el10_3.rocky.0.1.x86_64            71/214 
+  Installing       : openjpeg2-2.5.2-5.el10.x86_64                       72/214 
+  Installing       : npth-1.6-21.el10.x86_64                             73/214 
+  Installing       : gnupg2-2.4.5-5.el10.x86_64                          74/214 
+  Installing       : gpgme-1.23.2-6.el10.x86_64                          75/214 
+  Installing       : gpgmepp-1.23.2-6.el10.x86_64                        76/214 
+  Installing       : mpg123-libs-1.32.9-1.el10.x86_64                    77/214 
+  Installing       : mesa-filesystem-26.1.1-2.el10.x86_64                78/214 
+  Installing       : low-memory-monitor-2.1-12.el10.x86_64               79/214 
+  Running scriptlet: low-memory-monitor-2.1-12.el10.x86_64               79/214 
+  Installing       : llvm-filesystem-22.1.8-1.el10.x86_64                80/214 
+  Installing       : llvm-libs-22.1.8-1.el10.x86_64                      81/214 
+  Installing       : libxslt-1.1.39-9.el10.x86_64                        82/214 
+  Installing       : libxshmfence-1.3.2-5.el10.x86_64                    83/214 
+  Installing       : libwsman1-2.8.1-3.el10.x86_64                       84/214 
+  Installing       : libwebp-1.3.2-10.el10.x86_64                        85/214 
+  Installing       : libtirpc-1.3.5-1.el10.x86_64                        86/214 
+  Installing       : libssh-config-0.12.2-2.el10.noarch                  87/214 
+  Installing       : libseccomp-2.5.6-1.el10.x86_64                      88/214 
+  Installing       : libsbc-2.0-7.el10.x86_64                            89/214 
+  Installing       : libportal-0.9.0-3.el10.x86_64                       90/214 
+  Installing       : libnl3-3.11.0-1.el10.x86_64                         91/214 
+  Installing       : liblerc-4.0.0-8.el10.x86_64                         92/214 
+  Installing       : libldac-2.0.2.3-17.el10.x86_64                      93/214 
+  Installing       : liblc3-1.1.3-1.el10.x86_64                          94/214 
+  Installing       : libiptcdata-1.0.5-20.el10.x86_64                    95/214 
+  Installing       : libexif-0.6.24-10.el10.x86_64                       96/214 
+  Installing       : libepoxy-1.5.10-10.el10.x86_64                      97/214 
+  Installing       : libdatrie-0.2.13-11.el10.x86_64                     98/214 
+  Installing       : libthai-0.1.29-10.el10.x86_64                       99/214 
+  Installing       : libcbor-0.11.0-3.el10.x86_64                       100/214 
+  Installing       : libfido2-1.14.0-7.el10.x86_64                      101/214 
+  Installing       : libssh-0.12.2-2.el10.x86_64                        102/214 
+  Installing       : libvirt-libs-12.5.0-4.1.el10_3.x86_64              103/214 
+  Installing       : libvirt-client-12.5.0-4.1.el10_3.x86_64            104/214 
+  Installing       : libvirt-glib-5.0.0-6.el10.x86_64                   105/214 
+  Installing       : openssh-clients-9.9p1-33.el10_3.rocky.0.1.x86_64   106/214 
+  Running scriptlet: openssh-clients-9.9p1-33.el10_3.rocky.0.1.x86_64   106/214 
+  Installing       : libatomic-14.4.1-5.el10_3.x86_64                   107/214 
+  Installing       : libdex-0.8.1-1.el10.x86_64                         108/214 
+  Installing       : libasyncns-0.8-30.el10.x86_64                      109/214 
+  Installing       : libaio-0.3.112-1.el10.x86_64                       110/214 
+  Installing       : qemu-img-18:10.1.0-28.el10_3.1.x86_64              111/214 
+  Installing       : libXau-1.0.11-8.el10.x86_64                        112/214 
+  Installing       : libxcb-1.17.0-3.el10.x86_64                        113/214 
+  Installing       : mesa-dri-drivers-26.1.1-2.el10.x86_64              114/214 
+  Installing       : mesa-libgbm-26.1.1-2.el10.x86_64                   115/214 
+  Installing       : libX11-common-1.8.13-1.el10_3.1.noarch             116/214 
+  Installing       : libX11-1.8.13-1.el10_3.1.x86_64                    117/214 
+  Installing       : libXext-1.3.6-3.el10.x86_64                        118/214 
+  Installing       : libXrender-0.9.11-8.el10_2.1.x86_64                119/214 
+  Installing       : libXi-1.8.1-7.el10_2.3.x86_64                      120/214 
+  Installing       : libXfixes-6.0.1-5.el10.x86_64                      121/214 
+  Installing       : libXcursor-1.2.1-9.el10.x86_64                     122/214 
+  Installing       : libXdamage-1.1.6-5.el10.x86_64                     123/214 
+  Installing       : libXtst-1.2.4-8.el10_2.1.x86_64                    124/214 
+  Installing       : libXrandr-1.5.4-5.el10.x86_64                      125/214 
+  Installing       : libXinerama-1.1.5-8.el10.x86_64                    126/214 
+  Installing       : libXv-1.0.12-5.el10.x86_64                         127/214 
+  Installing       : libXxf86vm-1.1.5-8.el10.x86_64                     128/214 
+  Installing       : libglvnd-glx-1:1.7.0-7.el10.x86_64                 129/214 
+  Installing       : mesa-libGL-26.1.1-2.el10.x86_64                    130/214 
+  Installing       : libXcomposite-0.4.6-5.el10.x86_64                  131/214 
+  Installing       : libglvnd-egl-1:1.7.0-7.el10.x86_64                 132/214 
+  Installing       : mesa-libEGL-26.1.1-2.el10.x86_64                   133/214 
+  Installing       : xprop-1.2.7-3.el10.x86_64                          134/214 
+  Installing       : lame-libs-3.100-19.el10.x86_64                     135/214 
+  Installing       : jbigkit-libs-2.1-31.el10.x86_64                    136/214 
+  Installing       : libtiff-4.6.0-11.el10.x86_64                       137/214 
+  Installing       : inih-58-3.el10.x86_64                              138/214 
+  Installing       : inih-cpp-58-3.el10.x86_64                          139/214 
+  Installing       : exiv2-libs-0.28.3-5.el10.x86_64                    140/214 
+  Installing       : exiv2-0.28.3-5.el10.x86_64                         141/214 
+  Installing       : libgexiv2-0.14.3-3.el10.x86_64                     142/214 
+  Installing       : hicolor-icon-theme-0.17-20.el10.noarch             143/214 
+  Installing       : gsm-1.0.22-8.el10.x86_64                           144/214 
+  Installing       : libsndfile-1.2.2-7.el10.x86_64                     145/214 
+  Installing       : pulseaudio-libs-17.0-6.el10.x86_64                 146/214 
+  Installing       : graphite2-1.3.14-17.el10.x86_64                    147/214 
+  Installing       : harfbuzz-8.4.0-6.el10.x86_64                       148/214 
+  Installing       : freetype-2.13.2-8.el10.x86_64                      149/214 
+  Installing       : graphene-1.10.6-10.el10.x86_64                     150/214 
+  Installing       : google-noto-fonts-common-20240401-5.el10.noarch    151/214 
+  Installing       : google-noto-sans-vf-fonts-20240401-5.el10.noarch   152/214 
+  Installing       : default-fonts-core-sans-4.1-3.el10.noarch          153/214 
+  Installing       : fontconfig-2.15.0-7.el10.x86_64                    154/214 
+  Running scriptlet: fontconfig-2.15.0-7.el10.x86_64                    154/214 
+  Installing       : cairo-1.18.2-3.el10.x86_64                         155/214 
+  Installing       : cairo-gobject-1.18.2-3.el10.x86_64                 156/214 
+  Installing       : libXft-2.3.8-8.el10.x86_64                         157/214 
+  Installing       : pango-1.54.0-4.el10.x86_64                         158/214 
+  Installing       : librsvg2-2.57.1-9.el10_3.10.x86_64                 159/214 
+  Installing       : rsvg-pixbuf-loader-2.57.1-9.el10_3.10.x86_64       160/214 
+  Installing       : gdk-pixbuf2-modules-2.42.12-4.el10_1.5.x86_64      161/214 
+  Running scriptlet: tk-1:8.6.13-5.el10.x86_64                          162/214 
+  Installing       : tk-1:8.6.13-5.el10.x86_64                          162/214 
+  Upgrading        : python3-3.12.16-2.el10_3.x86_64                    163/214 
+  Installing       : python3-tkinter-3.12.16-2.el10_3.x86_64            164/214 
+  Upgrading        : python3-libs-3.12.16-2.el10_3.x86_64               165/214 
+  Installing       : gstreamer1-1.26.7-5.el10_3.1.x86_64                166/214 
+  Installing       : gstreamer1-plugins-base-1.26.7-4.el10_3.1.x86_64   167/214 
+  Installing       : libcanberra-0.30-37.el10.x86_64                    168/214 
+  Running scriptlet: libcanberra-0.30-37.el10.x86_64                    168/214 
+  Installing       : libgxps-0.3.2-11.el10.x86_64                       169/214 
+  Installing       : poppler-24.02.0-10.el10.x86_64                     170/214 
+  Installing       : poppler-glib-24.02.0-10.el10.x86_64                171/214 
+  Installing       : gobject-introspection-1.79.1-7.el10.x86_64         172/214 
+  Installing       : upower-libs-1.90.10-2.el10.x86_64                  173/214 
+  Installing       : giflib-5.2.1-25.el10_2.x86_64                      174/214 
+  Installing       : fuse-common-3.16.2-5.el10.x86_64                   175/214 
+  Installing       : fuse3-3.16.2-5.el10.x86_64                         176/214 
+  Installing       : fftw-libs-single-3.3.11-1.el10.x86_64              177/214 
+  Installing       : fdk-aac-free-2.0.0-15.el10.x86_64                  178/214 
+  Installing       : exempi-2.6.4-7.el10.x86_64                         179/214 
+  Installing       : duktape-2.7.0-10.el10.x86_64                       180/214 
+  Installing       : libproxy-0.5.5-4.el10.x86_64                       181/214 
+  Installing       : glib-networking-2.80.0-3.el10_3.4.x86_64           182/214 
+  Installing       : libsoup3-3.6.6-1.el10_3.9.x86_64                   183/214 
+  Installing       : osinfo-db-tools-1.11.0-8.el10.x86_64               184/214 
+  Installing       : libosinfo-1.11.0-8.el10.x86_64                     185/214 
+  Installing       : libtracker-sparql-3.7.3-4.el10.x86_64              186/214 
+  Installing       : tracker-3.7.3-4.el10.x86_64                        187/214 
+  Running scriptlet: tracker-3.7.3-4.el10.x86_64                        187/214 
+  Installing       : tracker-miners-3.7.4-1.el10.x86_64                 188/214 
+  Running scriptlet: tracker-miners-3.7.4-1.el10.x86_64                 188/214 
+  Installing       : dbus-common-1:1.14.10-6.el10.noarch                189/214 
+  Running scriptlet: dbus-common-1:1.14.10-6.el10.noarch                189/214 
+  Installing       : dbus-broker-36-5.el10_3.x86_64                     190/214 
+  Running scriptlet: dbus-broker-36-5.el10_3.x86_64                     190/214 
+  Installing       : dbus-1:1.14.10-6.el10.x86_64                       191/214 
+  Installing       : at-spi2-core-2.56.1-1.el10.x86_64                  192/214 
+  Installing       : atk-2.56.1-1.el10.x86_64                           193/214 
+  Installing       : at-spi2-atk-2.56.1-1.el10.x86_64                   194/214 
+  Installing       : dconf-0.40.0-17.el10.x86_64                        195/214 
+  Running scriptlet: dconf-0.40.0-17.el10.x86_64                        195/214 
+  Installing       : cups-filesystem-1:2.4.10-18.el10_2.noarch          196/214 
+  Installing       : cups-libs-1:2.4.10-18.el10_2.x86_64                197/214 
+  Installing       : bluez-libs-5.87+1.git30db66dc971b-1.el10.x86_64    198/214 
+  Installing       : pipewire-libs-1.4.11-1.1.1.el10_3.x86_64           199/214 
+  Installing       : adwaita-cursor-theme-46.0-3.el10.noarch            200/214 
+  Installing       : adwaita-icon-theme-46.0-3.el10.noarch              201/214 
+  Installing       : ModemManager-glib-1.22.0-7.el10.x86_64             202/214 
+  Running scriptlet: geoclue2-2.7.2-1.el10.x86_64                       203/214 
+  Installing       : geoclue2-2.7.2-1.el10.x86_64                       203/214 
+  Running scriptlet: geoclue2-2.7.2-1.el10.x86_64                       203/214 
+  Installing       : xdg-desktop-portal-1.20.0-2.el10.x86_64            204/214 
+  Running scriptlet: xdg-desktop-portal-1.20.0-2.el10.x86_64            204/214 
+  Installing       : libcanberra-gtk3-0.30-37.el10.x86_64               205/214 
+  Installing       : gtk3-3.24.43-5.el10.x86_64                         206/214 
+  Installing       : xdg-desktop-portal-gtk-1.15.3-1.el10.x86_64        207/214 
+  Running scriptlet: xdg-desktop-portal-gtk-1.15.3-1.el10.x86_64        207/214 
+  Installing       : gtk-vnc2-1.3.1-7.el10.x86_64                       208/214 
+  Installing       : vte291-0.78.6-1.el10.x86_64                        209/214 
+  Installing       : virt-viewer-11.0-10.el10.x86_64                    210/214 
+  Installing       : flagship-1.3.0-0.1.dev1.el10.noarch                211/214 
+  Running scriptlet: flagship-1.3.0-0.1.dev1.el10.noarch                211/214 
+  Cleanup          : python3-3.12.13-2.el10_2.x86_64                    212/214 
+  Cleanup          : python3-libs-3.12.13-2.el10_2.x86_64               213/214 
+  Cleanup          : cyrus-sasl-lib-2.1.28-29.el10.x86_64               214/214 
+  Running scriptlet: fontconfig-2.15.0-7.el10.x86_64                    214/214 
+  Running scriptlet: dconf-0.40.0-17.el10.x86_64                        214/214 
+  Running scriptlet: cyrus-sasl-lib-2.1.28-29.el10.x86_64               214/214 
+
+Upgraded:
+  cyrus-sasl-lib-2.1.28-30.el10_2.x86_64     python3-3.12.16-2.el10_3.x86_64    
+  python3-libs-3.12.16-2.el10_3.x86_64      
+Installed:
+  ModemManager-glib-1.22.0-7.el10.x86_64                                        
+  adwaita-cursor-theme-46.0-3.el10.noarch                                       
+  adwaita-icon-theme-46.0-3.el10.noarch                                         
+  alsa-lib-1.2.16.1-1.el10.x86_64                                               
+  at-spi2-atk-2.56.1-1.el10.x86_64                                              
+  at-spi2-core-2.56.1-1.el10.x86_64                                             
+  atk-2.56.1-1.el10.x86_64                                                      
+  avahi-glib-0.9~rc2-3.el10.x86_64                                              
+  avahi-libs-0.9~rc2-3.el10.x86_64                                              
+  bluez-libs-5.87+1.git30db66dc971b-1.el10.x86_64                               
+  cairo-1.18.2-3.el10.x86_64                                                    
+  cairo-gobject-1.18.2-3.el10.x86_64                                            
+  colord-libs-1.4.7-6.el10.x86_64                                               
+  cups-filesystem-1:2.4.10-18.el10_2.noarch                                     
+  cups-libs-1:2.4.10-18.el10_2.x86_64                                           
+  cyrus-sasl-gssapi-2.1.28-30.el10_2.x86_64                                     
+  dbus-1:1.14.10-6.el10.x86_64                                                  
+  dbus-broker-36-5.el10_3.x86_64                                                
+  dbus-common-1:1.14.10-6.el10.noarch                                           
+  dbus-libs-1:1.14.10-6.el10.x86_64                                             
+  dconf-0.40.0-17.el10.x86_64                                                   
+  default-fonts-core-sans-4.1-3.el10.noarch                                     
+  duktape-2.7.0-10.el10.x86_64                                                  
+  exempi-2.6.4-7.el10.x86_64                                                    
+  exiv2-0.28.3-5.el10.x86_64                                                    
+  exiv2-libs-0.28.3-5.el10.x86_64                                               
+  fdk-aac-free-2.0.0-15.el10.x86_64                                             
+  fftw-libs-single-3.3.11-1.el10.x86_64                                         
+  flac-libs-1.4.3-6.el10.x86_64                                                 
+  flagship-1.3.0-0.1.dev1.el10.noarch                                           
+  fontconfig-2.15.0-7.el10.x86_64                                               
+  fonts-filesystem-1:2.0.5-18.el10.noarch                                       
+  freetype-2.13.2-8.el10.x86_64                                                 
+  fribidi-1.0.14-4.el10.x86_64                                                  
+  fuse-common-3.16.2-5.el10.x86_64                                              
+  fuse3-3.16.2-5.el10.x86_64                                                    
+  fuse3-libs-3.16.2-5.el10.x86_64                                               
+  gdk-pixbuf2-2.42.12-4.el10_1.5.x86_64                                         
+  gdk-pixbuf2-modules-2.42.12-4.el10_1.5.x86_64                                 
+  geoclue2-2.7.2-1.el10.x86_64                                                  
+  giflib-5.2.1-25.el10_2.x86_64                                                 
+  glib-networking-2.80.0-3.el10_3.4.x86_64                                      
+  gnupg2-2.4.5-5.el10.x86_64                                                    
+  gobject-introspection-1.79.1-7.el10.x86_64                                    
+  google-noto-fonts-common-20240401-5.el10.noarch                               
+  google-noto-sans-vf-fonts-20240401-5.el10.noarch                              
+  gpgme-1.23.2-6.el10.x86_64                                                    
+  gpgmepp-1.23.2-6.el10.x86_64                                                  
+  graphene-1.10.6-10.el10.x86_64                                                
+  graphite2-1.3.14-17.el10.x86_64                                               
+  gsettings-desktop-schemas-47.1-4.el10.x86_64                                  
+  gsm-1.0.22-8.el10.x86_64                                                      
+  gstreamer1-1.26.7-5.el10_3.1.x86_64                                           
+  gstreamer1-plugins-base-1.26.7-4.el10_3.1.x86_64                              
+  gtk-update-icon-cache-3.24.43-5.el10.x86_64                                   
+  gtk-vnc2-1.3.1-7.el10.x86_64                                                  
+  gtk3-3.24.43-5.el10.x86_64                                                    
+  gvnc-1.3.1-7.el10.x86_64                                                      
+  harfbuzz-8.4.0-6.el10.x86_64                                                  
+  hicolor-icon-theme-0.17-20.el10.noarch                                        
+  hwdata-0.379-10.10.el10.noarch                                                
+  inih-58-3.el10.x86_64                                                         
+  inih-cpp-58-3.el10.x86_64                                                     
+  iso-codes-4.16.0-6.el10.noarch                                                
+  jbigkit-libs-2.1-31.el10.x86_64                                               
+  json-glib-1.8.0-5.el10.x86_64                                                 
+  lame-libs-3.100-19.el10.x86_64                                                
+  lcms2-2.16-6.el10.x86_64                                                      
+  libX11-1.8.13-1.el10_3.1.x86_64                                               
+  libX11-common-1.8.13-1.el10_3.1.noarch                                        
+  libX11-xcb-1.8.13-1.el10_3.1.x86_64                                           
+  libXau-1.0.11-8.el10.x86_64                                                   
+  libXcomposite-0.4.6-5.el10.x86_64                                             
+  libXcursor-1.2.1-9.el10.x86_64                                                
+  libXdamage-1.1.6-5.el10.x86_64                                                
+  libXext-1.3.6-3.el10.x86_64                                                   
+  libXfixes-6.0.1-5.el10.x86_64                                                 
+  libXft-2.3.8-8.el10.x86_64                                                    
+  libXi-1.8.1-7.el10_2.3.x86_64                                                 
+  libXinerama-1.1.5-8.el10.x86_64                                               
+  libXrandr-1.5.4-5.el10.x86_64                                                 
+  libXrender-0.9.11-8.el10_2.1.x86_64                                           
+  libXtst-1.2.4-8.el10_2.1.x86_64                                               
+  libXv-1.0.12-5.el10.x86_64                                                    
+  libXxf86vm-1.1.5-8.el10.x86_64                                                
+  libaio-0.3.112-1.el10.x86_64                                                  
+  libassuan-2.5.6-6.el10.x86_64                                                 
+  libasyncns-0.8-30.el10.x86_64                                                 
+  libatomic-14.4.1-5.el10_3.x86_64                                              
+  libbrotli-1.1.0-8.el10_2.1.x86_64                                             
+  libcanberra-0.30-37.el10.x86_64                                               
+  libcanberra-gtk3-0.30-37.el10.x86_64                                          
+  libcbor-0.11.0-3.el10.x86_64                                                  
+  libdatrie-0.2.13-11.el10.x86_64                                               
+  libdex-0.8.1-1.el10.x86_64                                                    
+  libdrm-2.4.128-1.el10.x86_64                                                  
+  libedit-3.1-52.20230828cvs.el10.x86_64                                        
+  libepoxy-1.5.10-10.el10.x86_64                                                
+  libexif-0.6.24-10.el10.x86_64                                                 
+  libfido2-1.14.0-7.el10.x86_64                                                 
+  libgcrypt-1.11.0-7.el10_2.x86_64                                              
+  libgexiv2-0.14.3-3.el10.x86_64                                                
+  libglvnd-1:1.7.0-7.el10.x86_64                                                
+  libglvnd-egl-1:1.7.0-7.el10.x86_64                                            
+  libglvnd-glx-1:1.7.0-7.el10.x86_64                                            
+  libgpg-error-1.50-2.el10.x86_64                                               
+  libgsf-1.14.53-2.el10.x86_64                                                  
+  libgudev-238-7.el10.x86_64                                                    
+  libgusb-0.4.9-4.el10.x86_64                                                   
+  libgxps-0.3.2-11.el10.x86_64                                                  
+  libicu-74.2-5.el10_0.x86_64                                                   
+  libiptcdata-1.0.5-20.el10.x86_64                                              
+  libjpeg-turbo-3.0.2-4.el10.x86_64                                             
+  libksba-1.6.7-2.el10.x86_64                                                   
+  liblc3-1.1.3-1.el10.x86_64                                                    
+  libldac-2.0.2.3-17.el10.x86_64                                                
+  liblerc-4.0.0-8.el10.x86_64                                                   
+  libnl3-3.11.0-1.el10.x86_64                                                   
+  libnotify-0.8.6-1.el10.x86_64                                                 
+  libogg-2:1.3.5-10.el10.x86_64                                                 
+  libosinfo-1.11.0-8.el10.x86_64                                                
+  libpciaccess-0.16-16.el10.x86_64                                              
+  libpng-2:1.6.40-11.el10_2.1.x86_64                                            
+  libportal-0.9.0-3.el10.x86_64                                                 
+  libproxy-0.5.5-4.el10.x86_64                                                  
+  libpsl-0.21.5-6.el10.x86_64                                                   
+  librsvg2-2.57.1-9.el10_3.10.x86_64                                            
+  libsbc-2.0-7.el10.x86_64                                                      
+  libseccomp-2.5.6-1.el10.x86_64                                                
+  libsndfile-1.2.2-7.el10.x86_64                                                
+  libsoup3-3.6.6-1.el10_3.9.x86_64                                              
+  libssh-0.12.2-2.el10.x86_64                                                   
+  libssh-config-0.12.2-2.el10.noarch                                            
+  libtdb-1.4.15-100.el10.x86_64                                                 
+  libthai-0.1.29-10.el10.x86_64                                                 
+  libtheora-1:1.1.1-39.el10.x86_64                                              
+  libtiff-4.6.0-11.el10.x86_64                                                  
+  libtirpc-1.3.5-1.el10.x86_64                                                  
+  libtool-ltdl-2.4.7-14.el10.x86_64                                             
+  libtracker-sparql-3.7.3-4.el10.x86_64                                         
+  liburing-2.12-1.el10.x86_64                                                   
+  libvirt-client-12.5.0-4.1.el10_3.x86_64                                       
+  libvirt-glib-5.0.0-6.el10.x86_64                                              
+  libvirt-libs-12.5.0-4.1.el10_3.x86_64                                         
+  libvorbis-1:1.3.7-12.el10.x86_64                                              
+  libwayland-client-1.25.0-1.el10.x86_64                                        
+  libwayland-cursor-1.25.0-1.el10.x86_64                                        
+  libwayland-egl-1.25.0-1.el10.x86_64                                           
+  libwebp-1.3.2-10.el10.x86_64                                                  
+  libwsman1-2.8.1-3.el10.x86_64                                                 
+  libxcb-1.17.0-3.el10.x86_64                                                   
+  libxkbcommon-1.7.0-4.el10.x86_64                                              
+  libxshmfence-1.3.2-5.el10.x86_64                                              
+  libxslt-1.1.39-9.el10.x86_64                                                  
+  llvm-filesystem-22.1.8-1.el10.x86_64                                          
+  llvm-libs-22.1.8-1.el10.x86_64                                                
+  low-memory-monitor-2.1-12.el10.x86_64                                         
+  mesa-dri-drivers-26.1.1-2.el10.x86_64                                         
+  mesa-filesystem-26.1.1-2.el10.x86_64                                          
+  mesa-libEGL-26.1.1-2.el10.x86_64                                              
+  mesa-libGL-26.1.1-2.el10.x86_64                                               
+  mesa-libgbm-26.1.1-2.el10.x86_64                                              
+  mpg123-libs-1.32.9-1.el10.x86_64                                              
+  npth-1.6-21.el10.x86_64                                                       
+  nspr-4.39.0-5.el10_2.x86_64                                                   
+  nss-3.124.0-5.el10_2.x86_64                                                   
+  nss-softokn-3.124.0-5.el10_2.x86_64                                           
+  nss-softokn-freebl-3.124.0-5.el10_2.x86_64                                    
+  nss-sysinit-3.124.0-5.el10_2.x86_64                                           
+  nss-util-3.124.0-5.el10_2.x86_64                                              
+  numactl-libs-2.0.19-3.el10.x86_64                                             
+  openjpeg2-2.5.2-5.el10.x86_64                                                 
+  openssh-9.9p1-33.el10_3.rocky.0.1.x86_64                                      
+  openssh-clients-9.9p1-33.el10_3.rocky.0.1.x86_64                              
+  opus-1.4-6.el10.x86_64                                                        
+  orc-0.4.39-2.el10.x86_64                                                      
+  osinfo-db-20260812-1.el10.noarch                                              
+  osinfo-db-tools-1.11.0-8.el10.x86_64                                          
+  pango-1.54.0-4.el10.x86_64                                                    
+  pipewire-libs-1.4.11-1.1.1.el10_3.x86_64                                      
+  pixman-0.43.4-2.el10.x86_64                                                   
+  poppler-24.02.0-10.el10.x86_64                                                
+  poppler-data-0.4.11-9.el10.noarch                                             
+  poppler-glib-24.02.0-10.el10.x86_64                                           
+  publicsuffix-list-dafsa-20240107-5.el10.noarch                                
+  pulseaudio-libs-17.0-6.el10.x86_64                                            
+  python3-tkinter-3.12.16-2.el10_3.x86_64                                       
+  qemu-img-18:10.1.0-28.el10_3.1.x86_64                                         
+  redhat-mono-vf-fonts-4.1.0-1.el10.noarch                                      
+  redhat-text-vf-fonts-4.1.0-1.el10.noarch                                      
+  rsvg-pixbuf-loader-2.57.1-9.el10_3.10.x86_64                                  
+  shared-mime-info-2.3-8.el10.x86_64                                            
+  sound-theme-freedesktop-0.8-23.el10.noarch                                    
+  spirv-tools-libs-2026.1-1.el10.x86_64                                         
+  tcl-1:8.6.13-4.el10.x86_64                                                    
+  tk-1:8.6.13-5.el10.x86_64                                                     
+  tracker-3.7.3-4.el10.x86_64                                                   
+  tracker-miners-3.7.4-1.el10.x86_64                                            
+  upower-libs-1.90.10-2.el10.x86_64                                             
+  virt-viewer-11.0-10.el10.x86_64                                               
+  vte-profile-0.78.6-1.el10.x86_64                                              
+  vte291-0.78.6-1.el10.x86_64                                                   
+  webrtc-audio-processing-1.3-5.el10.x86_64                                     
+  xdg-desktop-portal-1.20.0-2.el10.x86_64                                       
+  xdg-desktop-portal-gtk-1.15.3-1.el10.x86_64                                   
+  xkeyboard-config-2.41-3.el10.noarch                                           
+  xml-common-0.6.3-65.el10.noarch                                               
+  xprop-1.2.7-3.el10.x86_64                                                     
+
+Complete!
+INSTALLED 1.3.0.dev1 /usr/share/flagship/flagship/__init__.py
+test_error_does_not_expose_arguments (test_api.ClientTests.test_error_does_not_expose_arguments) ... ok
+test_expired_session_aborts_inventory (test_api.ClientTests.test_expired_session_aborts_inventory) ... ok
+test_inventory_permission_failure_is_visible (test_api.ClientTests.test_inventory_permission_failure_is_visible) ... ok
+test_logout_clears_session_even_on_error (test_api.ClientTests.test_logout_clears_session_even_on_error) ... ok
+test_mutation_not_retried (test_api.ClientTests.test_mutation_not_retried) ... ok
+test_no_unlisted_mutations (test_api.ClientTests.test_no_unlisted_mutations) ... ok
+test_redaction_is_recursive (test_api.ClientTests.test_redaction_is_recursive) ... ok
+test_reject_insecure_or_credential_urls (test_api.ClientTests.test_reject_insecure_or_credential_urls) ... ok
+test_secure_context_and_timeout (test_api.ClientTests.test_secure_context_and_timeout) ... ok
+test_setter_is_synchronous (test_api.ClientTests.test_setter_is_synchronous) ... ok
+test_start_signature (test_api.ClientTests.test_start_signature) ... ok
+test_help_title (test_branding.AboutDialogTests.test_help_title) ... ok
+test_window_title_and_about (test_branding.AboutDialogTests.test_window_title_and_about) ... ok
+test_about_copy (test_branding.BrandingTests.test_about_copy) ... ok
+test_package_metadata (test_branding.BrandingTests.test_package_metadata) ... ok
+test_shim_exports_application (test_branding.BrandingTests.test_shim_exports_application) ... ok
+test_declined_host_action_does_not_submit (test_center.CenterTests.test_declined_host_action_does_not_submit) ... ok
+test_empty_snapshot_selection_cannot_revert_parent (test_center.CenterTests.test_empty_snapshot_selection_cannot_revert_parent) ... ok
+test_halted_guest_uses_affinity_when_resident_on_is_null (test_center.CenterTests.test_halted_guest_uses_affinity_when_resident_on_is_null) ... ok
+test_host_and_vm_tabs_are_selection_specific (test_center.CenterTests.test_host_and_vm_tabs_are_selection_specific) ... ok
+test_infrastructure_nests_running_guest_under_resident_host (test_center.CenterTests.test_infrastructure_nests_running_guest_under_resident_host) ... ok
+test_navigation_and_search_are_read_only (test_center.CenterTests.test_navigation_and_search_are_read_only) ... ok
+test_snapshot_action_selects_the_table_snapshot (test_center.CenterTests.test_snapshot_action_selects_the_table_snapshot) ... ok
+test_snapshot_visibility_does_not_require_template_visibility (test_center.CenterTests.test_snapshot_visibility_does_not_require_template_visibility) ... ok
+test_host_storage_follows_pbd_and_networking_follows_pif (test_center.RelationshipTests.test_host_storage_follows_pbd_and_networking_follows_pif) ... ok
+test_vm_tabs_distinguish_templates_and_storage (test_center.RelationshipTests.test_vm_tabs_distinguish_templates_and_storage) ... ok
+test_fresh_ownership_and_host_resolution (test_console.ConsoleTests.test_fresh_ownership_and_host_resolution) ... ok
+test_refused_or_oversized_response_never_retried_or_exposed (test_console.ConsoleTests.test_refused_or_oversized_response_never_retried_or_exposed) ... ok
+test_refuses_foreign_console_and_stopped_vm (test_console.ConsoleTests.test_refuses_foreign_console_and_stopped_vm) ... ok
+test_rejects_credential_forwarding_targets (test_console.ConsoleTests.test_rejects_credential_forwarding_targets) ... ok
+test_tls_failure_sends_no_session (test_console.ConsoleTests.test_tls_failure_sends_no_session) ... ok
+test_tunnel_preserves_buffered_frame_and_cookie_not_url (test_console.ConsoleTests.test_tunnel_preserves_buffered_frame_and_cookie_not_url) ... ok
+test_cad_preserves_a_modifier_already_held_by_operator (test_console_window.ConsoleWindowTests.test_cad_preserves_a_modifier_already_held_by_operator) ... ok
+test_closing_console_cancels_its_pending_callback_while_parent_lives (test_console_window.ConsoleWindowTests.test_closing_console_cancels_its_pending_callback_while_parent_lives) ... ok
+test_default_view_only_and_explicit_control_events (test_console_window.ConsoleWindowTests.test_default_view_only_and_explicit_control_events) ... ok
+test_error_is_visible_and_disables_control (test_console_window.ConsoleWindowTests.test_error_is_visible_and_disables_control) ... ok
+test_focus_release_clears_buttons_and_modifiers (test_console_window.ConsoleWindowTests.test_focus_release_clears_buttons_and_modifiers) ... ok
+test_input_overflow_closes_without_recursing_during_key_release (test_console_window.ConsoleWindowTests.test_input_overflow_closes_without_recursing_during_key_release) ... ok
+test_old_connection_cannot_receive_input_and_poll_closes_tunnel (test_console_window.ConsoleWindowTests.test_old_connection_cannot_receive_input_and_poll_closes_tunnel) ... ok
+test_raw_copy_and_resize_preserve_display_pixels (test_console_window.ConsoleWindowTests.test_raw_copy_and_resize_preserve_display_pixels) ... ok
+test_dock_undock_keeps_same_framebuffer_and_connection (test_console_window.DockingTests.test_dock_undock_keeps_same_framebuffer_and_connection) ... ok
+test_cancelled_resource_choice_never_submits (test_device_panel.DevicePanelTests.test_cancelled_resource_choice_never_submits) ... ok
+test_confirmed_detach_has_no_delete_flag (test_device_panel.DevicePanelTests.test_confirmed_detach_has_no_delete_flag) ... ok
+test_declined_detach_does_not_submit (test_device_panel.DevicePanelTests.test_declined_detach_does_not_submit) ... ok
+test_delete_uuid_is_forwarded_for_fresh_server_validation (test_device_panel.DevicePanelTests.test_delete_uuid_is_forwarded_for_fresh_server_validation) ... ok
+test_history_reopens_unconfirmed_intent_without_server_calls (test_device_panel.DevicePanelTests.test_history_reopens_unconfirmed_intent_without_server_calls) ... ok
+test_offline_help_index_opens_recovery_chapter_without_server (test_device_panel.DevicePanelTests.test_offline_help_index_opens_recovery_chapter_without_server) ... ok
+test_tables_show_disk_capacity_and_adapter_mac (test_device_panel.DevicePanelTests.test_tables_show_disk_capacity_and_adapter_mac) ... ok
+test_window_from_old_connection_cannot_change_new_pool (test_device_panel.DevicePanelTests.test_window_from_old_connection_cannot_change_new_pool) ... ok
+test_wrong_delete_uuid_never_submits (test_device_panel.DevicePanelTests.test_wrong_delete_uuid_never_submits) ... ok
+test_add_disk_to_running_guest_creates_then_plugs (test_devices.DeviceTests.test_add_disk_to_running_guest_creates_then_plugs) ... ok
+test_detach_keeps_disk_contents_and_removes_only_connection (test_devices.DeviceTests.test_detach_keeps_disk_contents_and_removes_only_connection) ... ok
+test_disk_shrink_is_rejected_without_mutation (test_devices.DeviceTests.test_disk_shrink_is_rejected_without_mutation) ... ok
+test_empty_dvd_then_iso_insert_and_eject (test_devices.DeviceTests.test_empty_dvd_then_iso_insert_and_eject) ... ok
+test_existing_unassociated_disk_attaches_without_copying_or_deleting (test_devices.DeviceTests.test_existing_unassociated_disk_attaches_without_copying_or_deleting) ... ok
+test_failed_adapter_unplug_does_not_remove_it (test_devices.DeviceTests.test_failed_adapter_unplug_does_not_remove_it) ... ok
+test_failed_async_unplug_task_never_destroys_connection (test_devices.DeviceTests.test_failed_async_unplug_task_never_destroys_connection) ... ok
+test_failed_unplug_never_destroys_connection_or_data (test_devices.DeviceTests.test_failed_unplug_never_destroys_connection_or_data) ... ok
+test_foreign_vbd_and_vif_are_rejected_before_mutation (test_devices.DeviceTests.test_foreign_vbd_and_vif_are_rejected_before_mutation) ... ok
+test_grow_uses_server_advertised_online_capability (test_devices.DeviceTests.test_grow_uses_server_advertised_online_capability) ... ok
+test_move_adapter_keeps_mac_uuid_and_connection (test_devices.DeviceTests.test_move_adapter_keeps_mac_uuid_and_connection) ... ok
+test_multicast_or_malformed_mac_is_rejected_before_create (test_devices.DeviceTests.test_multicast_or_malformed_mac_is_rejected_before_create) ... ok
+test_new_adapter_auto_connects_on_running_guest (test_devices.DeviceTests.test_new_adapter_auto_connects_on_running_guest) ... ok
+test_non_iso_media_is_rejected_before_eject (test_devices.DeviceTests.test_non_iso_media_is_rejected_before_eject) ... ok
+test_permanent_deletion_only_after_connection_removed (test_devices.DeviceTests.test_permanent_deletion_only_after_connection_removed) ... ok
+test_permanent_deletion_requires_matching_uuid (test_devices.DeviceTests.test_permanent_deletion_requires_matching_uuid) ... ok
+test_remove_adapter_unplugs_first (test_devices.DeviceTests.test_remove_adapter_unplugs_first) ... ok
+test_remove_dvd_preserves_iso_image (test_devices.DeviceTests.test_remove_dvd_preserves_iso_image) ... ok
+test_second_disk_association_prevents_delete (test_devices.DeviceTests.test_second_disk_association_prevents_delete) ... ok
+test_shared_or_snapshot_or_readonly_disk_cannot_be_deleted (test_devices.DeviceTests.test_shared_or_snapshot_or_readonly_disk_cannot_be_deleted) ... ok
+test_busy_monitor_does_not_discard_reviewed_creation_plan (test_gui.DesktopTests.test_busy_monitor_does_not_discard_reviewed_creation_plan) ... ok
+test_creation_review_is_read_only_until_explicit_create (test_gui.DesktopTests.test_creation_review_is_read_only_until_explicit_create) ... ok
+test_declined_task_cancellation_never_submits (test_gui.DesktopTests.test_declined_task_cancellation_never_submits) ... ok
+test_declining_confirmation_never_reaches_server (test_gui.DesktopTests.test_declining_confirmation_never_reaches_server) ... ok
+test_disallowed_operation_never_reaches_server (test_gui.DesktopTests.test_disallowed_operation_never_reaches_server) ... ok
+test_failed_remote_logout_clears_local_pool_and_task_context (test_gui.DesktopTests.test_failed_remote_logout_clears_local_pool_and_task_context) ... ok
+test_failed_workflow_retains_complete_report_without_oversized_dialog (test_gui.DesktopTests.test_failed_workflow_retains_complete_report_without_oversized_dialog) ... ok
+test_filter_matches_uuid (test_gui.DesktopTests.test_filter_matches_uuid) ... ok
+test_filter_no_match_is_empty (test_gui.DesktopTests.test_filter_no_match_is_empty) ... ok
+test_invalid_creation_form_cannot_submit (test_gui.DesktopTests.test_invalid_creation_form_cannot_submit) ... ok
+test_migration_uses_named_host_selector_and_reviews_destination (test_gui.DesktopTests.test_migration_uses_named_host_selector_and_reviews_destination) ... ok
+test_running_vm_hardware_editor_never_requests_changes (test_gui.DesktopTests.test_running_vm_hardware_editor_never_requests_changes) ... ok
+test_select_guest_shows_related_disk (test_gui.DesktopTests.test_select_guest_shows_related_disk) ... ok
+test_task_monitor_pauses_on_session_loss_without_resubmitting (test_gui.DesktopTests.test_task_monitor_pauses_on_session_loss_without_resubmitting) ... ok
+test_task_success_is_visible_in_tasks_view (test_gui.DesktopTests.test_task_success_is_visible_in_tasks_view) ... ok
+test_wizard_preserves_template_firmware_by_default (test_gui.DesktopTests.test_wizard_preserves_template_firmware_by_default) ... ok
+test_ambiguous_truncated_and_malformed_body_framing_is_refused (test_httpstream.HTTPStreamTests.test_ambiguous_truncated_and_malformed_body_framing_is_refused) ... ok
+test_duplicate_lengths_and_oversized_headers_are_rejected (test_httpstream.HTTPStreamTests.test_duplicate_lengths_and_oversized_headers_are_rejected) ... ok
+test_export_streams_chunked_and_keeps_cookie_out_of_url (test_httpstream.HTTPStreamTests.test_export_streams_chunked_and_keeps_cookie_out_of_url) ... ok
+test_failed_upload_is_not_retried_and_body_error_is_not_exposed (test_httpstream.HTTPStreamTests.test_failed_upload_is_not_retried_and_body_error_is_not_exposed) ... ok
+test_mismatched_early_200_cannot_receive_archive (test_httpstream.HTTPStreamTests.test_mismatched_early_200_cannot_receive_archive) ... ok
+test_redirects_cannot_forward_credentials_or_change_import_parameters (test_httpstream.HTTPStreamTests.test_redirects_cannot_forward_credentials_or_change_import_parameters) ... ok
+test_tls_failure_prevents_cookie_or_upload_send (test_httpstream.HTTPStreamTests.test_tls_failure_prevents_cookie_or_upload_send) ... ok
+test_upload_follows_verified_prebody_redirect_then_sends_once (test_httpstream.HTTPStreamTests.test_upload_follows_verified_prebody_redirect_then_sends_once) ... ok
+test_upload_waits_for_continue_and_checks_source_length (test_httpstream.HTTPStreamTests.test_upload_waits_for_continue_and_checks_source_length) ... ok
+test_xapi_early_200_with_matching_task_streams_body_without_second_status (test_httpstream.HTTPStreamTests.test_xapi_early_200_with_matching_task_streams_body_without_second_status) ... ok
+test_api_error_arguments_are_not_recorded (test_journal.JournalTests.test_api_error_arguments_are_not_recorded) ... ok
+test_complete_device_workflow_records_uuid_and_confirmed_tasks (test_journal.JournalTests.test_complete_device_workflow_records_uuid_and_confirmed_tasks) ... ok
+test_created_object_identity_is_durable_when_uuid_is_observed (test_journal.JournalTests.test_created_object_identity_is_durable_when_uuid_is_observed) ... ok
+test_explicit_export_is_private_even_when_replacing_permissive_file (test_journal.JournalTests.test_explicit_export_is_private_even_when_replacing_permissive_file) ... ok
+test_explicit_export_refuses_symlink_without_modifying_target (test_journal.JournalTests.test_explicit_export_refuses_symlink_without_modifying_target) ... ok
+test_failure_to_persist_intent_prevents_server_call (test_journal.JournalTests.test_failure_to_persist_intent_prevents_server_call) ... ok
+test_fsync_failure_before_request_blocks_server_changes (test_journal.JournalTests.test_fsync_failure_before_request_blocks_server_changes) ... ok
+test_getters_and_session_logout_do_not_create_journal (test_journal.JournalTests.test_getters_and_session_logout_do_not_create_journal) ... ok
+test_intent_is_readable_before_server_call (test_journal.JournalTests.test_intent_is_readable_before_server_call) ... ok
+test_interrupted_workflow_with_known_resources_requires_review (test_journal.JournalTests.test_interrupted_workflow_with_known_resources_requires_review) ... ok
+test_invalid_record_types_warn_instead_of_crashing_history (test_journal.JournalTests.test_invalid_record_types_warn_instead_of_crashing_history) ... ok
+test_inventory_export_handles_xmlrpc_timestamps (test_journal.JournalTests.test_inventory_export_handles_xmlrpc_timestamps) ... ok
+test_lost_connection_is_unknown_and_not_replayed (test_journal.JournalTests.test_lost_connection_is_unknown_and_not_replayed) ... ok
+test_partial_final_record_preserves_prior_intent_and_warns (test_journal.JournalTests.test_partial_final_record_preserves_prior_intent_and_warns) ... ok
+test_private_permissions_and_no_credentials_or_raw_arguments (test_journal.JournalTests.test_private_permissions_and_no_credentials_or_raw_arguments) ... ok
+test_process_exit_after_intent_preserves_recovery_record (test_journal.JournalTests.test_process_exit_after_intent_preserves_recovery_record) ... ok
+test_reports_whitelist_fields_and_deduplicate_percentage_updates (test_journal.JournalTests.test_reports_whitelist_fields_and_deduplicate_percentage_updates) ... ok
+test_result_write_failure_blocks_further_mutations_but_allows_reads (test_journal.JournalTests.test_result_write_failure_blocks_further_mutations_but_allows_reads) ... ok
+test_symlink_directory_is_rejected (test_journal.JournalTests.test_symlink_directory_is_rejected) ... ok
+test_terminal_task_state_and_uuid_survive_new_journal_instance (test_journal.JournalTests.test_terminal_task_state_and_uuid_survive_new_journal_instance) ... ok
+test_uuid_identity_is_recorded_without_full_object (test_journal.JournalTests.test_uuid_identity_is_recorded_without_full_object) ... ok
+test_attachment_failure_preserves_created_storage (test_management.ManagementTests.test_attachment_failure_preserves_created_storage) ... ok
+test_invalid_mtu_does_not_create_network (test_management.ManagementTests.test_invalid_mtu_does_not_create_network) ... ok
+test_invalid_storage_makes_no_rpc (test_management.ManagementTests.test_invalid_storage_makes_no_rpc) ... ok
+test_iso_storage_uses_upstream_nfs_iso_config (test_management.ManagementTests.test_iso_storage_uses_upstream_nfs_iso_config) ... ok
+test_partial_property_failure_reports_the_object (test_management.ManagementTests.test_partial_property_failure_reports_the_object) ... ok
+test_power_and_maintenance_refuse_active_guests (test_management.ManagementTests.test_power_and_maintenance_refuse_active_guests) ... ok
+test_reboot_refuses_enabled_host (test_management.ManagementTests.test_reboot_refuses_enabled_host) ... ok
+test_rrd_filters_other_objects_and_nonfinite_samples (test_management.ManagementTests.test_rrd_filters_other_objects_and_nonfinite_samples) ... ok
+test_rrd_rejects_entity_documents (test_management.ManagementTests.test_rrd_rejects_entity_documents) ... ok
+test_copies_journals_and_leaves_originals (test_migrate.MigrateTests.test_copies_journals_and_leaves_originals) ... ok
+test_does_nothing_without_legacy_data (test_migrate.MigrateTests.test_does_nothing_without_legacy_data) ... ok
+test_skips_when_flagship_state_already_exists (test_migrate.MigrateTests.test_skips_when_flagship_state_already_exists) ... ok
+test_backing_file_qcow2_is_refused_before_qemu_reads_it (test_portable_images.ImageTests.test_backing_file_qcow2_is_refused_before_qemu_reads_it) ... ok
+test_external_data_qcow2_is_refused (test_portable_images.ImageTests.test_external_data_qcow2_is_refused) ... ok
+test_manifest_mismatch_is_rejected (test_portable_images.ImageTests.test_manifest_mismatch_is_rejected) ... ok
+test_real_ova_preserves_hardware_manifest_and_disk_content (test_portable_images.ImageTests.test_real_ova_preserves_hardware_manifest_and_disk_content) ... ok
+test_real_qcow2_roundtrip_matches_disk_bytes (test_portable_images.ImageTests.test_real_qcow2_roundtrip_matches_disk_bytes) ... ok
+test_traversal_and_link_ova_members_never_extract (test_portable_images.ImageTests.test_traversal_and_link_ova_members_never_extract) ... ok
+test_invalid_disk_does_not_create_any_server_resource (test_portable_images.PortableWorkflowTests.test_invalid_disk_does_not_create_any_server_resource) ... ok
+test_ova_import_preserves_two_disks_without_touching_template (test_portable_images.PortableWorkflowTests.test_ova_import_preserves_two_disks_without_touching_template) ... ok
+test_qcow_import_creates_new_halted_vm_and_keeps_exact_virtual_capacity (test_portable_images.PortableWorkflowTests.test_qcow_import_creates_new_halted_vm_and_keeps_exact_virtual_capacity) ... ok
+test_import_result_does_not_expand_entities (test_protocol.ImportResultTests.test_import_result_does_not_expand_entities) ... ok
+test_multiple_and_empty_vm_sets_never_pick_an_arbitrary_vm (test_protocol.ImportResultTests.test_multiple_and_empty_vm_sets_never_pick_an_arbitrary_vm) ... ok
+test_single_vm_set_accepts_implicit_and_explicit_strings (test_protocol.ImportResultTests.test_single_vm_set_accepts_implicit_and_explicit_strings) ... ok
+test_explicit_string_and_escaped_opaque_content (test_protocol.ProtocolTests.test_explicit_string_and_escaped_opaque_content) ... ok
+test_live_xcp_ng_26_task_result_implicit_string (test_protocol.ProtocolTests.test_live_xcp_ng_26_task_result_implicit_string) ... ok
+test_non_string_task_results_are_not_coerced_into_references (test_protocol.ProtocolTests.test_non_string_task_results_are_not_coerced_into_references) ... ok
+test_headless_cli_help_imports_without_display (test_recovery.RecoveryTests.test_headless_cli_help_imports_without_display) ... ok
+test_headless_history_reopens_saved_intent_and_does_not_replay (test_recovery.RecoveryTests.test_headless_history_reopens_saved_intent_and_does_not_replay) ... ok
+test_inspection_resolves_new_reference_by_uuid_and_only_uses_getters (test_recovery.RecoveryTests.test_inspection_resolves_new_reference_by_uuid_and_only_uses_getters) ... ok
+test_invalid_class_and_opaque_reference_do_not_reach_server (test_recovery.RecoveryTests.test_invalid_class_and_opaque_reference_do_not_reach_server) ... ok
+test_wrong_server_identity_is_not_presented_as_the_requested_object (test_recovery.RecoveryTests.test_wrong_server_identity_is_not_presented_as_the_requested_object) ... ok
+test_clipboard_is_consumed_without_exposing_or_synchronizing_content (test_rfb.RFBTests.test_clipboard_is_consumed_without_exposing_or_synchronizing_content) ... ok
+test_framebuffer_pixels_converted_without_alpha_or_endian_error (test_rfb.RFBTests.test_framebuffer_pixels_converted_without_alpha_or_endian_error) ... ok
+test_keyboard_and_pointer_wire_events (test_rfb.RFBTests.test_keyboard_and_pointer_wire_events) ... ok
+test_malformed_rectangles_and_encodings_fail_closed (test_rfb.RFBTests.test_malformed_rectangles_and_encodings_fail_closed) ... ok
+test_old_and_modern_handshake_requests_shared_truecolor_raw (test_rfb.RFBTests.test_old_and_modern_handshake_requests_shared_truecolor_raw) ... ok
+test_refuses_authentication_downgrade_and_oversized_desktop (test_rfb.RFBTests.test_refuses_authentication_downgrade_and_oversized_desktop) ... ok
+test_resize_and_copyrect_with_validated_source (test_rfb.RFBTests.test_resize_and_copyrect_with_validated_source) ... ok
+test_already_cancelling_task_is_not_requested_again (test_tasks.TaskTests.test_already_cancelling_task_is_not_requested_again) ... ok
+test_cancellation_request_does_not_claim_task_cancelled (test_tasks.TaskTests.test_cancellation_request_does_not_claim_task_cancelled) ... ok
+test_expired_session_does_not_change_task_outcome (test_tasks.TaskTests.test_expired_session_does_not_change_task_outcome) ... ok
+test_failure_remains_failure_and_does_not_resubmit (test_tasks.TaskTests.test_failure_remains_failure_and_does_not_resubmit) ... ok
+test_finished_task_is_not_cancelled (test_tasks.TaskTests.test_finished_task_is_not_cancelled) ... ok
+test_malformed_task_ref_is_rejected (test_tasks.TaskTests.test_malformed_task_ref_is_rejected) ... ok
+test_missing_task_is_unavailable_not_success (test_tasks.TaskTests.test_missing_task_is_unavailable_not_success) ... ok
+test_non_cancellable_task_is_not_submitted (test_tasks.TaskTests.test_non_cancellable_task_is_not_submitted) ... ok
+test_pending_is_not_success (test_tasks.TaskTests.test_pending_is_not_success) ... ok
+test_progress_is_bounded (test_tasks.TaskTests.test_progress_is_bounded) ... ok
+test_success_is_reported_after_server_confirmation (test_tasks.TaskTests.test_success_is_reported_after_server_confirmation) ... ok
+test_task_reference_is_opaque (test_tasks.TaskTests.test_task_reference_is_opaque) ... ok
+test_console_insecure_accept (test_tls.ConsoleTrustTests.test_console_insecure_accept) ... ok
+test_console_pin_accept (test_tls.ConsoleTrustTests.test_console_pin_accept) ... ok
+test_console_pin_mismatch_never_sends_session (test_tls.ConsoleTrustTests.test_console_pin_mismatch_never_sends_session) ... ok
+test_console_verify_failure_sends_nothing (test_tls.ConsoleTrustTests.test_console_verify_failure_sends_nothing) ... ok
+test_default_store_location_follows_xdg (test_tls.FingerprintTests.test_default_store_location_follows_xdg) ... ok
+test_host_keys_and_names (test_tls.FingerprintTests.test_host_keys_and_names) ... ok
+test_normalize_forms (test_tls.FingerprintTests.test_normalize_forms) ... ok
+test_store_ignores_corrupt_file (test_tls.FingerprintTests.test_store_ignores_corrupt_file) ... ok
+test_insecure_and_pin_flags (test_tls.RecoveryFlagTests.test_insecure_and_pin_flags) ... ok
+test_ca_pem_option_still_works (test_tls.XmlRpcTrustTests.test_ca_pem_option_still_works) ... ok
+test_changed_certificate_is_refused_before_credentials (test_tls.XmlRpcTrustTests.test_changed_certificate_is_refused_before_credentials) ... ok
+test_changed_saved_pin_is_refused_even_with_valid_ca (test_tls.XmlRpcTrustTests.test_changed_saved_pin_is_refused_even_with_valid_ca) ... ok
+test_default_still_verifies_and_reports_certificate (test_tls.XmlRpcTrustTests.test_default_still_verifies_and_reports_certificate) ... ok
+test_fetch_certificate_reads_leaf (test_tls.XmlRpcTrustTests.test_fetch_certificate_reads_leaf) ... ok
+test_insecure_accepts_without_any_pin (test_tls.XmlRpcTrustTests.test_insecure_accepts_without_any_pin) ... ok
+test_pin_accepts_hostname_mismatch (test_tls.XmlRpcTrustTests.test_pin_accepts_hostname_mismatch) ... ok
+test_saved_pin_accepts_and_file_is_private (test_tls.XmlRpcTrustTests.test_saved_pin_accepts_and_file_is_private) ... ok
+test_session_pin_accepts_self_signed (test_tls.XmlRpcTrustTests.test_session_pin_accepts_self_signed) ... ok
+test_stdlib_fallback_parser (test_tls.XmlRpcTrustTests.test_stdlib_fallback_parser) ... ok
+test_existing_file_and_running_vm_are_never_exported (test_transfers.TransferTests.test_existing_file_and_running_vm_are_never_exported) ... ok
+test_export_publishes_only_confirmed_task_and_records_digest (test_transfers.TransferTests.test_export_publishes_only_confirmed_task_and_records_digest) ... ok
+test_failed_server_task_keeps_private_partial_and_no_final_archive (test_transfers.TransferTests.test_failed_server_task_keeps_private_partial_and_no_final_archive) ... ok
+test_import_creates_halted_guest_maps_network_and_keeps_source (test_transfers.TransferTests.test_import_creates_halted_guest_maps_network_and_keeps_source) ... ok
+test_import_refuses_device_changes_on_preexisting_result (test_transfers.TransferTests.test_import_refuses_device_changes_on_preexisting_result) ... ok
+test_invalid_archive_never_creates_server_task (test_transfers.TransferTests.test_invalid_archive_never_creates_server_task) ... ok
+test_network_failure_keeps_recovery_task_and_never_replays (test_transfers.TransferTests.test_network_failure_keeps_recovery_task_and_never_replays) ... ok
+test_nonregular_empty_and_symlink_sources_send_nothing (test_transfers.TransferTests.test_nonregular_empty_and_symlink_sources_send_nothing) ... ok
+test_always_trust_saves_pin_and_retries_with_it (test_trust_gui.TrustGuiTests.test_always_trust_saves_pin_and_retries_with_it) ... ok
+test_cancel_does_not_connect (test_trust_gui.TrustGuiTests.test_cancel_does_not_connect) ... ok
+test_changed_dialog_shows_previous_fingerprint (test_trust_gui.TrustGuiTests.test_changed_dialog_shows_previous_fingerprint) ... ok
+test_connect_dialog_has_insecure_checkbox_and_warning (test_trust_gui.TrustGuiTests.test_connect_dialog_has_insecure_checkbox_and_warning) ... ok
+test_connect_once_does_not_save (test_trust_gui.TrustGuiTests.test_connect_once_does_not_save) ... ok
+test_insecure_checkbox_reaches_client (test_trust_gui.TrustGuiTests.test_insecure_checkbox_reaches_client) ... Exception in Tkinter callback
+Traceback (most recent call last):
+  File "/usr/lib64/python3.12/tkinter/__init__.py", line 1968, in __call__
+    return self.func(*args)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/share/flagship/flagship/app.py", line 75, in cancel_timers
+    try: self.root.after_cancel(timer)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib64/python3.12/tkinter/__init__.py", line 896, in after_cancel
+    self.deletecommand(script)
+  File "/usr/lib64/python3.12/tkinter/__init__.py", line 696, in deletecommand
+    self.tk.deletecommand(name)
+TypeError: deletecommand() argument must be str, not tuple
+ok
+test_status_bar_indicator (test_trust_gui.TrustGuiTests.test_status_bar_indicator) ... ok
+test_trust_dialog_buttons_and_fields (test_trust_gui.TrustGuiTests.test_trust_dialog_buttons_and_fields) ... ok
+test_authenticated_bridge_relays_init_and_pixels_and_preserves_shared_mode (test_viewer_bridge.ViewerBridgeTests.test_authenticated_bridge_relays_init_and_pixels_and_preserves_shared_mode) ... ok
+test_bad_one_use_password_never_opens_authenticated_host_tunnel (test_viewer_bridge.ViewerBridgeTests.test_bad_one_use_password_never_opens_authenticated_host_tunnel) ... ok
+test_platform_des_matches_standard_known_vector (test_viewer_bridge.ViewerBridgeTests.test_platform_des_matches_standard_known_vector) ... ok
+test_every_toolbar_action_stays_visible_after_narrowing (test_window_layout.WindowLayoutTests.test_every_toolbar_action_stays_visible_after_narrowing) ... can't invoke "winfo" command: application has been destroyed
+    while executing
+"winfo exists $pb"
+    (procedure "ttk::progressbar::Autoincrement" line 4)
+    invoked from within
+"ttk::progressbar::Autoincrement .!frame3.!progressbar 12 1"
+    ("after" script)
+invalid command name "139863935848704poll"
+    while executing
+"139863935848704poll"
+    ("after" script)
+ok
+test_initial_window_fits_the_display (test_window_layout.WindowLayoutTests.test_initial_window_fits_the_display) ... ok
+test_vm_actions_and_status_remain_visible_at_default_guest_resolution (test_window_layout.WindowLayoutTests.test_vm_actions_and_status_remain_visible_at_default_guest_resolution) ... ok
+test_large_memory_arguments_cross_real_xmlrpc_as_decimal_strings (test_wire.WireTests.test_large_memory_arguments_cross_real_xmlrpc_as_decimal_strings) ... ok
+test_real_wire_api_error_is_not_success (test_wire.WireTests.test_real_wire_api_error_is_not_success) ... ok
+test_recovery_uuid_inspection_crosses_verified_https (test_wire.WireTests.test_recovery_uuid_inspection_crosses_verified_https) ... ok
+test_trusted_wire_login_inventory_and_logout (test_wire.WireTests.test_trusted_wire_login_inventory_and_logout) ... ok
+test_untrusted_certificate_rejected (test_wire.WireTests.test_untrusted_certificate_rejected) ... ok
+test_wrong_hostname_rejected_even_with_trusted_ca (test_wire.WireTests.test_wrong_hostname_rejected_even_with_trusted_ca) ... ok
+test_cpu_shrink_lowers_startup_before_max (test_workflows.WorkflowTests.test_cpu_shrink_lowers_startup_before_max) ... ok
+test_hardware_failure_preserves_creation_recovery_context (test_workflows.WorkflowTests.test_hardware_failure_preserves_creation_recovery_context) ... ok
+test_installed_template_uses_copy_and_retains_disk_size (test_workflows.WorkflowTests.test_installed_template_uses_copy_and_retains_disk_size) ... ok
+test_installer_template_provisions_selected_storage_network_and_iso (test_workflows.WorkflowTests.test_installer_template_provisions_selected_storage_network_and_iso) ... ok
+test_invalid_plan_makes_no_server_calls (test_workflows.WorkflowTests.test_invalid_plan_makes_no_server_calls) ... ok
+test_large_integer_encoding_preserves_booleans (test_workflows.WorkflowTests.test_large_integer_encoding_preserves_booleans) ... ok
+test_memory_below_template_minimum_never_clones (test_workflows.WorkflowTests.test_memory_below_template_minimum_never_clones) ... ok
+test_non_template_is_rejected_before_mutation (test_workflows.WorkflowTests.test_non_template_is_rejected_before_mutation) ... ok
+test_partial_failure_retains_recovery_refs_and_never_deletes_disk (test_workflows.WorkflowTests.test_partial_failure_retains_recovery_refs_and_never_deletes_disk) ... ok
+test_progress_snapshots_preserve_pending_and_confirmed_outcomes (test_workflows.WorkflowTests.test_progress_snapshots_preserve_pending_and_confirmed_outcomes) ... ok
+test_reference_result_is_opaque (test_workflows.WorkflowTests.test_reference_result_is_opaque) ... ok
+test_running_guest_cannot_be_reconfigured (test_workflows.WorkflowTests.test_running_guest_cannot_be_reconfigured) ... ok
+test_stopped_monitor_does_not_submit_work (test_workflows.WorkflowTests.test_stopped_monitor_does_not_submit_work) ... ok
+test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTests.test_template_cannot_be_modified_by_hardware_editor) ... ok
+test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests.test_timeout_retains_task_and_never_resubmits) ... ok
+test_arbitrary_block_boundaries_preserve_complete_envelope (test_xva.EnvelopeTests.test_arbitrary_block_boundaries_preserve_complete_envelope) ... ok
+test_truncated_body_and_end_markers_do_not_pass (test_xva.EnvelopeTests.test_truncated_body_and_end_markers_do_not_pass) ... ok
+test_wrong_metadata_bad_checksum_and_data_after_end_are_refused (test_xva.EnvelopeTests.test_wrong_metadata_bad_checksum_and_data_after_end_are_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 233 tests in 6.469s
+
+OK
+Flagship 1.3.0.dev1
+flagship-1.3.0-0.1.dev1.el10.noarch
+python3-3.12.16-2.el10_3.x86_64
+python3-tkinter-3.12.16-2.el10_3.x86_64
+NAME="Rocky Linux"
+VERSION="10.2 (Red Quartz)"
+RELEASE_TYPE="stable"
+ID="rocky"
+ID_LIKE="rhel centos fedora"
+VERSION_ID="10.2"
+PLATFORM_ID="platform:el10"
+PRETTY_NAME="Rocky Linux 10.2 (Red Quartz)"
+ANSI_COLOR="0;32"
+LOGO="fedora-logo-icon"
+CPE_NAME="cpe:/o:rocky:rocky:10::baseos"
+HOME_URL="https://rockylinux.org/"
+VENDOR_NAME="RESF"
+VENDOR_URL="https://resf.org/"
+BUG_REPORT_URL="https://bugs.rockylinux.org/"
+SUPPORT_END="2035-05-31"
+ROCKY_SUPPORT_PRODUCT="Rocky-Linux-10"
+ROCKY_SUPPORT_PRODUCT_VERSION="10.2"
+REDHAT_SUPPORT_PRODUCT="Rocky Linux"
+REDHAT_SUPPORT_PRODUCT_VERSION="10.2"
+PASS: installed native GUI and regression suite with network disabled
