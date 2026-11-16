@@ -1,5 +1,9 @@
 # VM console (development source)
 
+For the current 1.3.0 workspace, OVA/qcow2 and docked/external console behavior,
+see [PORTABLE_IMAGES.md](PORTABLE_IMAGES.md). Earlier details below describe
+their original candidate.
+
 Console support is on the development branch and is not included in dev.3 RPMs.
 Select a running VM, then Console. A separate scrollable window opens in view-only
 mode. Enable keyboard and mouse to send input; click inside the guest display.

@@ -165,7 +165,7 @@ safest to least safe:
 
 ## Run from source
 
-On a connected Rocky desktop, install `python3 python3-tkinter ca-certificates`.
+On a connected Rocky desktop, install `python3 python3-tkinter ca-certificates qemu-img virt-viewer`.
 From this directory:
 
 ```bash
