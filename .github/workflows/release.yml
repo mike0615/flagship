@@ -39,7 +39,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: native-release-assets
-          path: dist/release-*/
+          path: dist/release-${{ github.ref_name }}/
           if-no-files-found: error
           retention-days: 14
   publish:

@@ -1,0 +1,65 @@
+name: Publish validated release artifact
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag
+        required: true
+        default: v1.2.0-dev.2
+      build_run_id:
+        description: Run with a successful build job and native-release-assets artifact
+        required: true
+        default: '43959205955'
+  push:
+    branches: [main]
+    paths: [.github/workflows/publish-release.yml]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: publish-validated-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ inputs.tag || 'v1.2.0-dev.2' }}
+      BUILD_RUN_ID: ${{ inputs.build_run_id || '43959205955' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify source tag and successful build job
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-dev\.[0-9]+$ ]]
+          [[ "$BUILD_RUN_ID" =~ ^[0-9]+$ ]]
+          expected=$(git rev-parse "${RELEASE_TAG}^{commit}")
+          actual=$(gh api "repos/$GH_REPO/actions/runs/$BUILD_RUN_ID" --jq .head_sha)
+          [[ "$actual" == "$expected" ]]
+          result=$(gh api "repos/$GH_REPO/actions/runs/$BUILD_RUN_ID/jobs" --jq '.jobs[] | select(.name == "build") | .conclusion')
+          [[ "$result" == success ]]
+      - uses: actions/download-artifact@v4
+        with:
+          name: native-release-assets
+          run-id: ${{ inputs.build_run_id || '43959205955' }}
+          github-token: ${{ github.token }}
+          path: release-assets
+      - name: Verify assets and publish prerelease
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t manifests < <(find release-assets -type f -name SHA256SUMS)
+          [[ ${#manifests[@]} == 1 ]]
+          release_root=$(dirname "${manifests[0]}")
+          expected=$(git rev-parse "${RELEASE_TAG}^{commit}")
+          actual=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["source_commit"])' "$release_root/RELEASE_SOURCE.json")
+          [[ "$actual" == "$expected" ]]
+          (cd "$release_root" && sha256sum -c SHA256SUMS)
+          gh release create "$RELEASE_TAG" "$release_root"/* \
+            --verify-tag --prerelease \
+            --title "Flagship $RELEASE_TAG — native Rocky Linux 9/10" \
+            --notes-file "packaging/RELEASE_${RELEASE_TAG#v}.md"
