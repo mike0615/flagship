@@ -221,6 +221,7 @@ class CenterShell:
         for title,frame in self.frames.items():
             if title in visible: self.tabs.add(frame,text=title)
             elif str(frame) in self.tabs.tabs(): self.tabs.hide(frame)
+        for index,title in enumerate(visible): self.tabs.insert(index,self.frames[title])
         self.tabs.select(current if current in [str(self.frames[t]) for t in visible] else self.frames[visible[0]])
         for title,view in self.views.items():
             kind,data=related(self.records,cls,ref,title); text=''
