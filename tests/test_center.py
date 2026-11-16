@@ -66,6 +66,16 @@ class CenterTests(unittest.TestCase):
         self.select(('VM','v')); self.app.action=Mock(); self.app.table_action('Snapshots','revert')
         self.app.action.assert_not_called()
 
+    def test_snapshot_visibility_does_not_require_template_visibility(self):
+        self.app.records['VM']['s']['is_a_template'] = True
+        self.app.show_templates.set(False); self.app.show_snapshots.set(True); self.app.populate()
+        self.assertIn(('VM','s'), self.app.items.values())
+
+    def test_halted_guest_uses_affinity_when_resident_on_is_null(self):
+        self.app.records['VM']['v'].update(resident_on='OpaqueRef:NULL',affinity='h',power_state='Halted')
+        self.app.populate(); guest=self.select(('VM','v'))
+        self.assertEqual(self.app.items[self.app.tree.parent(guest)],('host','h'))
+
     def test_navigation_and_search_are_read_only(self):
         self.app.open_notifications(); self.assertEqual(self.visible_tabs(),{'Alerts','Tasks'})
         self.app.navigation.set('Saved Searches'); self.app.show(); self.assertEqual(self.visible_tabs(),{'Search'})

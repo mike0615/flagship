@@ -173,11 +173,11 @@ class CenterShell:
             for ref,r in sorted(self.records.get(cls,{}).items(),key=lambda x:x[1].get('name_label','').casefold()):
                 if cls=='VM':
                     if r.get('is_control_domain'): continue
-                    if not flat and r.get('is_a_template') and not self.show_templates.get(): continue
+                    if not flat and r.get('is_a_template') and not r.get('is_a_snapshot') and not self.show_templates.get(): continue
                     if not flat and r.get('is_a_snapshot') and not self.show_snapshots.get(): continue
                 if cls=='SR' and not r.get('shared') and not self.show_local.get(): continue
                 category = ('Snapshots' if r.get('is_a_snapshot') else 'Templates' if r.get('is_a_template') else 'Virtual machines') if cls=='VM' else {'SR':'Storage','network':'Networks'}[cls]
-                parent = nodes.get(('host',r.get('resident_on') or r.get('affinity'))) or poolnode
+                parent = nodes.get(('host',r.get('resident_on'))) or nodes.get(('host',r.get('affinity'))) or poolnode
                 if cls=='SR' and not r.get('shared'):
                     hosts=[p.get('host') for p in self.records.get('PBD',{}).values() if p.get('SR')==ref]
                     if hosts: parent=nodes.get(('host',hosts[0])) or poolnode

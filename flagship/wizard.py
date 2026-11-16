@@ -34,6 +34,7 @@ class NewVMDialog:
         isos={ref:r for ref,r in records.get('VDI',{}).items() if records.get('SR',{}).get(r.get('SR'),{}).get('content_type')=='iso'}
         self.combo('Install ISO',isos,optional='No ISO — use template boot configuration')
         self.combo('Boot mode',{'':{'name_label':'Template default'},'bios':{'name_label':'BIOS'},'uefi':{'name_label':'UEFI'}})
+        self.values['Boot mode'].set(next(label for label,ref in self.choices['Boot mode'].items() if ref==''))
         self.current=self.pages[3]
         self.combo('Home Server',records.get('host',{}),optional='Automatic placement')
         self.current=self.pages[4]; self.entry('vCPUs','2'); self.entry('Memory (MiB)','2048')

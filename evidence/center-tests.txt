@@ -16,10 +16,12 @@ test_package_metadata (test_branding.BrandingTests) ... ok
 test_shim_exports_application (test_branding.BrandingTests) ... ok
 test_declined_host_action_does_not_submit (test_center.CenterTests) ... ok
 test_empty_snapshot_selection_cannot_revert_parent (test_center.CenterTests) ... ok
+test_halted_guest_uses_affinity_when_resident_on_is_null (test_center.CenterTests) ... ok
 test_host_and_vm_tabs_are_selection_specific (test_center.CenterTests) ... ok
 test_infrastructure_nests_running_guest_under_resident_host (test_center.CenterTests) ... ok
 test_navigation_and_search_are_read_only (test_center.CenterTests) ... ok
 test_snapshot_action_selects_the_table_snapshot (test_center.CenterTests) ... ok
+test_snapshot_visibility_does_not_require_template_visibility (test_center.CenterTests) ... ok
 test_host_storage_follows_pbd_and_networking_follows_pif (test_center.RelationshipTests) ... ok
 test_vm_tabs_distinguish_templates_and_storage (test_center.RelationshipTests) ... ok
 test_fresh_ownership_and_host_resolution (test_console.ConsoleTests) ... ok
@@ -80,6 +82,7 @@ test_running_vm_hardware_editor_never_requests_changes (test_gui.DesktopTests) .
 test_select_guest_shows_related_disk (test_gui.DesktopTests) ... ok
 test_task_monitor_pauses_on_session_loss_without_resubmitting (test_gui.DesktopTests) ... ok
 test_task_success_is_visible_in_tasks_view (test_gui.DesktopTests) ... ok
+test_wizard_preserves_template_firmware_by_default (test_gui.DesktopTests) ... ok
 test_ambiguous_truncated_and_malformed_body_framing_is_refused (test_httpstream.HTTPStreamTests) ... ok
 test_duplicate_lengths_and_oversized_headers_are_rejected (test_httpstream.HTTPStreamTests) ... ok
 test_export_streams_chunked_and_keeps_cookie_out_of_url (test_httpstream.HTTPStreamTests) ... ok
@@ -212,6 +215,6 @@ test_truncated_body_and_end_markers_do_not_pass (test_xva.EnvelopeTests) ... ok
 test_wrong_metadata_bad_checksum_and_data_after_end_are_refused (test_xva.EnvelopeTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 212 tests in 4.945s
+Ran 215 tests in 4.956s
 
 OK
