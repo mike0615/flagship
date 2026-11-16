@@ -22,6 +22,8 @@ class WireTests(unittest.TestCase):
                         '-subj', '/CN=localhost', '-addext', 'subjectAltName=DNS:localhost'],
                        check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         cls.server = SimpleXMLRPCServer(('127.0.0.1', 0), logRequests=False, allow_none=True)
+        # Refused certificates end in a hang-up after the handshake (and a details fetch).
+        cls.server.handle_error = lambda request, address: None
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         context.load_cert_chain(str(cls.cert), str(key))
         cls.server.socket = context.wrap_socket(cls.server.socket, server_side=True)

@@ -1,6 +1,6 @@
 Name:           flagship
 Version:        1.1.0
-Release:        0.1.dev1%{?dist}
+Release:        0.2.dev2%{?dist}
 Summary:        Native Linux desktop management client for XAPI pools
 
 License:        BSD-2-Clause
@@ -56,7 +56,7 @@ gtk-update-icon-cache -q %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
 %license LICENSE upstream/LICENSE.xcp-ng
-%doc README.md SOURCE_COMMIT docs/*.md
+%doc README.md CHANGELOG.md SOURCE_COMMIT docs/*.md
 %{_bindir}/flagship
 %{_bindir}/flagship-recovery
 %{_bindir}/xenadmin-rocky
@@ -66,6 +66,17 @@ gtk-update-icon-cache -q %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/%{name}/
 
 %changelog
+* Sun Nov 15 2026 Mike Anderson <mike@andersoncomputer.us> - 1.1.0-0.2.dev2
+- Self-signed certificate handling: trust prompt (Connect once / Always trust
+  this certificate / Cancel) with SHA-256 pins per host:port in
+  ~/.config/flagship/known_certs.json (0600), checked before credentials or
+  console cookies are sent; changed certificates get a red warning and a new
+  prompt, never auto-accepted. Covers XML-RPC and the console.
+- "Ignore SSL certificate errors (insecure)" checkbox with an Insecure TLS
+  status-bar marker; flagship --insecure; flagship-recovery --pin, --insecure
+  and --no-saved-pins. Tools > Trusted certificates removes pins.
+- Verified-by-default and the CA PEM option unchanged. New help chapter.
+
 * Sun Nov 15 2026 Mike Anderson <mike@andersoncomputer.us> - 1.1.0-0.1.dev1
 - Renamed from XenAdmin Rocky to Flagship: package flagship, commands
   /usr/bin/flagship and flagship-recovery (old xenadmin-rocky and

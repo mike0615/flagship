@@ -18,6 +18,11 @@ TOOLSET = (
     'Part of the Anderson Computer cyber chief toolset, '
     'together with Skiff, Sonar and Porthole.'
 )
+TLS_NOTE = (
+    'TLS certificates are verified by default. Self-signed XCP-ng hosts: use a '
+    'CA PEM file, the trust prompt (SHA-256 pin) or, on a lab network, Ignore '
+    'SSL certificate errors. See Help \u25b8 Self-signed XCP-ng certificates.'
+)
 AUTHOR = 'Mike Anderson'
 COPYRIGHT = 'Copyright (c) 2026 Mike Anderson'
 LINKS = [

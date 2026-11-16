@@ -1,10 +1,12 @@
 """TLS-verified XenAPI XML-RPC transport. No automatic mutation retries."""
-import ssl
+import http.client
+import socket
 import threading
 import xmlrpc.client
 from urllib.parse import urlsplit
 from .journal import JournalError, OBJECT_CLASSES
 from .protocol import decode_reference_result
+from .tls import TrustPolicy, MODE_INSECURE
 
 
 def wire_value(value):
@@ -29,18 +31,51 @@ class APIError(RuntimeError):
         super().__init__(self.details[0] if self.details else 'UNKNOWN_API_ERROR')
 
 
+class TrustedHTTPSConnection(http.client.HTTPSConnection):
+    """HTTPS connection whose TLS layer is set up by a TrustPolicy.
+
+    The policy runs the handshake and, for pinned hosts, compares the
+    certificate fingerprint before http.client sends the request line, so a
+    refused certificate never sees credentials or session references."""
+
+    def __init__(self, host, port, policy, timeout):
+        super().__init__(host, port, timeout=timeout)
+        self.policy = policy
+
+    def connect(self):
+        raw = socket.create_connection((self.host, self.port), self.timeout, self.source_address)
+        try:
+            raw.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        except OSError:
+            pass
+        try:
+            self.sock = self.policy.wrap(raw, self.host, self.port)
+        except BaseException:
+            raw.close()
+            raise
+
+
 class Transport(xmlrpc.client.SafeTransport):
-    def __init__(self, context, timeout=30):
+    def __init__(self, context, timeout=30, policy=None):
         super().__init__(context=context)
         self.timeout = timeout
+        self.policy = policy
 
     def request(self, host, handler, request_body, verbose=False):
         # stdlib Transport.request retries disconnects, unsafe for mutations.
         return self.single_request(host, handler, request_body, verbose)
 
     def make_connection(self, host):
-        connection = super().make_connection(host)
-        connection.timeout = self.timeout
+        if self.policy is None:
+            connection = super().make_connection(host)
+            connection.timeout = self.timeout
+            return connection
+        if self._connection and host == self._connection[0]:
+            return self._connection[1]
+        chost, self._extra_headers, _x509 = self.get_host_info(host)
+        parts = urlsplit('//' + chost)
+        connection = TrustedHTTPSConnection(parts.hostname, parts.port or 443, self.policy, self.timeout)
+        self._connection = host, connection
         return connection
 
 
@@ -48,7 +83,11 @@ class Client:
     classes = ('pool', 'host', 'VM', 'SR', 'network', 'VDI', 'VBD', 'VIF',
                'PIF', 'task', 'message', 'VM_metrics', 'host_metrics')
 
-    def __init__(self, endpoint, ca_file=None, journal=None):
+    def __init__(self, endpoint, ca_file=None, journal=None, insecure=False, pins=None, known=None):
+        """ca_file: trust only this CA PEM. insecure: skip all certificate checks.
+        pins: {host:port: sha256} accepted for this session. known: KnownCerts
+        store of "Always trust" pins. Without these, the system CA store and host
+        name are verified (the default)."""
         parts = urlsplit(endpoint)
         if (parts.scheme != 'https' or not parts.hostname or parts.username or
                 parts.password or parts.query or parts.fragment or parts.path not in ('', '/')):
@@ -62,10 +101,23 @@ class Client:
         self.created_refs = {}
         self.lock = threading.RLock()
         self.session = None
-        self.ssl_context = ssl.create_default_context(cafile=ca_file)
+        self.host = parts.hostname
+        self.port = parts.port or 443
+        self.trust = TrustPolicy(ca_file, insecure=insecure, pins=pins, known=known)
+        # Context for the coordinator as decided now (kept for callers/tests).
+        self.ssl_context = self.trust.context(self.host, self.port)
         self.proxy = xmlrpc.client.ServerProxy(
             self.endpoint + '/', allow_none=True,
-            transport=Transport(self.ssl_context))
+            transport=Transport(self.ssl_context, policy=self.trust))
+
+    @property
+    def tls_mode(self):
+        """'verified', 'pinned' or 'insecure' for the coordinator connection."""
+        return self.trust.mode(self.host, self.port)
+
+    @property
+    def insecure(self):
+        return self.tls_mode == MODE_INSECURE
 
     def _rpc(self, name, *args):
         with self.lock:

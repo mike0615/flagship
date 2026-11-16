@@ -9,7 +9,7 @@ import xenadmin_rocky
 class BrandingTests(unittest.TestCase):
     def test_package_metadata(self):
         self.assertEqual(flagship.APP_NAME, 'Flagship')
-        self.assertEqual(flagship.__version__, '1.1.0.dev1')
+        self.assertEqual(flagship.__version__, '1.1.0.dev2')
         self.assertEqual(xenadmin_rocky.__version__, flagship.__version__)
 
     def test_shim_exports_application(self):

@@ -81,7 +81,9 @@ def open_console(client, vm_ref, timeout=30):
     try:
         raw = socket.create_connection((hostname, port), timeout=timeout)
         try:
-            connection = client.ssl_context.wrap_socket(raw, server_hostname=hostname)
+            # Same trust decision as the XML-RPC transport: verified, pinned
+            # (fingerprint checked before the session cookie is sent) or insecure.
+            connection = client.trust.wrap(raw, hostname, port)
         except Exception:
             raw.close()
             raise

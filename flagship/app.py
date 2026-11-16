@@ -20,12 +20,16 @@ from .redaction import safe_record
 from .recovery import inspect_by_uuid
 from .help import AboutDialog, HelpDialog, docs_directory
 from .journal import OBJECT_CLASSES
+from .tls import CertificateError, CertificateChanged, KnownCerts, MODE_INSECURE, MODE_PINNED
+from .trust_dialog import TrustDialog, TrustedCertificatesDialog
 
 
 
 class Application:
-    def __init__(self, root, journal=None):
+    def __init__(self, root, journal=None, insecure_default=False, known=None):
         self.root = root
+        self.known = known if known is not None else KnownCerts()
+        self.insecure_default = insecure_default
         self.journal = journal or OperationJournal()
         self.device_panels = []
         self.consoles = []
@@ -52,6 +56,7 @@ class Application:
         tools.add_command(label='Save workflow report', command=self.save_workflow_report)
         tools.add_command(label='Operation history / recovery', command=lambda: HistoryDialog(self.root, self.journal, self.inspect_object))
         tools.add_command(label='Request task cancellation…', command=self.cancel_task)
+        tools.add_command(label='Trusted certificates…', command=lambda: TrustedCertificatesDialog(self.root, self.known))
         menu.add_cascade(label='Tools', menu=tools)
         help_menu = tk.Menu(menu, tearoff=False)
         help_menu.add_command(label='Flagship Help', command=self.help, accelerator='F1')
@@ -111,7 +116,11 @@ class Application:
             ttk.Button(actions, text=label, command=lambda a=action: self.action(a)).grid(
                 row=index // 5, column=index % 5, sticky='ew', padx=2, pady=2)
         self.status = tk.StringVar(value='Disconnected. Connect to a pool coordinator using HTTPS.')
-        ttk.Label(root, textvariable=self.status, padding=6).pack(side='bottom', fill='x', before=split)
+        statusbar = ttk.Frame(root)
+        statusbar.pack(side='bottom', fill='x', before=split)
+        self.tls_indicator = tk.Label(statusbar, text='', padx=8)
+        self.tls_indicator.pack(side='right')
+        ttk.Label(statusbar, textvariable=self.status, padding=6).pack(side='left', fill='x', expand=True)
         self.tree.bind('<<TreeviewSelect>>', lambda *_: self.show())
         root.protocol('WM_DELETE_WINDOW', self.close)
         root.bind('<Destroy>', self.cancel_timers, add='+')
@@ -217,40 +226,96 @@ class Application:
             return
         dialog = tk.Toplevel(self.root)
         dialog.title('Connect to pool coordinator')
+        self.connect_dialog = dialog
         fields = {}
         for row, (key, default) in enumerate([('Endpoint', 'https://'), ('Username', 'root'),
                                                 ('Password', ''), ('CA PEM file (optional)', '')]):
-            ttk.Label(dialog, text=key).grid(row=row, column=0, padx=8, pady=5)
+            ttk.Label(dialog, text=key).grid(row=row, column=0, padx=8, pady=5, sticky='w')
             entry = ttk.Entry(dialog, width=48, show='*' if key == 'Password' else '')
             entry.insert(0, default)
             entry.grid(row=row, column=1, padx=8, pady=5)
             fields[key] = entry
+        insecure = tk.BooleanVar(value=self.insecure_default)
+        warning = tk.Label(dialog, fg='#b00020', anchor='w',
+                           text='\u26a0 Certificate checks are off: anyone on the network path could read your password.')
+        def toggled():
+            if insecure.get():
+                warning.grid(row=5, column=0, columnspan=2, padx=8, sticky='w')
+            else:
+                warning.grid_remove()
+        check = ttk.Checkbutton(dialog, text='Ignore SSL certificate errors (insecure)', variable=insecure, command=toggled)
+        check.grid(row=4, column=1, padx=8, pady=(2, 0), sticky='w')
+        toggled()
+        dialog.fields, dialog.insecure, dialog.insecure_check, dialog.insecure_warning = fields, insecure, check, warning
         def accept():
             endpoint, username, password, ca = [e.get() for e in fields.values()]
             dialog.destroy()
-            def work():
-                client = Client(endpoint, ca or None, journal=self.journal)
-                try:
-                    client.login(username, password)
-                    records, errors = client.inventory()
-                    if not records.get('pool') or not records.get('host'):
-                        raise ValueError('Pool and host inventory required; verify permissions and coordinator address.')
-                    return client, records, errors
-                except Exception:
-                    try:
-                        client.logout()
-                    except Exception:
-                        pass
-                    raise
-            def done(result):
-                self.client, self.records, errors = result
-                self.populate()
-                self.root.title(APP_NAME + ' — ' + __version__ + ' — ' + self.client.endpoint)
-                self.status.set('Connected to ' + self.client.endpoint + '. ' + self.warning(errors))
-            self.submit(work, done, 'Connecting…')
-        ttk.Button(dialog, text='Connect', command=accept).grid(row=4, column=1, pady=8)
+            self.start_connect(endpoint, username, password, ca or None, insecure.get())
+        ttk.Button(dialog, text='Connect', command=accept).grid(row=6, column=1, pady=8)
         dialog.transient(self.root)
         dialog.grab_set()
+        return dialog
+
+    def start_connect(self, endpoint, username, password, ca=None, insecure=False, pins=None):
+        """Connect in the worker; certificate questions come back to the Tk thread."""
+        def work():
+            client = Client(endpoint, ca, journal=self.journal, insecure=insecure, pins=pins, known=self.known)
+            try:
+                client.login(username, password)
+            except CertificateError as exc:
+                # Raised after the handshake and before the login request was written.
+                try:
+                    client.logout()
+                except Exception:
+                    pass
+                return 'certificate', exc
+            try:
+                records, errors = client.inventory()
+                if not records.get('pool') or not records.get('host'):
+                    raise ValueError('Pool and host inventory required; verify permissions and coordinator address.')
+                return client, records, errors
+            except Exception:
+                try:
+                    client.logout()
+                except Exception:
+                    pass
+                raise
+        def done(result):
+            if result[0] == 'certificate':
+                exc = result[1]
+                choice = self.ask_trust(exc)
+                if choice is None:
+                    self.status.set('Connection cancelled: the certificate of ' + exc.info.key + ' was not trusted.')
+                    return
+                if choice == 'always':
+                    try:
+                        self.known.remember(exc.info)
+                    except OSError:
+                        messagebox.showwarning('Trusted certificates', 'Could not save the trusted certificate; it is accepted for this connection only.')
+                session_pins = dict(pins or {})
+                session_pins[exc.info.key] = exc.info.sha256
+                self.start_connect(endpoint, username, password, ca, insecure, session_pins)
+                return
+            self.client, self.records, errors = result
+            self.populate()
+            self.root.title(APP_NAME + ' — ' + __version__ + ' — ' + self.client.endpoint)
+            self.status.set('Connected to ' + self.client.endpoint + '. ' + self.warning(errors))
+            self.update_tls_indicator()
+        self.submit(work, done, 'Connecting…')
+
+    def ask_trust(self, exc):
+        changed = isinstance(exc, CertificateChanged)
+        return TrustDialog(self.root, exc.info, changed=changed,
+                           old_fingerprint=exc.pinned if changed else '').result
+
+    def update_tls_indicator(self):
+        mode = self.client.tls_mode if self.client else None
+        if mode == MODE_INSECURE:
+            self.tls_indicator.configure(text='\u26a0 Insecure TLS', fg='white', bg='#b00020')
+        elif mode == MODE_PINNED:
+            self.tls_indicator.configure(text='Pinned certificate', fg='black', bg='#ffe08a')
+        else:
+            self.tls_indicator.configure(text='', bg=self.root.cget('bg'), fg='black')
 
     @staticmethod
     def warning(errors):
@@ -270,6 +335,7 @@ class Application:
                 return True
         def done(unconfirmed):
             self.client = None
+            self.update_tls_indicator()
             self.tracker = TaskTracker()
             self.records = {}
             self.last_workflow_report = None
@@ -615,11 +681,13 @@ def main():
     parser = argparse.ArgumentParser(prog='flagship', description='Flagship — native Rocky Linux XAPI desktop client')
     parser.add_argument('--version', action='version', version='%s %s' % (APP_NAME, __version__))
     parser.add_argument('--smoke-test', action='store_true', help='Create UI, then exit; requires a display')
+    parser.add_argument('--insecure', action='store_true',
+                        help='Pre-tick "Ignore SSL certificate errors (insecure)" in the connect dialog')
     args = parser.parse_args()
     from .migrate import migrate_legacy
     migrate_legacy()
     root = tk.Tk()
-    Application(root)
+    Application(root, insecure_default=args.insecure)
     if args.smoke_test:
         root.after(500, root.destroy)
     root.mainloop()

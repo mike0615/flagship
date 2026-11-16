@@ -127,6 +127,7 @@ class AboutDialog:
         version = line('Version %s' % about.VERSION, foreground='#555555')
         line(about.TAGLINE, pady=(6, 2))
         line(about.TOOLSET, pady=(0, 6))
+        line(about.TLS_NOTE, pady=(0, 6), foreground='#333333')
         line('Author: %s' % about.AUTHOR)
         line(about.COPYRIGHT, pady=(0, 8))
 

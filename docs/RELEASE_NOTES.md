@@ -1,5 +1,22 @@
 # Release notes
 
+## 1.1.0.dev2 — self-signed certificates, November 15, 2026
+
+- **Trust prompt** for hosts whose certificate can't be verified (self-signed,
+  unknown CA, name mismatch, expired). It shows the subject, issuer, validity
+  and SHA-256 fingerprint, with Connect once, Always trust this certificate
+  and Cancel. Saved pins go in `~/.config/flagship/known_certs.json` (0600)
+  per host:port and are checked after the handshake, before credentials or
+  console cookies are sent. A changed certificate gets a red warning and a new
+  prompt, and is never accepted automatically. The pins cover XML-RPC and the
+  console. **Tools ▸ Trusted certificates…** removes pins.
+- **Ignore SSL certificate errors (insecure)** checkbox, with a warning line
+  and a red Insecure TLS status-bar marker. `flagship --insecure` pre-ticks it.
+- `flagship-recovery inspect`: `--pin`, `--insecure` and `--no-saved-pins`.
+  Untrusted certificates print their fingerprint.
+- Verified-by-default and the CA PEM field are unchanged. New help chapter:
+  Self-signed XCP-ng certificates.
+
 ## 1.1.0.dev1 — Flagship rename, November 15, 2026
 
 Renamed from XenAdmin Rocky to Flagship to align with the Anderson Computer

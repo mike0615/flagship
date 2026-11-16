@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import ttk
 from .console import open_console
 from .rfb import RFB
+from .tls import CertificateError, MODE_INSECURE
 
 
 class ConsoleWindow:
@@ -28,7 +29,9 @@ class ConsoleWindow:
                         command=self.release).pack(side='left')
         ttk.Button(toolbar, text='Send Ctrl+Alt+Delete', command=self.cad).pack(side='left')
         ttk.Button(toolbar, text='Close console', command=self.close).pack(side='right')
-        self.status = tk.StringVar(value='Connecting through verified TLS…')
+        insecure = getattr(self.client, 'tls_mode', None) == MODE_INSECURE
+        self.status = tk.StringVar(value='Connecting with certificate checks OFF (insecure TLS)…' if insecure
+                                   else 'Connecting through verified TLS…')
         ttk.Label(self.window, textvariable=self.status).pack(fill='x')
         frame = ttk.Frame(self.window)
         frame.pack(fill='both', expand=True)
@@ -50,6 +53,7 @@ class ConsoleWindow:
             self.canvas.bind('<ButtonPress-%d>' % button, lambda event, b=button: self.pointer(event, b, True))
             self.canvas.bind('<ButtonRelease-%d>' % button, lambda event, b=button: self.pointer(event, b, False))
         self.window.protocol('WM_DELETE_WINDOW', self.close)
+        self.connector = connector
         self.worker = threading.Thread(target=self.receive, args=(connector,), daemon=True)
         self.window.update_idletasks()
         self.worker.start()
@@ -83,6 +87,9 @@ class ConsoleWindow:
             threading.Thread(target=self.send, daemon=True).start()
             while not self.stop.is_set():
                 for event in rfb.events(): self.emit(event)
+        except CertificateError as exc:
+            # A pool member's certificate is not trusted (or changed); ask on the Tk thread.
+            self.emit(('certificate', exc))
         except Exception as exc:
             # Never show server response bodies, cookie contents or URLs.
             self.emit(('error', type(exc).__name__))
@@ -170,9 +177,27 @@ class ConsoleWindow:
             self.image.tk.call(str(self.image), 'copy', str(tile), '-to', x, y)
         elif kind == 'connected':
             self.status.set('Connected. Viewing only; enable keyboard and mouse to control the guest.')
+        elif kind == 'certificate':
+            self.trust_and_retry(args[0])
         elif kind == 'error':
             self.control.set(False)
             self.status.set('Console stopped: ' + args[0] + '. Close and reopen to reconnect.')
+
+    def trust_and_retry(self, exc):
+        choice = self.app.ask_trust(exc)
+        if choice is None or not self.window.winfo_exists() or self.app.client is not self.client:
+            self.status.set('Console not opened: the certificate of ' + exc.info.key + ' was not trusted.')
+            return
+        try:
+            self.client.trust.trust(exc.info, always=(choice == 'always'))
+        except OSError:
+            self.client.trust.trust(exc.info)
+            self.status.set('Could not save the trusted certificate; accepted for this session only.')
+        self.worker.join(timeout=2)
+        self.stop = threading.Event()
+        self.status.set('Connecting with the certificate you accepted…')
+        self.worker = threading.Thread(target=self.receive, args=(self.connector,), daemon=True)
+        self.worker.start()
 
     def poll(self):
         self.poll_timer = None

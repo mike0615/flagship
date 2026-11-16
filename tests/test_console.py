@@ -48,7 +48,7 @@ class ConsoleTests(unittest.TestCase):
     def socket(self, response):
         connection = Mock()
         connection.makefile.return_value = io.BytesIO(response)
-        self.client.ssl_context.wrap_socket.return_value = connection
+        self.client.trust.wrap.return_value = connection
         return connection
 
     @patch('flagship.console.socket.create_connection')
@@ -59,7 +59,7 @@ class ConsoleTests(unittest.TestCase):
         request = connection.sendall.call_args.args[0]
         self.assertIn(b'Cookie: session_id=private-session\r\n', request)
         self.assertNotIn(b'private-session', request.split(b'\r\n')[0])
-        self.client.ssl_context.wrap_socket.assert_called_once_with(connect.return_value, server_hostname='member.test')
+        self.client.trust.wrap.assert_called_once_with(connect.return_value, 'member.test', 443)
         tunnel.close()
         connection.close.assert_called_once()
 
@@ -77,7 +77,7 @@ class ConsoleTests(unittest.TestCase):
 
     @patch('flagship.console.socket.create_connection')
     def test_tls_failure_sends_no_session(self, connect):
-        self.client.ssl_context.wrap_socket.side_effect = ssl.SSLCertVerificationError('untrusted')
+        self.client.trust.wrap.side_effect = ssl.SSLCertVerificationError('untrusted')
         with self.assertRaises(ssl.SSLCertVerificationError): open_console(self.client, 'vm')
         connect.return_value.sendall.assert_not_called()
         connect.return_value.close.assert_called_once()

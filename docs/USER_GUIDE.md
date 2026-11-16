@@ -12,7 +12,10 @@ and are not saved to disk. Use an account with the permissions needed for your t
 
 For an internal CA, provide its PEM file in the connection dialog or install the
 trusted CA through Rocky's system trust mechanism. Certificate hostname and chain
-verification are required. Use the DNS name listed in the certificate.
+verification are on by default. Use the DNS name listed in the certificate.
+For a self-signed XCP-ng host you can also use the trust prompt (fingerprint
+pinning) or, on a lab network, Ignore SSL certificate errors. See
+TLS_CERTIFICATES.md (Help ▸ Self-signed XCP-ng certificates).
 If a member reports HOST_IS_SLAVE, reconnect explicitly to the trusted coordinator;
 the application does not forward credentials to an automatically supplied address.
 
