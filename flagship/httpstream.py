@@ -99,7 +99,7 @@ class Response:
 def request(client, method, path, parameters, source=None, size=None,
             checkpoint=lambda: None, progress=lambda transferred: None, timeout=30):
     """Return a response owned by caller, who must close it and confirm its task."""
-    if (method, path) not in (('GET', '/export'), ('PUT', '/import')):
+    if (method, path) not in (('GET', '/export'), ('PUT', '/import'), ('GET', '/export_raw_vdi'), ('PUT', '/import_raw_vdi')):
         raise ValueError('Unsupported XAPI transfer operation')
     if method == 'PUT' and (source is None or not isinstance(size, int) or size <= 0):
         raise ValueError('Import requires a nonempty source with an exact byte length')

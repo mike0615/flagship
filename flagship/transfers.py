@@ -84,7 +84,7 @@ class XVATransfer(Provisioner):
         if self.op_id:
             try: self.client.journal.outcome(self.op_id, 'unknown', error=exc)
             except JournalError: self.client.journal_failed = True
-        reason = str(exc) if isinstance(exc, (APIError, ValueError, TransferError)) else type(exc).__name__
+        reason = exc.reason if isinstance(exc, WorkflowError) else str(exc) if isinstance(exc, (APIError, ValueError, TransferError)) else type(exc).__name__
         error = WorkflowError(self.stage, reason, self.resources, self.tasks)
         error.report = dict(self.report(), reason=reason)
         return error

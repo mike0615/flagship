@@ -11,21 +11,18 @@ VM_ACTIONS = [('Start','start'),('Shut down','clean_shutdown'),('Reboot','clean_
  ('Migrate in pool','pool_migrate'),('Rename','set_name_label'),('Force off','hard_shutdown'),('Delete VM record','destroy')]
 
 
-class CenterShell:
+from .workspace import Workspace
+
+
+class CenterShell(Workspace):
     def build_shell(self, width):
         self.navigation = tk.StringVar(value='Infrastructure')
         self.show_templates = tk.BooleanVar(value=False)
         self.show_snapshots = tk.BooleanVar(value=False)
         self.show_local = tk.BooleanVar(value=True)
         self.auto_refresh = tk.BooleanVar(value=True)
-        style = ttk.Style(self.root)
-        if 'clam' in style.theme_names(): style.theme_use('clam')
-        style.configure('.', background='#f2f4f7', foreground='#20354a')
-        style.configure('TButton', padding=(6,4))
-        style.configure('Treeview', rowheight=25, background='white', fieldbackground='white')
-        style.map('Treeview', background=[('selected','#245b87')], foreground=[('selected','white')])
-        style.configure('Heading.TLabel', font=('sans',16,'bold'), foreground='#203b59')
-        style.configure('TNotebook.Tab', padding=(10,6))
+        self.workspace_style()
+        self.brand_header()
         self.make_menus()
         for key, command in (('<F1>',self.help),('<Control-n>',self.new_vm),('<Control-e>',lambda:self.action('clean_shutdown')),
                              ('<Control-r>',lambda:self.action('clean_reboot')),('<Control-y>',lambda:self.action('suspend')),('<F5>',self.refresh)):
@@ -34,41 +31,51 @@ class CenterShell:
         self.buttonbar = ttk.Frame(toolbar); self.buttonbar.pack(fill='x')
         self.toolbar_buttons = []; self.toolbar_columns = None
         for label, command in [('Add New Server',self.connect),('Disconnect',self.disconnect),('Refresh',self.refresh),
-          ('New VM',self.new_vm),('New Storage',self.new_sr),('CPU / memory',self.hardware),('Devices',self.manage_devices),('Console',self.open_console),('Export inventory',self.export)]:
-            self.toolbar_buttons.append(ttk.Button(self.buttonbar,text=label,command=command))
+          ('New VM',self.new_vm),('Import VM',self.import_vm),('Export VM',self.export_vm)]:
+            self.toolbar_buttons.append(ttk.Button(self.buttonbar,text=label,command=command,style='Accent.TButton' if label=='New VM' else 'TButton'))
         self.buttonbar.bind('<Configure>',lambda e:self.layout_toolbar(e.width)); self.layout_toolbar(width-12)
         split = ttk.Panedwindow(self.root,orient='horizontal'); split.pack(fill='both',expand=True)
-        left = ttk.Frame(split,width=260); split.add(left,weight=1)
+        left = ttk.Frame(split,width=260,style='Side.TFrame'); split.add(left,weight=1)
+        ttk.Label(left,text='  INVENTORY NAVIGATOR',style='Side.TLabel',padding=(6,12)).pack(fill='x')
         self.search = tk.StringVar()
         ttk.Entry(left,textvariable=self.search).pack(fill='x',padx=7,pady=7)
         self.search.trace_add('write',lambda *_:self.populate())
         treeframe = ttk.Frame(left); treeframe.pack(fill='both',expand=True)
-        self.tree = ttk.Treeview(treeframe,columns=('state',),selectmode='browse')
+        self.tree = ttk.Treeview(treeframe,columns=('state',),selectmode='browse',style='Inventory.Treeview')
         self.tree.heading('#0',text='Resources'); self.tree.heading('state',text='State')
         self.tree.column('#0',width=190,minwidth=100); self.tree.column('state',width=65,minwidth=50)
         scroll = ttk.Scrollbar(treeframe,command=self.tree.yview); self.tree.configure(yscrollcommand=scroll.set)
         scroll.pack(side='right',fill='y'); self.tree.pack(fill='both',expand=True)
         for title in ('Infrastructure','Objects','Organization Views','Saved Searches','Notifications'):
-            ttk.Radiobutton(left,text=title,value=title,variable=self.navigation,command=self.populate).pack(fill='x',padx=8,pady=3)
+            ttk.Radiobutton(left,text=title,value=title,variable=self.navigation,command=self.populate,style='Nav.TRadiobutton').pack(fill='x',padx=0,pady=1)
         right = ttk.Frame(split); split.add(right,weight=4)
-        banner = ttk.Frame(right,padding=(14,10)); banner.pack(fill='x')
+        trail=ttk.Frame(right,padding=(14,6)); trail.pack(fill='x')
+        self.back_button=ttk.Button(trail,text='‹',width=3,command=lambda:self.navigate_history(-1)); self.back_button.pack(side='left')
+        self.forward_button=ttk.Button(trail,text='›',width=3,command=lambda:self.navigate_history(1)); self.forward_button.pack(side='left',padx=(3,12))
+        self.breadcrumb=ttk.Label(trail,text='WORKSPACE / OVERVIEW',style='Muted.TLabel'); self.breadcrumb.pack(side='left')
+        banner = ttk.Frame(right,padding=(14,8)); banner.pack(fill='x')
         self.object_title = ttk.Label(banner,text='Flagship',style='Heading.TLabel'); self.object_title.pack(side='left')
-        self.object_subtitle = ttk.Label(banner,text='Native XAPI management'); self.object_subtitle.pack(side='right')
-        actions = ttk.Frame(right,padding=4); actions.pack(side='bottom',fill='x')
-        self.action_buttons = {}
-        for i,(label,action) in enumerate(VM_ACTIONS):
-            b = ttk.Button(actions,text=label,command=lambda a=action:self.action(a))
-            b.grid(row=i//5,column=i%5,sticky='ew',padx=2,pady=2); actions.columnconfigure(i%5,weight=1)
-            self.action_buttons[action] = b
+        self.object_subtitle = ttk.Label(banner,text='Native XAPI management',style='Muted.TLabel'); self.object_subtitle.pack(side='right')
+        actions = ttk.Frame(right,padding=(14,6)); actions.pack(fill='x')
+        self.actions_popup=ttk.Menubutton(actions,text='Actions ▾'); self.actions_popup.pack(side='right')
+        self.action_buttons={}
+        # Keep less frequent/destructive operations in the contextual Actions menu.
+        for label,action in VM_ACTIONS:
+            button=ttk.Button(actions,text=label,command=lambda a=action:self.action(a))
+            self.action_buttons[action]=button
+            if action in ('start','clean_shutdown','clean_reboot'): button.pack(side='left',padx=(0,5))
+        self.console_button=ttk.Button(actions,text='Console',command=self.open_console); self.console_button.pack(side='left',padx=5)
+        ttk.Button(actions,text='Edit settings',command=self.properties).pack(side='left',padx=5)
         self.tabs = ttk.Notebook(right); self.tabs.pack(fill='both',expand=True)
         self.frames, self.views, self.tables, self.table_items = {}, {}, {}, {}
+        self.summary_cards={}; self.table_frames={}
         commands = {
          'Home':[('Add New Server',self.connect),('New VM',self.new_vm),('Help',self.help)],
-         'General':[('Properties',self.properties),('Refresh',self.refresh)],
+         'General':[('Edit settings',self.properties),('Advanced properties',self.advanced_properties)],
          'Memory':[('Edit VM memory',self.hardware)],
          'Storage':[('New SR',self.new_sr),('Manage VM disks',self.manage_devices),('Rescan SR',lambda:self.sr_action('scan'))],
          'Networking':[('Add Network',self.new_network),('Manage VM interfaces',self.manage_devices)],
-         'Performance':[('Load history',self.load_performance)],'NICs':[('Refresh',self.refresh)],'Console':[('Open native console',self.open_console)],
+         'Performance':[('Load history',self.load_performance)],'NICs':[('Refresh',self.refresh)],'Console':[('Connect console',self.open_console),('Open in Virt Viewer',self.open_external_console)],
          'Snapshots':[('Take snapshot',lambda:self.action('snapshot')),('Revert selected',lambda:self.table_action('Snapshots','revert')),
                       ('Delete selected record',lambda:self.table_action('Snapshots','destroy'))],
          'Search':[('Export inventory',self.export)],'Tasks':[('Refresh',self.refresh),('Request cancellation',self.cancel_task)],
@@ -92,18 +99,23 @@ class CenterShell:
                 self.performance_canvas.pack(fill='x',pady=5)
                 self.performance_canvas.bind('<Configure>',lambda e:self.draw_performance())
                 self.performance_series = {}; self.performance_key = None
-            tf = ttk.Frame(frame); tf.pack(fill='both',expand=True)
+            if title in ('Home','General'): self.make_summary(frame,title)
+            if title=='Console':
+                self.console_host=ttk.Frame(frame); self.console_host.pack(fill='both',expand=True)
+            tf = ttk.Frame(frame); self.table_frames[title]=tf; tf.pack(fill='both',expand=True)
             table = ttk.Treeview(tf,show='headings',selectmode='browse',height=8)
             sy = ttk.Scrollbar(tf,command=table.yview); sx = ttk.Scrollbar(tf,orient='horizontal',command=table.xview)
             table.configure(yscrollcommand=sy.set,xscrollcommand=sx.set)
             sy.pack(side='right',fill='y'); sx.pack(side='bottom',fill='x'); table.pack(fill='both',expand=True)
             self.tables[title] = table
+            if title=='Console': tf.pack_forget()
             table.bind('<Double-1>',lambda e,t=title:self.navigate_table(t))
-            text = tk.Text(frame,height=4,wrap='word',relief='flat',background='#f5f7fa',foreground='#30465a',state='disabled')
+            text = tk.Text(frame,height=2,wrap='word',relief='flat',background='#f5f7fa',foreground='#30465a',state='disabled')
             text.pack(fill='x',pady=(8,0)); self.views[title] = text
         self.status = tk.StringVar(value='Disconnected. Add a server to get started.')
         sb = ttk.Frame(self.root); sb.pack(side='bottom',fill='x',before=split)
         self.tls_indicator = tk.Label(sb,text='',padx=8); self.tls_indicator.pack(side='right')
+        self.activity=ttk.Progressbar(sb,mode='indeterminate',length=90); self.activity.pack(side='right',padx=10); self.activity_running=False
         self.alert_count = ttk.Button(sb,text='Alerts: 0',command=self.open_notifications); self.alert_count.pack(side='right')
         ttk.Label(sb,textvariable=self.status,padding=6).pack(side='left',fill='x',expand=True)
         self.tree.bind('<<TreeviewSelect>>',lambda *_:self.show()); self.tree.bind('<Button-3>',self.context_menu)
@@ -114,7 +126,7 @@ class CenterShell:
         for title in ('File','View','Pool','Server','VM','Storage','Templates','Tools','Help'):
             menu = tk.Menu(bar,tearoff=False); self.menus[title] = menu; bar.add_cascade(label=title,menu=menu)
         self.root.configure(menu=bar)
-        self.menus['File'].add_command(label='Import XVA…',command=self.import_vm)
+        self.menus['File'].add_command(label='Import XVA / OVA / qcow2…',command=self.import_vm)
         self.menus['File'].add_command(label='Export inventory…',command=self.export)
         self.menus['File'].add_separator(); self.menus['File'].add_command(label='Exit',command=self.close)
         for label,var in [('Custom and system templates',self.show_templates),('Snapshots',self.show_snapshots),('Local storage',self.show_local)]:
@@ -130,6 +142,8 @@ class CenterShell:
     def update_commands(self):
         cls,ref = self.selected() or ('',''); r = self.records.get(cls,{}).get(ref,{})
         connected = self.client is not None and not self.busy
+        if self.busy and not self.activity_running: self.activity.start(12); self.activity_running=True
+        elif not self.busy and self.activity_running: self.activity.stop(); self.activity.configure(value=0); self.activity_running=False
         def add(menu,label,command,enabled=True):
             self.menus[menu].add_command(label=label,command=command,state='normal' if enabled else 'disabled')
         for title in ('Pool','Server','VM','Storage','Templates'): self.menus[title].delete(0,'end')
@@ -144,7 +158,7 @@ class CenterShell:
             enabled = connected and cls=='VM' and (action in r.get('allowed_operations',[]) or action=='set_name_label')
             self.action_buttons[action].configure(state='normal' if enabled else 'disabled')
             add('VM',label,lambda a=action:self.action(a),enabled)
-        add('VM','Export XVA…',self.export_vm,connected and cls=='VM' and not r.get('is_control_domain') and r.get('power_state')=='Halted')
+        add('VM','Export XVA / OVA / qcow2…',self.export_vm,connected and cls=='VM' and not r.get('is_control_domain') and r.get('power_state')=='Halted')
         add('VM','CPU / memory…',self.hardware,connected and cls=='VM' and ordinary(r) and r.get('power_state')=='Halted')
         add('VM','Devices…',self.manage_devices,connected and cls=='VM' and ordinary(r))
         add('VM','Properties…',self.properties,connected and cls=='VM')
@@ -155,15 +169,29 @@ class CenterShell:
         add('Templates','Create VM from selection…',self.new_vm,connected and cls=='VM' and r.get('is_a_template'))
         add('Templates','Copy',lambda:self.action('clone'),connected and cls=='VM' and r.get('is_a_template') and 'clone' in r.get('allowed_operations',[]))
         add('Templates','Properties…',self.properties,connected and cls=='VM' and r.get('is_a_template'))
+        for action in ('start','clean_shutdown','clean_reboot'):
+            button=self.action_buttons[action]
+            if cls=='VM': button.pack(side='left',padx=(0,5),before=self.console_button)
+            else: button.pack_forget()
+        self.console_button.configure(state='normal' if connected and cls=='VM' and r.get('power_state') in ('Running','Paused') else 'disabled')
+        for button in self.toolbar_buttons:
+            label=str(button.cget('text'))
+            if label in ('New VM','Import VM','Export VM'):
+                enabled=connected and (label!='Export VM' or cls=='VM' and r.get('power_state')=='Halted')
+                button.configure(state='normal' if enabled else 'disabled')
+        self.actions_popup.configure(menu=self.menus.get({'VM':'VM','host':'Server','SR':'Storage','pool':'Pool'}.get(cls),self.menus['Tools']))
 
     def populate(self):
-        selected = self.selected(); self.tree.delete(*self.tree.get_children()); self.items = {}
+        selected = self.selected()
+        closed={key for iid,key in self.items.items() if not self.tree.item(iid,'open')}
+        self.tree.delete(*self.tree.get_children()); self.items = {}
         term = self.search.get().casefold(); flat = self.navigation.get()!='Infrastructure' or bool(term)
         root = self.tree.insert('','end',text='Flagship',open=True); nodes = {}; groups = {}
         def insert(parent,cls,ref,r):
             label = r.get('name_label') or r.get('uuid') or ref
             if term and term not in (label+' '+r.get('uuid','')).casefold(): return
-            node = self.tree.insert(parent,'end',text=label,open=True,values=(r.get('power_state',''),))
+            icon='halted' if cls=='VM' and r.get('power_state')!='Running' else cls
+            node = self.tree.insert(parent,'end',text=label,open=(cls,ref) not in closed,image=self.resource_icons.get(icon,''),values=(r.get('power_state',''),))
             self.items[node]=(cls,ref); nodes[(cls,ref)]=node
             if selected==(cls,ref): self.tree.selection_set(node)
         for ref,r in self.records.get('pool',{}).items(): insert(root,'pool',ref,r)
@@ -219,14 +247,14 @@ class CenterShell:
         elif self.navigation.get()=='Saved Searches': visible=('Search',)
         current=self.tabs.select()
         for title,frame in self.frames.items():
-            if title in visible: self.tabs.add(frame,text=title)
+            if title in visible: self.tabs.add(frame,text='Summary' if title=='General' else title)
             elif str(frame) in self.tabs.tabs(): self.tabs.hide(frame)
         for index,title in enumerate(visible): self.tabs.insert(index,self.frames[title])
         self.tabs.select(current if current in [str(self.frames[t]) for t in visible] else self.frames[visible[0]])
         for title,view in self.views.items():
             kind,data=related(self.records,cls,ref,title); text=''
             if title=='General':
-                self.fill_table(title,('Property','Value'),[(None,(k.replace('_',' ').capitalize(),self.describe(v))) for k,v in safe_record(record).items()])
+                self.fill_table(title,('Property','Value'),self.overview_rows(cls,ref,record))
                 text=record.get('name_label','')+'\n'+record.get('name_description','')
             elif title=='Home':
                 self.fill_table(title,('Resource','Count'),[(None,(label,len(self.records.get(k,{})))) for label,k in [('Servers','host'),('VMs and templates','VM'),('Storage repositories','SR'),('Networks','network')]])
@@ -247,7 +275,7 @@ class CenterShell:
                 text='Load RRD history from the selected host. Values use the server data source units; gaps are unavailable samples. TLS trust is required for the resident host.'
             elif title=='Console':
                 self.fill_table(title,('Console','State'),[])
-                text='Open native console uses the authenticated TLS VNC viewer in a separate window. Input is opt-in.' if cls=='VM' else 'Host text console is not yet supported by the native viewer.'
+                text='Connect here to dock the console. Use Undock or Fullscreen in the viewer toolbar. Keyboard and mouse are opt-in.' if cls=='VM' else 'Host text console is not yet supported by the native viewer.'
             else:
                 columns=[x[0] for x in FIELDS.get(kind,(('Name','name_label'),('UUID','uuid')))]
                 self.fill_table(title,columns,[((kind,r),values(self.records,kind,obj)) for r,obj in data.items()])
@@ -261,6 +289,7 @@ class CenterShell:
             view.configure(state='normal'); view.delete('1.0','end'); view.insert('end',text); view.configure(state='disabled')
         self.alert_count.configure(text='Alerts: '+str(len(self.records.get('message',{}))))
         self.update_commands()
+        self.update_workspace(cls,ref,record)
 
     @staticmethod
     def describe(value):
@@ -271,6 +300,9 @@ class CenterShell:
     def navigate_table(self,title):
         key=self.table_items.get(title,{}).get(next(iter(self.tables[title].selection()),''))
         if not key: return False
+        if key[0] not in ('pool','host','VM','SR','network'):
+            self.record_details(*key); return False
+        if self.navigation.get() in ('Saved Searches','Notifications'): self.navigation.set('Infrastructure')
         if key not in self.items.values():
             self.navigation.set('Objects'); self.search.set(''); self.populate()
         for iid,value in self.items.items():

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0.dev1 — 2026-11-16
+
+- Redesigned infrastructure workspace with summaries, icon navigation, history
+  and compact contextual commands.
+- Native OVA/qcow2 import/export with strict parsing, manifests, standalone disk
+  checks, conversion and exact disk capacities; live disk-byte roundtrips passed.
+- Docked console, persistent undock/redock, fit/fullscreen and authenticated
+  Virt Viewer option; live console continuity/viewer checks passed.
+- qemu-img and virt-viewer included as native matching-major RPM dependencies.
+
 ## 1.2.0.dev2 — 2026-11-16
 
 - Live XCP-ng qualification found an import compatibility issue: accept the

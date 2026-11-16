@@ -43,6 +43,10 @@ class WindowLayoutTests(unittest.TestCase):
             rectangles.append((x,y,w,h))
 
     def test_vm_actions_and_status_remain_visible_at_default_guest_resolution(self):
+        from unittest.mock import Mock
+        self.app.client=Mock()
+        self.app.records={'VM':{'vm':{'name_label':'Guest','power_state':'Halted','allowed_operations':['start']}}}
+        self.app.populate(); self.app.select_resource('VM','vm')
         self.root.geometry('984x668')
         self.root.update()
         bottom=self.root.winfo_rooty()+self.root.winfo_height()
@@ -52,7 +56,7 @@ class WindowLayoutTests(unittest.TestCase):
                 widgets.append(widget);collect(widget)
         collect(self.root)
         actions=[widget for widget in widgets if widget.winfo_class()=='TButton'
-                 and widget.cget('text') in ('Start','Force off','Delete VM record')]
+                 and widget.cget('text') in ('Start','Shut down','Reboot')]
         self.assertEqual(len(actions),3)
         for widget in actions:
             self.assertTrue(widget.winfo_ismapped())

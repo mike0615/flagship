@@ -29,7 +29,10 @@ from .center import CenterShell
 from .management_ui import ManagementUI
 
 
-class Application(CenterShell, ManagementUI):
+from .format_ui import PortableUI
+
+
+class Application(CenterShell, PortableUI, ManagementUI):
     def __init__(self, root, journal=None, insecure_default=False, known=None):
         self.root = root
         self.known = known if known is not None else KnownCerts()
@@ -37,6 +40,7 @@ class Application(CenterShell, ManagementUI):
         self.journal = journal or OperationJournal()
         self.device_panels = []
         self.consoles = []
+        self.external_viewers = []
         self.workflow_label = 'Workflow'
         self.client = None
         self.records = {}
@@ -51,6 +55,8 @@ class Application(CenterShell, ManagementUI):
         self.workflow_stop = None
         self.last_workflow_report = None
         root.title(APP_NAME + ' — ' + __version__)
+        self.app_icon=tk.PhotoImage(file=str(Path(__file__).parent/'icons'/'flagship.png'))
+        root.iconphoto(True,self.app_icon)
         width = min(1200, max(640, root.winfo_screenwidth()-40))
         height = min(760, max(480, root.winfo_screenheight()-100))
         root.geometry(f'{width}x{height}')
@@ -260,6 +266,8 @@ class Application(CenterShell, ManagementUI):
         if not self.client:
             return
         client = self.client
+        for viewer in self.external_viewers: viewer.close()
+        self.external_viewers=[]
         for console in self.consoles: console.close()
         self.consoles = []
         def work():
@@ -433,12 +441,42 @@ class Application(CenterShell, ManagementUI):
             messagebox.showinfo('Select VM', 'Select a running VM to open its console.')
             return
         from .console_window import ConsoleWindow
+        if self.navigation.get() in ('Saved Searches','Notifications'):
+            self.navigation.set('Infrastructure'); self.show()
         self.consoles = [c for c in self.consoles if c.window.winfo_exists()]
         for console in self.consoles:
             if console.vm == selected[1] and console.client is self.client:
-                console.window.lift()
+                console.reveal()
                 return
-        self.consoles.append(ConsoleWindow(self, selected[1]))
+        for console in list(self.consoles):
+            if console.docked: console.close()
+        self.consoles.append(ConsoleWindow(self, selected[1], parent=self.console_host))
+        self.tabs.select(self.frames['Console'])
+
+    def open_external_console(self):
+        if self.busy or not self.client: return
+        selected=self.selected()
+        if not selected or selected[0]!='VM': return
+        from .external_viewer import ExternalViewer
+        try:
+            viewer=ExternalViewer(self.client,selected[1],self.records['VM'][selected[1]].get('name_label','Flagship console'))
+        except (ValueError,RuntimeError,OSError) as exc:
+            messagebox.showerror('External console',str(exc)); return
+        self.external_viewers.append(viewer)
+        self.poll_external_viewer(viewer)
+
+    def poll_external_viewer(self,viewer):
+        if self.closing: viewer.close(); return
+        try: error=viewer.errors.get_nowait()
+        except queue.Empty: error=None
+        if error:
+            if isinstance(error,CertificateError):
+                choice=self.ask_trust(error)
+                if choice is not None:
+                    self.client.trust.trust(error.info,always=choice=='always')
+                    messagebox.showinfo('Certificate accepted','Open Virt Viewer again to connect with the accepted certificate.')
+            else: messagebox.showerror('External console','The external console stopped: '+type(error).__name__)
+        if not viewer.stop.is_set(): self.root.after(250,lambda:self.poll_external_viewer(viewer))
 
     def manage_devices(self):
         if self.busy or not self.client:
@@ -555,6 +593,8 @@ class Application(CenterShell, ManagementUI):
             messagebox.showinfo('Operation in progress', 'Wait for the current operation before closing.')
             return
         self.closing = True
+        for viewer in self.external_viewers: viewer.close()
+        self.external_viewers=[]
         for console in self.consoles: console.close()
         self.consoles = []
         if self.client:

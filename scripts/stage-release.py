@@ -44,7 +44,7 @@ for major in (9, 10):
     shutil.copy2(build / 'airgap' / 'PACKAGES.tsv', release / ('PACKAGES-el' + str(major) + '.tsv'))
     manifest['targets'][str(major)] = {'source_archive': source_name, 'offline_bundle': bundles[0].name,
                                      'rpms': [p.name for p in candidates]}
-for name in ('LIVE_CENTER_2026-11-16.md', 'CENTER_DEV2_QUALIFICATION.md'):
+for name in ('LIVE_PORTABLE_2026-11-16.md', 'WORKSPACE_QUALIFICATION.md'):
     shutil.copy2(ROOT / 'evidence' / name, release / name)
 (release / 'RELEASE_SOURCE.json').write_text(json.dumps(manifest, indent=2) + '\n')
 files = sorted(p for p in release.iterdir() if p.is_file())

@@ -102,3 +102,19 @@ class ConsoleWindowTests(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+
+@unittest.skipUnless(os.environ.get('DISPLAY'),'requires X display')
+class DockingTests(unittest.TestCase):
+    def test_dock_undock_keeps_same_framebuffer_and_connection(self):
+        root=tk.Tk();root.withdraw();host=tk.Frame(root);host.pack(fill='both',expand=True)
+        app=SimpleNamespace(root=root,client=object(),records={'VM':{'vm':{'name_label':'Guest'}}},select_resource=Mock())
+        with patch('flagship.console_window.threading.Thread.start'):
+            view=ConsoleWindow(app,'vm',parent=host)
+        try:
+            view.draw(('resize',2,2));view.draw(('pixels',0,0,1,1,bytes([10,20,30])))
+            image=view.image;window=view.window;stop=view.stop
+            self.assertTrue(view.docked);view.toggle_dock();root.update_idletasks();self.assertFalse(view.docked)
+            self.assertEqual(view.image.get(0,0),(10,20,30));view.toggle_dock();root.update_idletasks()
+            self.assertTrue(view.docked);self.assertIs(view.image,image);self.assertIs(view.window,window);self.assertIs(view.stop,stop)
+            app.select_resource.assert_called_once_with('VM','vm')
+        finally:view.close();root.destroy()

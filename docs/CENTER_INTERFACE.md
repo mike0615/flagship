@@ -1,5 +1,9 @@
 # Center-style native desktop
 
+For the current 1.3.0 workspace, OVA/qcow2 and docked/external console behavior,
+see [PORTABLE_IMAGES.md](PORTABLE_IMAGES.md). Earlier details below describe
+their original candidate.
+
 Flagship 1.2.0.dev1 implements the main navigation model in the supplied
 XCP-ng Center 25.4 Interface Reference, using Python 3.9+ and Tk 8.6.
 It runs as a Linux desktop program on Rocky Linux 9 and 10. No Wine,

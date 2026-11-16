@@ -34,3 +34,10 @@ A v1.0 of the full requested compatibility scope cannot be declared from this
 candidate. Expand and test the missing workflows before a parity-oriented release.
 
 The 1.2.0.dev1 Center interface and host workflow details are in [CENTER_INTERFACE.md](CENTER_INTERFACE.md). Named saved searches, multiple simultaneous connections and advanced Windows workflows remain incomplete.
+
+## 1.3.0.dev1 additions
+
+OVA/qcow2 imports/exports, docked/undocked native console and authenticated Virt
+Viewer are implemented within the [supported portable-image profile](PORTABLE_IMAGES.md).
+Live XCP-ng disk-byte roundtrips and console/viewer checks passed. Installed-guest
+transplants and vCenter/ESXi import compatibility remain unqualified.
