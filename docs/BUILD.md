@@ -39,7 +39,7 @@ SRPMs using `./scripts/collect-dependency-sources.sh 9` and the equivalent for 1
 Source archives can be large (the Rocky 10 Noto font SRPM alone is about 1 GB);
 retain them with the binary bundles for offline source access.
 
-Build output is isolated by application version (currently 1.2.0.dev1) so a new
+Build output is isolated by application version (currently 1.2.0.dev2) so a new
 candidate does not overwrite published dev.1 artifacts. CI uploads the complete
 versioned dist tree for its Rocky matrix job.
 

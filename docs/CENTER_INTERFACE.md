@@ -86,7 +86,9 @@ snapshot to a new filename. OVF, OVA and raw-disk imports are not implemented.
 
 Transfers stream through bounded buffers, authenticate TLS before sending
 session cookies and do not retry failed mutations. Uploads wait for HTTP 100
-Continue. Redirects must identify a verified member of the connected pool and
+Continue or XAPI early HTTP 200 readiness with the exact transfer task ID.
+Readiness is distinct from task completion. Import decodes the singleton VM set
+returned by XAPI and refuses to choose arbitrarily from a multiple-VM result. Redirects must identify a verified member of the connected pool and
 preserve the operation parameters. Task success and complete tar framing are
 required before a private export partial file is published. Existing files are
 never overwritten. Tools > Save workflow report retains paths, task references

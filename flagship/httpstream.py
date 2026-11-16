@@ -1,7 +1,7 @@
 """Bounded HTTPS XAPI transfers. Callers journal PUT intent and track server tasks.
 
-Session cookies stay out of URLs. A PUT body is sent only after 100 Continue;
-redirects are followed only before upload, to a freshly verified pool host.
+Session cookies stay out of URLs. A PUT body is sent only after 100 Continue
+or a task-matched XAPI readiness response; redirects are followed only before upload, to a freshly verified pool host.
 """
 import re
 import socket
@@ -30,7 +30,7 @@ def head(reader):
         if not line.endswith(b'\r\n') or not re.fullmatch(rb'[A-Za-z0-9-]+', key):
             raise TransferError('Invalid transfer response header')
         key = key.decode('ascii').lower()
-        if key in headers and key in ('content-length', 'transfer-encoding', 'location'):
+        if key in headers and key in ('content-length', 'transfer-encoding', 'location', 'task-id'):
             raise TransferError('Ambiguous transfer response headers')
         headers[key] = value.strip().decode('latin1')
     return int(match[1]), headers
@@ -144,8 +144,10 @@ def request(client, method, path, parameters, source=None, size=None,
                 response.close()
                 continue
             if method == 'PUT':
-                if status != 100:
-                    raise TransferError('Host did not authorize the upload body')
+                early_ready = (status == 200 and bool(query.get('task_id')) and
+                               fields.get('task-id') == query['task_id'])
+                if status != 100 and not early_ready:
+                    raise TransferError('Host did not authorize the upload body (HTTP '+str(status)+')')
                 transferred = 0
                 while transferred < size:
                     checkpoint()
@@ -155,7 +157,8 @@ def request(client, method, path, parameters, source=None, size=None,
                     connection.sendall(block)
                     transferred += len(block)
                     progress(transferred)
-                status, fields = head(response.reader)
+                if not early_ready:
+                    status, fields = head(response.reader)
             if status != 200:
                 raise TransferError('Host refused the transfer; inspect the associated task')
             response.headers = fields

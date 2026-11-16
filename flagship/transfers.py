@@ -7,7 +7,7 @@ import uuid
 from .api import APIError
 from .httpstream import request, TransferError
 from .journal import JournalError
-from .protocol import decode_reference_result
+from .protocol import decode_import_result
 from .xva import XVAEnvelope
 from .workflows import Provisioner, WorkflowError, NULL
 
@@ -192,7 +192,7 @@ class XVATransfer(Provisioner):
                     raise ValueError('Archive changed during import; inspect the server task before retrying')
                 self.sha256 = digest.hexdigest()
             result = self.wait_task(task)
-            vm = decode_reference_result(result.get('result', ''))
+            vm = decode_import_result(result.get('result', ''))
             machine = self.call('VM.get_record', vm)
             if vm in previous or machine.get('uuid') in previous_uuids or machine.get('is_control_domain'):
                 raise ValueError('Import returned a pre-existing VM; no device or power changes were made')

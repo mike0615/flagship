@@ -87,7 +87,7 @@ class TransferTests(unittest.TestCase):
                 ref = 'old-vm' if self.existing_result else 'new-vm'
                 if not self.existing_result:
                     self.pool.vms[ref] = {'uuid':'new-uuid', 'power_state':'Halted', 'VIFs':['new-vif']}
-                task['result'] = '<value>'+ref+'</value>'
+                task['result'] = '<value><array><data><value><string>'+ref+'</string></value></data></array></value>'
         if method == 'PUT':
             data = options['source'].read(options['size'])
             self.assertEqual(data, self.archive)

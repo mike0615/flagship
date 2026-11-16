@@ -1,6 +1,6 @@
 Name:           flagship
 Version:        1.2.0
-Release:        0.1.dev1%{?dist}
+Release:        0.2.dev2%{?dist}
 Summary:        Native Linux desktop management client for XAPI pools
 
 License:        BSD-2-Clause
@@ -70,6 +70,11 @@ gtk-update-icon-cache -q %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/%{name}/
 
 %changelog
+* Mon Nov 16 2026 Mike Anderson <mike@andersoncomputer.us> - 1.2.0-0.2.dev2
+- Fix live XCP-ng XVA imports: accept task-matched early HTTP 200 readiness
+  and decode the singleton VM-set task result. Keep TLS pins, exact task
+  binding, streamed uploads and confirmed task completion.
+
 * Mon Nov 16 2026 Mike Anderson <mike@andersoncomputer.us> - 1.2.0-0.1.dev1
 - Center-style native desktop, contextual menus, scoped inventory tables,
   notifications, eight-step VM wizard, NFS storage, private networks, host

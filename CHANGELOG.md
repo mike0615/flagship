@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0.dev2 — 2026-11-16
+
+- Live XCP-ng qualification found an import compatibility issue: accept the
+  task-matched early HTTP 200 readiness response used by XAPI and decode
+  its singleton VM-set task result. Ordinary HTTP 200 responses without the
+  exact transfer task ID still cannot receive an archive.
+- Disposable VM/device/snapshot and XVA roundtrip checks completed on a live
+  XCP-ng 8.3.0 host; test resources were explicitly cleaned up.
+
 ## 1.2.0.dev1 — 2026-11-16
 
 - Native Center-style navigation, contextual menus/tabs, relationship-scoped

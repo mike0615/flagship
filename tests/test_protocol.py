@@ -14,3 +14,18 @@ class ProtocolTests(unittest.TestCase):
                      '<value><string>a</string><string>b</string></value>'):
             with self.assertRaises(ValueError):
                 decode_reference_result(text)
+
+class ImportResultTests(unittest.TestCase):
+    def test_single_vm_set_accepts_implicit_and_explicit_strings(self):
+        from flagship.protocol import decode_import_result
+        for member in ('<value>OpaqueRef:vm</value>','<value><string>OpaqueRef:vm</string></value>'):
+            self.assertEqual(decode_import_result('<value><array><data>'+member+'</data></array></value>'),'OpaqueRef:vm')
+
+    def test_multiple_and_empty_vm_sets_never_pick_an_arbitrary_vm(self):
+        from flagship.protocol import decode_import_result
+        for members in ('','<value>a</value><value>b</value>','<value><int>1</int></value>'):
+            with self.assertRaises(ValueError): decode_import_result('<value><array><data>'+members+'</data></array></value>')
+
+    def test_import_result_does_not_expand_entities(self):
+        from flagship.protocol import decode_import_result
+        with self.assertRaises(ValueError): decode_import_result('<!DOCTYPE x [<!ENTITY y "z">]><value>&y;</value>')

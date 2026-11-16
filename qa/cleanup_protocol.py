@@ -2,6 +2,8 @@
 """Explicit cleanup of resources recorded by live_protocol_smoke; never select production VMs by name alone."""
 import argparse
 import getpass
+from urllib.parse import urlsplit
+from flagship.tls import host_key
 import json
 from pathlib import Path
 from flagship.api import Client, APIError
@@ -14,7 +16,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--endpoint', required=True)
     p.add_argument('--username', required=True)
-    p.add_argument('--ca-file', required=True)
+    p.add_argument('--ca-file')
+    p.add_argument('--pin', help='Expected TLS certificate SHA-256 fingerprint')
     p.add_argument('--state-file', required=True)
     p.add_argument('--sr-uuid', required=True)
     p.add_argument('--recover-clone-task-uuid')
@@ -27,7 +30,9 @@ def main():
     if state.get('endpoint') != args.endpoint or not prefix.startswith('xenadmin-qa-'):
         p.error('State must belong to this endpoint and the QA namespace')
     journal=OperationJournal(path.parent/'cleanup-journals')
-    c=Client(args.endpoint,args.ca_file,journal=journal)
+    endpoint=urlsplit(args.endpoint)
+    pins={host_key(endpoint.hostname,endpoint.port or 443):args.pin} if args.pin else None
+    c=Client(args.endpoint,args.ca_file,journal=journal,pins=pins)
     jobs=Provisioner(c,progress=journal.workflow,timeout=300)
     def find(kind, object_uuid):
         try: return c.call(kind+'.get_by_uuid', object_uuid)
@@ -87,6 +92,7 @@ def main():
         plan={'vm_uuids':[m['uuid'] for _,m in machines],'disk_uuids':list(disks),
               'network_uuids':[i['uuid'] for i in state['created'] if i['class']=='network']}
         save_json_private(path.parent/'cleanup-plan.json',plan)
+        machines.sort(key=lambda pair: not pair[1].get('is_a_snapshot',False))
         for ref,_ in machines:
             jobs.async_call('VM.destroy',ref)
         for object_uuid in disks:

@@ -71,6 +71,24 @@ class HTTPStreamTests(unittest.TestCase):
         self.assertEqual(connection.sendall.call_count, 2)
 
     @patch('flagship.httpstream.socket.create_connection')
+    def test_xapi_early_200_with_matching_task_streams_body_without_second_status(self,connect):
+        connection=self.connection(b'HTTP/1.1 200 OK\r\nTask-Id: own-task\r\nConnection: close\r\n\r\n')
+        self.client.trust.wrap.return_value=connection
+        response=request(self.client,'PUT','/import',{'task_id':'own-task'},io.BytesIO(b'data'),4)
+        try: self.assertEqual(list(response.chunks()),[])
+        finally: response.close()
+        self.assertEqual(connection.sendall.call_args_list[1].args,(b'data',))
+
+    @patch('flagship.httpstream.socket.create_connection')
+    def test_mismatched_early_200_cannot_receive_archive(self,connect):
+        connection=self.connection(b'HTTP/1.1 200 OK\r\nTask-Id: other-task\r\n\r\n')
+        self.client.trust.wrap.return_value=connection
+        source=io.BytesIO(b'data')
+        with self.assertRaises(TransferError): request(self.client,'PUT','/import',{'task_id':'own-task'},source,4)
+        self.assertEqual(source.tell(),0)
+        self.assertEqual(connection.sendall.call_count,1)
+
+    @patch('flagship.httpstream.socket.create_connection')
     def test_tls_failure_prevents_cookie_or_upload_send(self, connect):
         self.client.trust.wrap.side_effect = ssl.SSLCertVerificationError('untrusted')
         with self.assertRaises(ssl.SSLCertVerificationError):
