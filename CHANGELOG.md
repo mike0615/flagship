@@ -31,6 +31,12 @@ in [docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md).
   accept, pin mismatch rejection (nothing sent) and insecure accept, covering
   RPC and console.
 
+### Fixed
+- The RPM now ships its own bytecode. On Rocky 10, file times are clamped to
+  the changelog date, so after an upgrade Python could reuse `__pycache__`
+  files left by an earlier build with the same date (for example
+  `flagship --version` still reporting 1.1.0.dev1).
+
 ### Unchanged
 - Certificates are verified against the system CA store (or the CA PEM file)
   with host name checks by default.

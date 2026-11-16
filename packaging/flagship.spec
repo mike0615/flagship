@@ -47,6 +47,10 @@ ln -s flagship %{buildroot}%{_bindir}/xenadmin-rocky
 ln -s flagship-recovery %{buildroot}%{_bindir}/xenadmin-rocky-recovery
 install -m 0644 packaging/flagship.desktop %{buildroot}%{_datadir}/applications/
 install -Dm0644 packaging/flagship.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/flagship.svg
+# Ship bytecode owned by the package. Rocky 10 clamps file mtimes to the
+# changelog date, so a pyc written by a previous build with the same date and
+# source size would otherwise be reused after an upgrade.
+%py_byte_compile %{python3} %{buildroot}%{_datadir}/%{name}/
 
 %post
 gtk-update-icon-cache -q %{_datadir}/icons/hicolor &>/dev/null || :
@@ -76,6 +80,8 @@ gtk-update-icon-cache -q %{_datadir}/icons/hicolor &>/dev/null || :
   status-bar marker; flagship --insecure; flagship-recovery --pin, --insecure
   and --no-saved-pins. Tools > Trusted certificates removes pins.
 - Verified-by-default and the CA PEM option unchanged. New help chapter.
+- Byte-compile into the package so upgrades never run stale bytecode (el10
+  clamps mtimes to the changelog date).
 
 * Sun Nov 15 2026 Mike Anderson <mike@andersoncomputer.us> - 1.1.0-0.1.dev1
 - Renamed from XenAdmin Rocky to Flagship: package flagship, commands
