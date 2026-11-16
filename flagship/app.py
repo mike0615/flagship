@@ -25,7 +25,11 @@ from .trust_dialog import TrustDialog, TrustedCertificatesDialog
 
 
 
-class Application:
+from .center import CenterShell
+from .management_ui import ManagementUI
+
+
+class Application(CenterShell, ManagementUI):
     def __init__(self, root, journal=None, insecure_default=False, known=None):
         self.root = root
         self.known = known if known is not None else KnownCerts()
@@ -50,78 +54,7 @@ class Application:
         width = min(1200, max(640, root.winfo_screenwidth()-40))
         height = min(760, max(480, root.winfo_screenheight()-100))
         root.geometry(f'{width}x{height}')
-        menu = tk.Menu(root)
-        tools = tk.Menu(menu, tearoff=False)
-        tools.add_command(label='Stop workflow monitoring', command=self.stop_workflow)
-        tools.add_command(label='Save workflow report', command=self.save_workflow_report)
-        tools.add_command(label='Operation history / recovery', command=lambda: HistoryDialog(self.root, self.journal, self.inspect_object))
-        tools.add_command(label='Request task cancellation…', command=self.cancel_task)
-        tools.add_command(label='Trusted certificates…', command=lambda: TrustedCertificatesDialog(self.root, self.known))
-        menu.add_cascade(label='Tools', menu=tools)
-        help_menu = tk.Menu(menu, tearoff=False)
-        help_menu.add_command(label='Flagship Help', command=self.help, accelerator='F1')
-        help_menu.add_command(label='About Flagship', command=self.about)
-        menu.add_cascade(label='Help', menu=help_menu)
-        root.configure(menu=menu)
-        root.bind('<F1>', lambda _event: self.help())
-        toolbar = ttk.Frame(root, padding=6)
-        toolbar.pack(fill='x')
-        self.buttonbar = ttk.Frame(toolbar)
-        self.buttonbar.pack(fill='x')
-        self.toolbar_buttons = []
-        self.toolbar_columns = None
-        for label, command in [('Connect', self.connect), ('Disconnect', self.disconnect),
-                               ('Refresh', self.refresh), ('New VM', self.new_vm),
-                               ('CPU / memory', self.hardware), ('Devices', self.manage_devices), ('Console', self.open_console), ('Export inventory', self.export),
-                               ('Help', self.help)]:
-            self.toolbar_buttons.append(ttk.Button(self.buttonbar, text=label, command=command))
-        self.buttonbar.bind('<Configure>', lambda event: self.layout_toolbar(event.width))
-        self.layout_toolbar(width-12)
-        filterbar = ttk.Frame(toolbar)
-        filterbar.pack(fill='x', pady=(4, 0))
-        self.search = tk.StringVar()
-        ttk.Label(filterbar, text='Filter inventory:').pack(side='left')
-        ttk.Entry(filterbar, textvariable=self.search).pack(side='left', fill='x', expand=True)
-        self.search.trace_add('write', lambda *_: self.populate())
-        split = ttk.Panedwindow(root, orient='horizontal')
-        split.pack(fill='both', expand=True)
-        self.tree = ttk.Treeview(split, columns=('state',), selectmode='browse')
-        self.tree.heading('#0', text='Resources')
-        self.tree.heading('state', text='State')
-        self.tree.column('state', width=95)
-        split.add(self.tree, weight=1)
-        right = ttk.Frame(split)
-        split.add(right, weight=3)
-        self.tabs = ttk.Notebook(right)
-        self.tabs.pack(fill='both', expand=True)
-        self.views = {}
-        for title in ('General', 'Storage', 'Networking', 'Snapshots', 'Tasks', 'Alerts'):
-            frame = ttk.Frame(self.tabs)
-            view = tk.Text(frame, wrap='none', state='disabled')
-            scroll = ttk.Scrollbar(frame, command=view.yview)
-            view.configure(yscrollcommand=scroll.set)
-            view.pack(side='left', fill='both', expand=True)
-            scroll.pack(side='right', fill='y')
-            self.tabs.add(frame, text=title)
-            self.views[title] = view
-        actions = ttk.Frame(right, padding=6)
-        actions.pack(side='bottom', fill='x', before=self.tabs)
-        for index, (label, action) in enumerate([
-                ('Start', 'start'), ('Shut down', 'clean_shutdown'),
-                ('Reboot', 'clean_reboot'), ('Pause', 'pause'), ('Unpause', 'unpause'),
-                ('Suspend', 'suspend'), ('Resume', 'resume'), ('Snapshot', 'snapshot'),
-                ('Clone', 'clone'), ('Revert snapshot', 'revert'),
-                ('Migrate in pool', 'pool_migrate'), ('Rename', 'set_name_label'),
-                ('Force off', 'hard_shutdown'), ('Delete VM record', 'destroy')]):
-            ttk.Button(actions, text=label, command=lambda a=action: self.action(a)).grid(
-                row=index // 5, column=index % 5, sticky='ew', padx=2, pady=2)
-        self.status = tk.StringVar(value='Disconnected. Connect to a pool coordinator using HTTPS.')
-        statusbar = ttk.Frame(root)
-        statusbar.pack(side='bottom', fill='x', before=split)
-        self.tls_indicator = tk.Label(statusbar, text='', padx=8)
-        self.tls_indicator.pack(side='right')
-        ttk.Label(statusbar, textvariable=self.status, padding=6).pack(side='left', fill='x', expand=True)
-        self.tree.bind('<<TreeviewSelect>>', lambda *_: self.show())
+        self.build_shell(width)
         root.protocol('WM_DELETE_WINDOW', self.close)
         root.bind('<Destroy>', self.cancel_timers, add='+')
         root.after(100, self.poll)
@@ -151,6 +84,7 @@ class Application:
             messagebox.showinfo('Operation in progress', 'Wait for the current operation to finish.')
             return
         self.busy = True
+        self.update_commands()
         self.status.set(label)
         def run():
             if not mutation:
@@ -198,6 +132,7 @@ class Application:
             pass
         else:
             self.busy = False
+            self.update_commands()
             try:
                 value = future.result()
                 done(value)
@@ -205,8 +140,8 @@ class Application:
                 # Do not display transport tracebacks, RPC arguments or session tokens.
                 self.status.set('Operation failed: ' + (str(exc) if isinstance(exc, APIError) else type(exc).__name__))
                 if isinstance(exc, WorkflowError):
-                    self.last_workflow_report = {'stage': exc.stage, 'reason': exc.reason,
-                                                 'resources': exc.resources, 'tasks': exc.tasks}
+                    self.last_workflow_report = getattr(exc, 'report', {'stage': exc.stage, 'reason': exc.reason,
+                                                 'resources': exc.resources, 'tasks': exc.tasks})
                 if isinstance(exc, JournalError) and hasattr(exc, 'report'):
                     self.last_workflow_report = exc.report
                 self.workflow_stop = None
@@ -365,55 +300,9 @@ class Application:
                 panel.reload()
         self.submit(self.client.inventory, done, 'Refreshing inventory…')
 
-    def populate(self):
-        selection = self.tree.selection()
-        selected = self.items.get(selection[0]) if selection else None
-        self.tree.delete(*self.tree.get_children())
-        self.items = {}
-        term = self.search.get().casefold()
-        groups = [('Pools', 'pool'), ('Hosts', 'host'), ('Virtual machines', 'VM'),
-                  ('Templates', 'VM'), ('Snapshots', 'VM'), ('Storage', 'SR'), ('Networks', 'network')]
-        for label, cls in groups:
-            parent = self.tree.insert('', 'end', text=label, open=True)
-            for ref, record in sorted(self.records.get(cls, {}).items(),
-                                      key=lambda item: item[1].get('name_label', '')):
-                if cls == 'VM':
-                    category = ('Snapshots' if record.get('is_a_snapshot') else
-                                'Templates' if record.get('is_a_template') else 'Virtual machines')
-                    if label != category or record.get('is_control_domain'):
-                        continue
-                name = record.get('name_label') or record.get('uuid', ref)
-                if term and term not in (name + ' ' + record.get('uuid', '')).casefold():
-                    continue
-                item = self.tree.insert(parent, 'end', text=name,
-                                        values=(record.get('power_state', ''),))
-                self.items[item] = (cls, ref)
-                if selected == (cls, ref):
-                    self.tree.selection_set(item)
-
     def selected(self):
         selection = self.tree.selection()
         return self.items.get(selection[0]) if selection else None
-
-    def show(self):
-        selected = self.selected()
-        cls, ref = selected or ('', '')
-        record = self.records.get(cls, {}).get(ref, {})
-        related = {
-            'General': record,
-            'Storage': {k: v for k, v in self.records.get('VBD' if cls == 'VM' else 'VDI', {}).items()
-                        if (v.get('VM') == ref if cls == 'VM' else v.get('SR') == ref)},
-            'Networking': {k: v for k, v in self.records.get('VIF' if cls == 'VM' else 'PIF', {}).items()
-                           if (v.get('VM') == ref if cls == 'VM' else v.get('host') == ref)},
-            'Snapshots': {k: v for k, v in self.records.get('VM', {}).items() if v.get('snapshot_of') == ref},
-            'Tasks': self.records.get('task', {}), 'Alerts': self.records.get('message', {})}
-        for title, view in self.views.items():
-            view.configure(state='normal')
-            view.delete('1.0', 'end')
-            if title == 'Tasks' and self.tracker.tasks:
-                view.insert('end', self.tracker.summary() + '\n\nPool task records:\n')
-            view.insert('end', json.dumps(safe_record(related[title]), indent=2, default=str))
-            view.configure(state='disabled')
 
     def action(self, action):
         if self.busy or not self.client:

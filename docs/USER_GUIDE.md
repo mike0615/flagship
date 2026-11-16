@@ -160,3 +160,9 @@ context even if remote logout cannot be confirmed; reconnecting does not reuse t
 previous pool's pending references. Persistent history remains available for
 investigation, and a remote authentication session may remain until server expiry
 if logout could not be delivered.
+
+## Center-style interface (1.2.0.dev1)
+
+See [CENTER_INTERFACE.md](CENTER_INTERFACE.md) for the new navigation, tables,
+notifications, wizard, NFS/private-network creation, host operations, RRD history
+and XVA transfers. These workflows require live-host qualification.

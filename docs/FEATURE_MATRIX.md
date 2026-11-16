@@ -7,7 +7,7 @@ See QUALIFICATION.md for the evidence boundary.
 |---|---|---|
 | Connect, TLS trust, login/logout | Implemented, one pool at a time | Live trusted TLS/login passed; restricted RBAC and pool coordinator tests remain |
 | Resource tree, search | Implemented | UI/operator validation |
-| General, storage, network properties | Structured inventory tabs | Rich editors and polished tables |
+| General, storage, network properties | Sortable scoped tables; name/description editor | Advanced property categories remain read-only |
 | VM start, shutdown, reboot | Async operation submission | Task completion and guest behavior |
 | Force shutdown | Confirmed async submission | Live firmware VM start/force shutdown passed; guest OS validation remains |
 | Pause/unpause/suspend/resume | Async operation submission | State transitions on host |
@@ -20,10 +20,10 @@ See QUALIFICATION.md for the evidence boundary.
 | New VM wizard | Template clone/copy, selected SR, disk, one NIC, optional ISO/start | Live installer-template provisioning passed; installed-template copy, additional NICs/disks and advanced installation options remain |
 | CPU/memory editing | Halted VM vCPU and fixed-memory editor | Live qualification, dynamic memory and live CPU controls |
 | Disk, ISO, VIF editing | Add/attach/grow/rename/detach/delete disks, DVD/ISO lifecycle, NIC add/move/connect/remove | Live cold disk/DVD/NIC checks passed; guest hotplug, advanced QoS/slots/MAC edits, specialized devices and storage migration |
-| SR/network creation | Not implemented | Validated creation wizards |
-| XVA/OVF import and export | Not implemented | Streaming transfer and task/error handling |
+| SR/network creation | NFS SR/ISO and private-network review forms | Live qualification; iSCSI/SMB/local formatting, VLAN/bond/IP editors |
+| XVA/OVF import and export | Streaming task-confirmed XVA import/export | Live qualification; OVF/OVA/raw disks not implemented |
 | Embedded VNC/RDP console | Development-source TLS console viewer, raw/CopyRect/resize and opt-in input; not in dev.3 RPMs | Live firmware handshake/pixels/input transmission passed; interactive guest input, installer, RDP and advanced viewer features remain |
-| Performance graphs | Not implemented | RRD collection and graph UI |
+| Performance graphs | Explicit RRD history reads, source selector, graph and range | Live qualification and richer charts |
 | Host updates, HA, DR, WLB | Not implemented | Dedicated workflows and entitlement tests |
 | Cross-pool migration | Not implemented | Transfer networks and credential boundaries |
 | Windows plugins/ReportViewer | Not implemented | Linux replacement design |
@@ -32,3 +32,5 @@ See QUALIFICATION.md for the evidence boundary.
 
 A v1.0 of the full requested compatibility scope cannot be declared from this
 candidate. Expand and test the missing workflows before a parity-oriented release.
+
+The 1.2.0.dev1 Center interface and host workflow details are in [CENTER_INTERFACE.md](CENTER_INTERFACE.md). Named saved searches, multiple simultaneous connections and advanced Windows workflows remain incomplete.

@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 import uuid
 
 MAX_RECORD = 512 * 1024
-OBJECT_CLASSES = {'VM', 'VDI', 'VBD', 'VIF', 'SR', 'network', 'host', 'pool', 'task', 'PIF'}
+OBJECT_CLASSES = {'VM', 'VDI', 'VBD', 'VIF', 'SR', 'network', 'host', 'pool', 'task', 'PIF', 'PBD', 'message'}
 
 
 class JournalError(ValueError):
@@ -27,7 +27,7 @@ def safe_report(report):
     if not isinstance(report, dict):
         return {}
     result = {key: report[key] for key in ('stage', 'label', 'status', 'operation', 'copied_template_disks',
-                                         'cpus', 'memory_mib') if key in report}
+                                         'cpus', 'memory_mib', 'transfer_bytes', 'transfer_total', 'partial_file', 'output_file', 'source_file', 'sha256') if key in report}
     result['resources'] = {key: value for key, value in report.get('resources', {}).items()
                            if key in OBJECT_CLASSES | {'CD'} and isinstance(value, str)}
     result['tasks'] = [{key: task[key] for key in ('method', 'task', 'status', 'progress', 'uuid') if key in task}
@@ -117,6 +117,7 @@ class OperationJournal:
         safe = safe_report(report)
         # Progress percentages can change every second; persist structural transitions.
         comparable = dict(safe, tasks=[{k: v for k, v in task.items() if k != 'progress'} for task in safe['tasks']])
+        comparable.pop('transfer_bytes', None)
         fingerprint = json.dumps(comparable, sort_keys=True)
         with self.lock:
             if fingerprint != self._last_report:

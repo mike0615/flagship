@@ -60,10 +60,14 @@ class VMPlan:
     disk_gib: int = 20
     iso: str = ''
     start: bool = False
+    description: str = ''
+    home_host: str = ''
+    boot_mode: str = ''
 
     def validate(self):
         if not self.name.strip() or len(self.name) > 255:
             raise ValueError('VM name must contain 1 to 255 characters')
+        if self.boot_mode not in ('', 'bios', 'uefi'): raise ValueError('Unsupported boot mode')
         for ref in (self.template, self.sr, self.network):
             if not isinstance(ref, str) or not ref or ref == NULL:
                 raise ValueError('Select a template, storage repository and network')
@@ -176,6 +180,11 @@ class Provisioner:
                 iso_sr = self.call('SR.get_record', iso['SR'])
                 if iso_sr.get('content_type') != 'iso':
                     raise ValueError('Install media must be from an ISO storage repository')
+            if plan.home_host:
+                host = self.call('host.get_record', plan.home_host)
+                if not host.get('enabled'): raise ValueError('Home server is not enabled')
+            if plan.boot_mode and not template.get('HVM_boot_policy'):
+                raise ValueError('Boot mode selection requires an HVM template')
             vbds = [self.call('VBD.get_record', ref) for ref in template.get('VBDs', [])]
             installed = any(v.get('type') == 'Disk' and not v.get('empty') and
                             v.get('VDI') not in ('', None, NULL) for v in vbds)
@@ -187,6 +196,12 @@ class Provisioner:
             if vm == plan.template or (template.get('uuid') and cloned.get('uuid') == template['uuid']):
                 raise ValueError('Server returned the source VM; refusing to change it')
             self.resources['VM'] = vm
+            if plan.description: self.call('VM.set_name_description', vm, plan.description)
+            if plan.home_host: self.call('VM.set_affinity', vm, plan.home_host)
+            if plan.boot_mode:
+                boot = dict(cloned.get('HVM_boot_params', {}))
+                boot['firmware'] = plan.boot_mode
+                self.call('VM.set_HVM_boot_params', vm, boot)
             config = dict(cloned.get('other_config', {}))
             config.pop('disks', None)  # Explicit storage below; avoid template's default SR.
             if plan.iso:
