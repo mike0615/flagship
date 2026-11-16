@@ -77,6 +77,13 @@ class DesktopTests(unittest.TestCase):
         self.app.start_provisioning = Mock()
         return NewVMDialog(self.app)
 
+    def test_wizard_preserves_template_firmware_by_default(self):
+        dialog = self.prepare_wizard()
+        dialog.review()
+        self.assertEqual(dialog.plan.boot_mode, '')
+        self.app.client.call.assert_not_called()
+        dialog.window.destroy()
+
     def test_creation_review_is_read_only_until_explicit_create(self):
         dialog = self.prepare_wizard()
         dialog.review()

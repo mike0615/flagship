@@ -20,12 +20,17 @@ Anderson Computer cyber chief toolset, together with
 It is an independent project maintained by Mike Anderson; it is not an official
 XCP-ng or XenServer product.
 
-**Status: development candidate 1.1.0.dev2.** There is no qualified v1.0
+**Status: development candidate 1.2.0.dev1.** There is no qualified v1.0
 release yet. A successful RPM build is not proof of working pool management or
 an offline install. See [qualification status](docs/QUALIFICATION.md) and the
 [feature matrix](docs/FEATURE_MATRIX.md).
 
-![Flagship main window](docs/screenshot.png)
+![Flagship Center-style host view (synthetic demonstration)](docs/screenshots/center-host.png)
+
+The new [Center-style interface guide](docs/CENTER_INTERFACE.md) describes the
+object-specific tables, navigation, wizard, NFS/private-network creation, host
+operations, RRD history and XVA transfer workflows. Full Windows feature parity
+is still in development.
 
 The interface uses a resource tree, inventory tabs and VM action buttons.
 Python/Tk and the standard library replace WinForms, .NET Framework, COM and
@@ -42,7 +47,7 @@ Passwords are not saved.
   process memory and are never written to disk.
 - **Resource tree** of pools, hosts, VMs, templates, snapshots, storage and
   networks, with a live name/UUID filter.
-- **Inventory tabs**: General, Storage, Networking, Snapshots, Tasks and Alerts.
+- **Contextual inventory tabs**, including Memory, NICs, GPU, snapshots, search, tasks and alerts; sortable tables replace raw JSON.
 - **VM lifecycle**: start, shutdown, reboot, force off, pause/unpause,
   suspend/resume, clone, snapshot, revert, rename, same-pool migrate and
   delete-record (disks retained), each confirmed before the server is called.
@@ -60,7 +65,14 @@ Passwords are not saved.
   toolset, project link, license and credits.
 - **Inventory export** to local JSON, with selected credential fields redacted.
 
-## Releases / Download
+## Build this candidate
+
+The source tree is 1.2.0.dev1. Build and install the matching RPM as described in
+[BUILD.md](docs/BUILD.md). RPMs and dependency-complete offline archives produced
+for this work are under `dist/1.2.0.dev1/el9` and `dist/1.2.0.dev1/el10`.
+The published release links below refer to the earlier 1.1.0.dev2 build.
+
+## Published releases / Download
 
 Two dist-tagged noarch RPMs are provided. Use the one that matches your release.
 Runtime dependencies (`python3`, `python3-tkinter`, `ca-certificates`) are in
@@ -186,7 +198,7 @@ builder with Bash, Git, Podman and network access to Rocky repositories
 ./scripts/build-rpm.sh 10
 ```
 
-Output goes under `dist/1.1.0.dev2/el9` and `dist/1.1.0.dev2/el10`: the noarch
+Output goes under `dist/1.2.0.dev1/el9` and `dist/1.2.0.dev1/el10`: the noarch
 RPM, the source RPM, the source tarball and `SHA256SUMS`. Build on the same
 Rocky major as the target; never mix dependency sets across majors.
 

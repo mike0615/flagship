@@ -3,6 +3,11 @@ set -euo pipefail
 root=$(cd -- "$(dirname -- "$0")/.." && pwd)
 major=${1:?Usage: build-rpm.sh 9|10}
 case "$major" in 9|10) ;; *) echo 'Rocky major must be 9 or 10' >&2; exit 2;; esac
+# SOURCE_COMMIT must describe exactly the source being packaged.
+if [[ -n $(git -C "$root" status --porcelain --untracked-files=normal) ]]; then
+    echo 'Commit source changes before building so SOURCE_COMMIT matches the archive' >&2
+    exit 1
+fi
 source "$root/scripts/common.sh"
 mkdir -p "$out"
 stage=$(mktemp -d "$root/build-rpm.XXXXXX")

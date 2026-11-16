@@ -1,3 +1,10 @@
+# Flagship 1.2.0.dev1
+
+Native Center-style desktop and management workflows. See
+[CENTER_INTERFACE.md](CENTER_INTERFACE.md) for implemented behavior, screenshots
+and the remaining Windows feature gaps. This candidate requires live-pool
+qualification; prior evidence below applies to its original builds.
+
 # Release notes
 
 ## 1.1.0.dev2 — self-signed certificates, November 15, 2026

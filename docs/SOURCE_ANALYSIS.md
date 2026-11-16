@@ -80,3 +80,27 @@ login parameters or raw RPC arguments. A read-only inspector resolves fresh
 references through get_by_uuid and verifies UUID identity; history never replays
 stored operations. Task cancellation requests remain distinct from terminal task
 outcomes, consistent with https://xapi-project.github.io/xen-api/classes/task.html.
+
+## November 16 Center interface work
+
+New input: the supplied `11-16-2026/xenadmin-development` tree and the
+XCP-ng Center 25.4 Interface Reference and XenCenter PDF. Their exact hashes
+are in `upstream/2026-11-16-SHA256SUMS`; original inputs were preserved.
+The Word reference's main-window anatomy, object tab lists and wizard steps
+informed the native shell. The PDF's navigation, VM/storage/network and
+performance sections provided supporting workflow context. These references
+are not redistributed as app assets.
+
+The supplied `XenModel/Actions/SR/SrCreateAction.cs` defines SR.create argument
+ordering and post-create PBD verification. `NFS_ISO.cs` specifies the
+`location` and `type=nfs_iso` device config. `NetworkAction.cs` distinguishes
+private network.create from physical/VLAN attachment. `CreateVMAction.cs`
+sets HVM_boot_params firmware to bios/uefi. `ArchiveMaintainer.cs` specifies
+RRD /rrd_updates query parameters and resident-host selection. The native
+implementation follows these interfaces without porting WinForms/COM.
+
+The existing feature/xva-transfer branch supplied httpstream.py, transfers.py,
+xva.py and their tests. Integration updates use current TrustPolicy wrapping,
+validate local XVA framing before uploading, persist recovery file paths,
+and record imported VM UUIDs. No source-wide replacement from that older
+branch was performed. See CENTER_INTERFACE.md for implemented scope and gaps.

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0.dev1 — 2026-11-16
+
+- Native Center-style navigation, contextual menus/tabs, relationship-scoped
+  sortable tables, tags, search, notifications and idle inventory refresh.
+- Eight-step VM wizard with description, home-server affinity and BIOS/UEFI.
+- Reviewed host maintenance/power actions, identity properties, NFS SR/ISO
+  creation, private networks, SR rescans/defaults and alert dismissal.
+- RRD history graph and integrated task-confirmed streaming XVA transfers.
+- Reuses the existing transfer branch while applying current certificate
+  pinning and preserving partial-file and imported-object recovery details.
+- Rocky 9/10 package and offline qualification recorded separately.
+
+
 All notable changes to Flagship (formerly XenAdmin Rocky). Detailed notes are
 in [docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md).
 

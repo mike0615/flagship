@@ -81,7 +81,7 @@ class Transport(xmlrpc.client.SafeTransport):
 
 class Client:
     classes = ('pool', 'host', 'VM', 'SR', 'network', 'VDI', 'VBD', 'VIF',
-               'PIF', 'task', 'message', 'VM_metrics', 'host_metrics')
+               'PIF', 'PBD', 'task', 'message', 'VM_metrics', 'host_metrics', 'PGPU')
 
     def __init__(self, endpoint, ca_file=None, journal=None, insecure=False, pins=None, known=None):
         """ca_file: trust only this CA PEM. insecure: skip all certificate checks.
@@ -161,6 +161,8 @@ class Client:
                                    (ref or '(none)') + '. Inspect server state before retrying.') from None
             if name.startswith('Async.') and ref:
                 self.task_origins[ref] = (op_id, name.removeprefix('Async.'))
+            elif ref and self.returns_reference(name):
+                self.created_refs[ref] = name.partition('.')[0]
         self.observe(name, args, result)
         return result
 
@@ -211,7 +213,7 @@ class Client:
                 return
             op_id, method = self.task_origins[ref]
             object_ref = None
-            if result.get('status') == 'success' and self.returns_reference(method):
+            if result.get('status') == 'success' and (self.returns_reference(method) or method == 'HTTP.import'):
                 try:
                     object_ref = decode_reference_result(result.get('result', ''))
                 except ValueError:
@@ -219,7 +221,7 @@ class Client:
             try:
                 self.journal.task(op_id, ref, result, result_ref=object_ref)
                 if object_ref:
-                    self.created_refs[object_ref] = method.partition('.')[0]
+                    self.created_refs[object_ref] = 'VM' if method == 'HTTP.import' else method.partition('.')[0]
                 self.task_states[ref] = state
             except JournalError:
                 self.journal_failed = True

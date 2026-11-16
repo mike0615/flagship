@@ -1,0 +1,510 @@
+STEP 1/2: FROM quay.io/rockylinux/rockylinux:10
+STEP 2/2: RUN dnf --disablerepo='*' --enablerepo=baseos --enablerepo=appstream install -y openssl && dnf clean all
+Rocky Linux 10 - BaseOS                         2.3 MB/s | 1.6 MB     00:00    
+Rocky Linux 10 - AppStream                      3.2 MB/s | 2.4 MB     00:00    
+Dependencies resolved.
+================================================================================
+ Package                    Arch        Version               Repository   Size
+================================================================================
+Installing:
+ openssl                    x86_64      1:3.5.9-1.el10_3      baseos      1.2 M
+Upgrading:
+ openssl-fips-provider      x86_64      1:3.5.9-1.el10_3      baseos      813 k
+ openssl-libs               x86_64      1:3.5.9-1.el10_3      baseos      2.3 M
+
+Transaction Summary
+================================================================================
+Install  1 Package
+Upgrade  2 Packages
+
+Total download size: 4.3 M
+Downloading Packages:
+(1/3): openssl-fips-provider-3.5.9-1.el10_3.x86 2.2 MB/s | 813 kB     00:00    
+(2/3): openssl-3.5.9-1.el10_3.x86_64.rpm        3.1 MB/s | 1.2 MB     00:00    
+(3/3): openssl-libs-3.5.9-1.el10_3.x86_64.rpm   5.1 MB/s | 2.3 MB     00:00    
+--------------------------------------------------------------------------------
+Total                                           7.6 MB/s | 4.3 MB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Upgrading        : openssl-libs-1:3.5.9-1.el10_3.x86_64                   1/5 
+  Upgrading        : openssl-fips-provider-1:3.5.9-1.el10_3.x86_64          2/5 
+  Installing       : openssl-1:3.5.9-1.el10_3.x86_64                        3/5 
+  Cleanup          : openssl-fips-provider-1:3.5.5-2.el10_2.x86_64          4/5 
+  Cleanup          : openssl-libs-1:3.5.5-2.el10_2.x86_64                   5/5 
+  Running scriptlet: openssl-libs-1:3.5.5-2.el10_2.x86_64                   5/5 
+
+Upgraded:
+  openssl-fips-provider-1:3.5.9-1.el10_3.x86_64                                 
+  openssl-libs-1:3.5.9-1.el10_3.x86_64                                          
+Installed:
+  openssl-1:3.5.9-1.el10_3.x86_64                                               
+
+Complete!
+12 files removed
+COMMIT localhost/flagship-center-qa:10
+--> 058fddddae9f
+Successfully tagged localhost/flagship-center-qa:10
+058fddddae9f6941f00b4702b0f758e14c6dbcd57d9dfb62b190a79394fec670
+./BUILD_OS_RELEASE: OK
+./LICENSE: OK
+./PACKAGES.tsv: OK
+./docs/BUILD.md: OK
+./docs/CENTER_INTERFACE.md: OK
+./docs/CONSOLE.md: OK
+./docs/FEATURE_MATRIX.md: OK
+./docs/INSTALL.md: OK
+./docs/OPERATIONS.md: OK
+./docs/QUALIFICATION.md: OK
+./docs/RECOVERY.md: OK
+./docs/RELEASE_NOTES.md: OK
+./docs/ROADMAP.md: OK
+./docs/SOURCE_ANALYSIS.md: OK
+./docs/TLS_CERTIFICATES.md: OK
+./docs/USER_GUIDE.md: OK
+./install-offline.sh: OK
+./rpms/alternatives-1.30-2.el10.x86_64.rpm: OK
+./rpms/audit-libs-4.2.1-3.el10.x86_64.rpm: OK
+./rpms/basesystem-11-22.el10.noarch.rpm: OK
+./rpms/bash-5.2.26-6.el10.x86_64.rpm: OK
+./rpms/bzip2-libs-1.0.8-25.el10.x86_64.rpm: OK
+./rpms/ca-certificates-2026.2.92_v9.0.319-100.3.el10_2.noarch.rpm: OK
+./rpms/coreutils-9.5-14.el10_3.x86_64.rpm: OK
+./rpms/coreutils-common-9.5-14.el10_3.x86_64.rpm: OK
+./rpms/crypto-policies-20260811-1.git4dcd294.el10.noarch.rpm: OK
+./rpms/default-fonts-core-sans-4.1-3.el10.noarch.rpm: OK
+./rpms/expat-2.7.3-2.el10_3.4.x86_64.rpm: OK
+./rpms/filesystem-3.18-17.el10.x86_64.rpm: OK
+./rpms/findutils-4.10.0-5.el10.x86_64.rpm: OK
+./rpms/flagship-1.2.0-0.1.dev1.el10.noarch.rpm: OK
+./rpms/fontconfig-2.15.0-7.el10.x86_64.rpm: OK
+./rpms/fonts-filesystem-2.0.5-18.el10.noarch.rpm: OK
+./rpms/freetype-2.13.2-8.el10.x86_64.rpm: OK
+./rpms/gdbm-libs-1.23-14.el10.x86_64.rpm: OK
+./rpms/glib2-2.80.4-22.el10_3.23.x86_64.rpm: OK
+./rpms/glibc-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/glibc-common-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/glibc-gconv-extra-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/glibc-minimal-langpack-2.39-147.el10_3.x86_64.rpm: OK
+./rpms/gmp-6.2.1-12.el10.x86_64.rpm: OK
+./rpms/gnutls-3.8.10-5.el10_2.x86_64.rpm: OK
+./rpms/google-noto-fonts-common-20240401-5.el10.noarch.rpm: OK
+./rpms/google-noto-sans-vf-fonts-20240401-5.el10.noarch.rpm: OK
+./rpms/graphite2-1.3.14-17.el10.x86_64.rpm: OK
+./rpms/grep-3.11-10.el10.x86_64.rpm: OK
+./rpms/harfbuzz-8.4.0-6.el10.x86_64.rpm: OK
+./rpms/libX11-1.8.13-1.el10_3.1.x86_64.rpm: OK
+./rpms/libX11-common-1.8.13-1.el10_3.1.noarch.rpm: OK
+./rpms/libXau-1.0.11-8.el10.x86_64.rpm: OK
+./rpms/libXft-2.3.8-8.el10.x86_64.rpm: OK
+./rpms/libXrender-0.9.11-8.el10_2.1.x86_64.rpm: OK
+./rpms/libacl-2.4.0-2.el10.x86_64.rpm: OK
+./rpms/libattr-2.6.0-2.el10.x86_64.rpm: OK
+./rpms/libblkid-2.40.2-24.el10_3.24.x86_64.rpm: OK
+./rpms/libbrotli-1.1.0-8.el10_2.1.x86_64.rpm: OK
+./rpms/libcap-2.69-7.el10_1.1.x86_64.rpm: OK
+./rpms/libcap-ng-0.9.3-2.el10.x86_64.rpm: OK
+./rpms/libeconf-0.6.2-4.el10.x86_64.rpm: OK
+./rpms/libffi-3.4.4-10.el10.x86_64.rpm: OK
+./rpms/libgcc-14.4.1-5.el10_3.x86_64.rpm: OK
+./rpms/libidn2-2.3.7-3.el10.x86_64.rpm: OK
+./rpms/libmount-2.40.2-24.el10_3.24.x86_64.rpm: OK
+./rpms/libpng-1.6.40-11.el10_2.1.x86_64.rpm: OK
+./rpms/libselinux-3.11-2.el10.x86_64.rpm: OK
+./rpms/libsepol-3.11-2.el10.x86_64.rpm: OK
+./rpms/libstdc++-14.4.1-5.el10_3.x86_64.rpm: OK
+./rpms/libtasn1-4.20.0-5.el10_2.x86_64.rpm: OK
+./rpms/libunistring-1.1-10.el10.x86_64.rpm: OK
+./rpms/libuuid-2.40.2-24.el10_3.24.x86_64.rpm: OK
+./rpms/libxcb-1.17.0-3.el10.x86_64.rpm: OK
+./rpms/libxcrypt-4.4.36-10.el10.x86_64.rpm: OK
+./rpms/libxml2-2.12.5-15.el10_3.2.x86_64.rpm: OK
+./rpms/mpdecimal-2.5.1-12.el10.x86_64.rpm: OK
+./rpms/ncurses-base-6.4-15.20240127.el10_1.noarch.rpm: OK
+./rpms/ncurses-libs-6.4-15.20240127.el10_1.x86_64.rpm: OK
+./rpms/openssl-fips-provider-3.5.9-1.el10_3.x86_64.rpm: OK
+./rpms/openssl-libs-3.5.9-1.el10_3.x86_64.rpm: OK
+./rpms/p11-kit-0.26.4-1.el10_2.x86_64.rpm: OK
+./rpms/p11-kit-trust-0.26.4-1.el10_2.x86_64.rpm: OK
+./rpms/pam-libs-1.6.1-11.el10.x86_64.rpm: OK
+./rpms/pcre2-10.44-1.5.el10_2.x86_64.rpm: OK
+./rpms/pcre2-syntax-10.44-1.5.el10_2.noarch.rpm: OK
+./rpms/python-unversioned-command-3.12.16-2.el10_3.noarch.rpm: OK
+./rpms/python3-3.12.16-2.el10_3.x86_64.rpm: OK
+./rpms/python3-libs-3.12.16-2.el10_3.x86_64.rpm: OK
+./rpms/python3-pip-wheel-23.3.2-11.el10_2.noarch.rpm: OK
+./rpms/python3-tkinter-3.12.16-2.el10_3.x86_64.rpm: OK
+./rpms/readline-8.2-11.el10.x86_64.rpm: OK
+./rpms/redhat-text-vf-fonts-4.1.0-1.el10.noarch.rpm: OK
+./rpms/repodata/65db8880c0aabc1af315706dbeff5524be978b3aebb22cc14d89700acf246184-filelists.xml.zst: OK
+./rpms/repodata/7a76e5849bbde2261089a14e7bfcea5507e89491b8900030e5fbb46209f0312d-other.xml.zst: OK
+./rpms/repodata/ca2948a7fa92ed4e7908d78844c0d6f92de2313b7f4caaace08afa6344f44b56-primary.xml.zst: OK
+./rpms/repodata/repomd.xml: OK
+./rpms/rocky-gpg-keys-10.3-1.0.el10.noarch.rpm: OK
+./rpms/rocky-release-10.3-1.0.el10.noarch.rpm: OK
+./rpms/rocky-repos-10.3-1.0.el10.noarch.rpm: OK
+./rpms/sed-4.9-5.el10.x86_64.rpm: OK
+./rpms/setup-2.14.5-7.el10.noarch.rpm: OK
+./rpms/sqlite-libs-3.46.1-6.el10_2.x86_64.rpm: OK
+./rpms/tcl-8.6.13-4.el10.x86_64.rpm: OK
+./rpms/tk-8.6.13-5.el10.x86_64.rpm: OK
+./rpms/tzdata-2026f-1.el10_2.noarch.rpm: OK
+./rpms/xml-common-0.6.3-65.el10.noarch.rpm: OK
+./rpms/xz-libs-5.6.2-5.el10.x86_64.rpm: OK
+./rpms/zlib-ng-compat-2.2.3-3.el10_1.x86_64.rpm: OK
+Added flagship-offline repo from file:///bundle/rpms
+flagship-offline                                 35 MB/s |  36 kB     00:00    
+Dependencies resolved.
+================================================================================
+ Package                   Arch   Version                Repository        Size
+================================================================================
+Installing:
+ flagship                  noarch 1.2.0-0.1.dev1.el10    flagship-offline 242 k
+Upgrading:
+ python3                   x86_64 3.12.16-2.el10_3       flagship-offline  28 k
+ python3-libs              x86_64 3.12.16-2.el10_3       flagship-offline 9.0 M
+Installing dependencies:
+ default-fonts-core-sans   noarch 4.1-3.el10             flagship-offline  33 k
+ fontconfig                x86_64 2.15.0-7.el10          flagship-offline 273 k
+ fonts-filesystem          noarch 1:2.0.5-18.el10        flagship-offline 7.8 k
+ freetype                  x86_64 2.13.2-8.el10          flagship-offline 408 k
+ google-noto-fonts-common  noarch 20240401-5.el10        flagship-offline  17 k
+ google-noto-sans-vf-fonts noarch 20240401-5.el10        flagship-offline 593 k
+ graphite2                 x86_64 1.3.14-17.el10         flagship-offline  95 k
+ harfbuzz                  x86_64 8.4.0-6.el10           flagship-offline 1.0 M
+ libX11                    x86_64 1.8.13-1.el10_3.1      flagship-offline 651 k
+ libX11-common             noarch 1.8.13-1.el10_3.1      flagship-offline 144 k
+ libXau                    x86_64 1.0.11-8.el10          flagship-offline  32 k
+ libXft                    x86_64 2.3.8-8.el10           flagship-offline  72 k
+ libXrender                x86_64 0.9.11-8.el10_2.1      flagship-offline  27 k
+ libbrotli                 x86_64 1.1.0-8.el10_2.1       flagship-offline 344 k
+ libpng                    x86_64 2:1.6.40-11.el10_2.1   flagship-offline 120 k
+ libxcb                    x86_64 1.17.0-3.el10          flagship-offline 241 k
+ python3-tkinter           x86_64 3.12.16-2.el10_3       flagship-offline 387 k
+ redhat-text-vf-fonts      noarch 4.1.0-1.el10           flagship-offline 353 k
+ tcl                       x86_64 1:8.6.13-4.el10        flagship-offline 1.1 M
+ tk                        x86_64 1:8.6.13-5.el10        flagship-offline 1.6 M
+ xml-common                noarch 0.6.3-65.el10          flagship-offline  31 k
+
+Transaction Summary
+================================================================================
+Install  22 Packages
+Upgrade   2 Packages
+
+Total size: 17 M
+Downloading Packages:
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                        1/1 
+  Installing       : fonts-filesystem-1:2.0.5-18.el10.noarch               1/26 
+  Installing       : tcl-1:8.6.13-4.el10.x86_64                            2/26 
+  Installing       : redhat-text-vf-fonts-4.1.0-1.el10.noarch              3/26 
+  Running scriptlet: xml-common-0.6.3-65.el10.noarch                       4/26 
+  Installing       : xml-common-0.6.3-65.el10.noarch                       4/26 
+  Installing       : libpng-2:1.6.40-11.el10_2.1.x86_64                    5/26 
+  Installing       : libbrotli-1.1.0-8.el10_2.1.x86_64                     6/26 
+  Installing       : libXau-1.0.11-8.el10.x86_64                           7/26 
+  Installing       : libxcb-1.17.0-3.el10.x86_64                           8/26 
+  Installing       : libX11-common-1.8.13-1.el10_3.1.noarch                9/26 
+  Installing       : libX11-1.8.13-1.el10_3.1.x86_64                      10/26 
+  Installing       : libXrender-0.9.11-8.el10_2.1.x86_64                  11/26 
+  Installing       : graphite2-1.3.14-17.el10.x86_64                      12/26 
+  Installing       : harfbuzz-8.4.0-6.el10.x86_64                         13/26 
+  Installing       : freetype-2.13.2-8.el10.x86_64                        14/26 
+  Installing       : google-noto-fonts-common-20240401-5.el10.noarch      15/26 
+  Installing       : google-noto-sans-vf-fonts-20240401-5.el10.noarch     16/26 
+  Installing       : default-fonts-core-sans-4.1-3.el10.noarch            17/26 
+  Installing       : fontconfig-2.15.0-7.el10.x86_64                      18/26 
+  Running scriptlet: fontconfig-2.15.0-7.el10.x86_64                      18/26 
+  Installing       : libXft-2.3.8-8.el10.x86_64                           19/26 
+  Running scriptlet: tk-1:8.6.13-5.el10.x86_64                            20/26 
+  Installing       : tk-1:8.6.13-5.el10.x86_64                            20/26 
+  Upgrading        : python3-3.12.16-2.el10_3.x86_64                      21/26 
+  Installing       : python3-tkinter-3.12.16-2.el10_3.x86_64              22/26 
+  Upgrading        : python3-libs-3.12.16-2.el10_3.x86_64                 23/26 
+  Installing       : flagship-1.2.0-0.1.dev1.el10.noarch                  24/26 
+  Running scriptlet: flagship-1.2.0-0.1.dev1.el10.noarch                  24/26 
+  Cleanup          : python3-3.12.13-2.el10_2.x86_64                      25/26 
+  Cleanup          : python3-libs-3.12.13-2.el10_2.x86_64                 26/26 
+  Running scriptlet: fontconfig-2.15.0-7.el10.x86_64                      26/26 
+  Running scriptlet: python3-libs-3.12.13-2.el10_2.x86_64                 26/26 
+
+Upgraded:
+  python3-3.12.16-2.el10_3.x86_64      python3-libs-3.12.16-2.el10_3.x86_64     
+Installed:
+  default-fonts-core-sans-4.1-3.el10.noarch                                     
+  flagship-1.2.0-0.1.dev1.el10.noarch                                           
+  fontconfig-2.15.0-7.el10.x86_64                                               
+  fonts-filesystem-1:2.0.5-18.el10.noarch                                       
+  freetype-2.13.2-8.el10.x86_64                                                 
+  google-noto-fonts-common-20240401-5.el10.noarch                               
+  google-noto-sans-vf-fonts-20240401-5.el10.noarch                              
+  graphite2-1.3.14-17.el10.x86_64                                               
+  harfbuzz-8.4.0-6.el10.x86_64                                                  
+  libX11-1.8.13-1.el10_3.1.x86_64                                               
+  libX11-common-1.8.13-1.el10_3.1.noarch                                        
+  libXau-1.0.11-8.el10.x86_64                                                   
+  libXft-2.3.8-8.el10.x86_64                                                    
+  libXrender-0.9.11-8.el10_2.1.x86_64                                           
+  libbrotli-1.1.0-8.el10_2.1.x86_64                                             
+  libpng-2:1.6.40-11.el10_2.1.x86_64                                            
+  libxcb-1.17.0-3.el10.x86_64                                                   
+  python3-tkinter-3.12.16-2.el10_3.x86_64                                       
+  redhat-text-vf-fonts-4.1.0-1.el10.noarch                                      
+  tcl-1:8.6.13-4.el10.x86_64                                                    
+  tk-1:8.6.13-5.el10.x86_64                                                     
+  xml-common-0.6.3-65.el10.noarch                                               
+
+Complete!
+INSTALLED 1.2.0.dev1 /usr/share/flagship/flagship/__init__.py
+test_error_does_not_expose_arguments (test_api.ClientTests.test_error_does_not_expose_arguments) ... ok
+test_expired_session_aborts_inventory (test_api.ClientTests.test_expired_session_aborts_inventory) ... ok
+test_inventory_permission_failure_is_visible (test_api.ClientTests.test_inventory_permission_failure_is_visible) ... ok
+test_logout_clears_session_even_on_error (test_api.ClientTests.test_logout_clears_session_even_on_error) ... ok
+test_mutation_not_retried (test_api.ClientTests.test_mutation_not_retried) ... ok
+test_no_unlisted_mutations (test_api.ClientTests.test_no_unlisted_mutations) ... ok
+test_redaction_is_recursive (test_api.ClientTests.test_redaction_is_recursive) ... ok
+test_reject_insecure_or_credential_urls (test_api.ClientTests.test_reject_insecure_or_credential_urls) ... ok
+test_secure_context_and_timeout (test_api.ClientTests.test_secure_context_and_timeout) ... ok
+test_setter_is_synchronous (test_api.ClientTests.test_setter_is_synchronous) ... ok
+test_start_signature (test_api.ClientTests.test_start_signature) ... ok
+test_help_title (test_branding.AboutDialogTests.test_help_title) ... ok
+test_window_title_and_about (test_branding.AboutDialogTests.test_window_title_and_about) ... ok
+test_about_copy (test_branding.BrandingTests.test_about_copy) ... ok
+test_package_metadata (test_branding.BrandingTests.test_package_metadata) ... ok
+test_shim_exports_application (test_branding.BrandingTests.test_shim_exports_application) ... ok
+test_declined_host_action_does_not_submit (test_center.CenterTests.test_declined_host_action_does_not_submit) ... ok
+test_empty_snapshot_selection_cannot_revert_parent (test_center.CenterTests.test_empty_snapshot_selection_cannot_revert_parent) ... ok
+test_halted_guest_uses_affinity_when_resident_on_is_null (test_center.CenterTests.test_halted_guest_uses_affinity_when_resident_on_is_null) ... ok
+test_host_and_vm_tabs_are_selection_specific (test_center.CenterTests.test_host_and_vm_tabs_are_selection_specific) ... ok
+test_infrastructure_nests_running_guest_under_resident_host (test_center.CenterTests.test_infrastructure_nests_running_guest_under_resident_host) ... ok
+test_navigation_and_search_are_read_only (test_center.CenterTests.test_navigation_and_search_are_read_only) ... ok
+test_snapshot_action_selects_the_table_snapshot (test_center.CenterTests.test_snapshot_action_selects_the_table_snapshot) ... ok
+test_snapshot_visibility_does_not_require_template_visibility (test_center.CenterTests.test_snapshot_visibility_does_not_require_template_visibility) ... ok
+test_host_storage_follows_pbd_and_networking_follows_pif (test_center.RelationshipTests.test_host_storage_follows_pbd_and_networking_follows_pif) ... ok
+test_vm_tabs_distinguish_templates_and_storage (test_center.RelationshipTests.test_vm_tabs_distinguish_templates_and_storage) ... ok
+test_fresh_ownership_and_host_resolution (test_console.ConsoleTests.test_fresh_ownership_and_host_resolution) ... ok
+test_refused_or_oversized_response_never_retried_or_exposed (test_console.ConsoleTests.test_refused_or_oversized_response_never_retried_or_exposed) ... ok
+test_refuses_foreign_console_and_stopped_vm (test_console.ConsoleTests.test_refuses_foreign_console_and_stopped_vm) ... ok
+test_rejects_credential_forwarding_targets (test_console.ConsoleTests.test_rejects_credential_forwarding_targets) ... ok
+test_tls_failure_sends_no_session (test_console.ConsoleTests.test_tls_failure_sends_no_session) ... ok
+test_tunnel_preserves_buffered_frame_and_cookie_not_url (test_console.ConsoleTests.test_tunnel_preserves_buffered_frame_and_cookie_not_url) ... ok
+test_cad_preserves_a_modifier_already_held_by_operator (test_console_window.ConsoleWindowTests.test_cad_preserves_a_modifier_already_held_by_operator) ... ok
+test_closing_console_cancels_its_pending_callback_while_parent_lives (test_console_window.ConsoleWindowTests.test_closing_console_cancels_its_pending_callback_while_parent_lives) ... ok
+test_default_view_only_and_explicit_control_events (test_console_window.ConsoleWindowTests.test_default_view_only_and_explicit_control_events) ... ok
+test_error_is_visible_and_disables_control (test_console_window.ConsoleWindowTests.test_error_is_visible_and_disables_control) ... ok
+test_focus_release_clears_buttons_and_modifiers (test_console_window.ConsoleWindowTests.test_focus_release_clears_buttons_and_modifiers) ... ok
+test_input_overflow_closes_without_recursing_during_key_release (test_console_window.ConsoleWindowTests.test_input_overflow_closes_without_recursing_during_key_release) ... ok
+test_old_connection_cannot_receive_input_and_poll_closes_tunnel (test_console_window.ConsoleWindowTests.test_old_connection_cannot_receive_input_and_poll_closes_tunnel) ... ok
+test_raw_copy_and_resize_preserve_display_pixels (test_console_window.ConsoleWindowTests.test_raw_copy_and_resize_preserve_display_pixels) ... ok
+test_cancelled_resource_choice_never_submits (test_device_panel.DevicePanelTests.test_cancelled_resource_choice_never_submits) ... ok
+test_confirmed_detach_has_no_delete_flag (test_device_panel.DevicePanelTests.test_confirmed_detach_has_no_delete_flag) ... ok
+test_declined_detach_does_not_submit (test_device_panel.DevicePanelTests.test_declined_detach_does_not_submit) ... ok
+test_delete_uuid_is_forwarded_for_fresh_server_validation (test_device_panel.DevicePanelTests.test_delete_uuid_is_forwarded_for_fresh_server_validation) ... ok
+test_history_reopens_unconfirmed_intent_without_server_calls (test_device_panel.DevicePanelTests.test_history_reopens_unconfirmed_intent_without_server_calls) ... ok
+test_offline_help_index_opens_recovery_chapter_without_server (test_device_panel.DevicePanelTests.test_offline_help_index_opens_recovery_chapter_without_server) ... ok
+test_tables_show_disk_capacity_and_adapter_mac (test_device_panel.DevicePanelTests.test_tables_show_disk_capacity_and_adapter_mac) ... ok
+test_window_from_old_connection_cannot_change_new_pool (test_device_panel.DevicePanelTests.test_window_from_old_connection_cannot_change_new_pool) ... ok
+test_wrong_delete_uuid_never_submits (test_device_panel.DevicePanelTests.test_wrong_delete_uuid_never_submits) ... ok
+test_add_disk_to_running_guest_creates_then_plugs (test_devices.DeviceTests.test_add_disk_to_running_guest_creates_then_plugs) ... ok
+test_detach_keeps_disk_contents_and_removes_only_connection (test_devices.DeviceTests.test_detach_keeps_disk_contents_and_removes_only_connection) ... ok
+test_disk_shrink_is_rejected_without_mutation (test_devices.DeviceTests.test_disk_shrink_is_rejected_without_mutation) ... ok
+test_empty_dvd_then_iso_insert_and_eject (test_devices.DeviceTests.test_empty_dvd_then_iso_insert_and_eject) ... ok
+test_existing_unassociated_disk_attaches_without_copying_or_deleting (test_devices.DeviceTests.test_existing_unassociated_disk_attaches_without_copying_or_deleting) ... ok
+test_failed_adapter_unplug_does_not_remove_it (test_devices.DeviceTests.test_failed_adapter_unplug_does_not_remove_it) ... ok
+test_failed_async_unplug_task_never_destroys_connection (test_devices.DeviceTests.test_failed_async_unplug_task_never_destroys_connection) ... ok
+test_failed_unplug_never_destroys_connection_or_data (test_devices.DeviceTests.test_failed_unplug_never_destroys_connection_or_data) ... ok
+test_foreign_vbd_and_vif_are_rejected_before_mutation (test_devices.DeviceTests.test_foreign_vbd_and_vif_are_rejected_before_mutation) ... ok
+test_grow_uses_server_advertised_online_capability (test_devices.DeviceTests.test_grow_uses_server_advertised_online_capability) ... ok
+test_move_adapter_keeps_mac_uuid_and_connection (test_devices.DeviceTests.test_move_adapter_keeps_mac_uuid_and_connection) ... ok
+test_multicast_or_malformed_mac_is_rejected_before_create (test_devices.DeviceTests.test_multicast_or_malformed_mac_is_rejected_before_create) ... ok
+test_new_adapter_auto_connects_on_running_guest (test_devices.DeviceTests.test_new_adapter_auto_connects_on_running_guest) ... ok
+test_non_iso_media_is_rejected_before_eject (test_devices.DeviceTests.test_non_iso_media_is_rejected_before_eject) ... ok
+test_permanent_deletion_only_after_connection_removed (test_devices.DeviceTests.test_permanent_deletion_only_after_connection_removed) ... ok
+test_permanent_deletion_requires_matching_uuid (test_devices.DeviceTests.test_permanent_deletion_requires_matching_uuid) ... ok
+test_remove_adapter_unplugs_first (test_devices.DeviceTests.test_remove_adapter_unplugs_first) ... ok
+test_remove_dvd_preserves_iso_image (test_devices.DeviceTests.test_remove_dvd_preserves_iso_image) ... ok
+test_second_disk_association_prevents_delete (test_devices.DeviceTests.test_second_disk_association_prevents_delete) ... ok
+test_shared_or_snapshot_or_readonly_disk_cannot_be_deleted (test_devices.DeviceTests.test_shared_or_snapshot_or_readonly_disk_cannot_be_deleted) ... ok
+test_busy_monitor_does_not_discard_reviewed_creation_plan (test_gui.DesktopTests.test_busy_monitor_does_not_discard_reviewed_creation_plan) ... ok
+test_creation_review_is_read_only_until_explicit_create (test_gui.DesktopTests.test_creation_review_is_read_only_until_explicit_create) ... ok
+test_declined_task_cancellation_never_submits (test_gui.DesktopTests.test_declined_task_cancellation_never_submits) ... ok
+test_declining_confirmation_never_reaches_server (test_gui.DesktopTests.test_declining_confirmation_never_reaches_server) ... ok
+test_disallowed_operation_never_reaches_server (test_gui.DesktopTests.test_disallowed_operation_never_reaches_server) ... ok
+test_failed_remote_logout_clears_local_pool_and_task_context (test_gui.DesktopTests.test_failed_remote_logout_clears_local_pool_and_task_context) ... ok
+test_failed_workflow_retains_complete_report_without_oversized_dialog (test_gui.DesktopTests.test_failed_workflow_retains_complete_report_without_oversized_dialog) ... ok
+test_filter_matches_uuid (test_gui.DesktopTests.test_filter_matches_uuid) ... ok
+test_filter_no_match_is_empty (test_gui.DesktopTests.test_filter_no_match_is_empty) ... ok
+test_invalid_creation_form_cannot_submit (test_gui.DesktopTests.test_invalid_creation_form_cannot_submit) ... ok
+test_migration_uses_named_host_selector_and_reviews_destination (test_gui.DesktopTests.test_migration_uses_named_host_selector_and_reviews_destination) ... ok
+test_running_vm_hardware_editor_never_requests_changes (test_gui.DesktopTests.test_running_vm_hardware_editor_never_requests_changes) ... ok
+test_select_guest_shows_related_disk (test_gui.DesktopTests.test_select_guest_shows_related_disk) ... ok
+test_task_monitor_pauses_on_session_loss_without_resubmitting (test_gui.DesktopTests.test_task_monitor_pauses_on_session_loss_without_resubmitting) ... ok
+test_task_success_is_visible_in_tasks_view (test_gui.DesktopTests.test_task_success_is_visible_in_tasks_view) ... ok
+test_wizard_preserves_template_firmware_by_default (test_gui.DesktopTests.test_wizard_preserves_template_firmware_by_default) ... ok
+test_ambiguous_truncated_and_malformed_body_framing_is_refused (test_httpstream.HTTPStreamTests.test_ambiguous_truncated_and_malformed_body_framing_is_refused) ... ok
+test_duplicate_lengths_and_oversized_headers_are_rejected (test_httpstream.HTTPStreamTests.test_duplicate_lengths_and_oversized_headers_are_rejected) ... ok
+test_export_streams_chunked_and_keeps_cookie_out_of_url (test_httpstream.HTTPStreamTests.test_export_streams_chunked_and_keeps_cookie_out_of_url) ... ok
+test_failed_upload_is_not_retried_and_body_error_is_not_exposed (test_httpstream.HTTPStreamTests.test_failed_upload_is_not_retried_and_body_error_is_not_exposed) ... ok
+test_redirects_cannot_forward_credentials_or_change_import_parameters (test_httpstream.HTTPStreamTests.test_redirects_cannot_forward_credentials_or_change_import_parameters) ... ok
+test_tls_failure_prevents_cookie_or_upload_send (test_httpstream.HTTPStreamTests.test_tls_failure_prevents_cookie_or_upload_send) ... ok
+test_upload_follows_verified_prebody_redirect_then_sends_once (test_httpstream.HTTPStreamTests.test_upload_follows_verified_prebody_redirect_then_sends_once) ... ok
+test_upload_waits_for_continue_and_checks_source_length (test_httpstream.HTTPStreamTests.test_upload_waits_for_continue_and_checks_source_length) ... ok
+test_api_error_arguments_are_not_recorded (test_journal.JournalTests.test_api_error_arguments_are_not_recorded) ... ok
+test_complete_device_workflow_records_uuid_and_confirmed_tasks (test_journal.JournalTests.test_complete_device_workflow_records_uuid_and_confirmed_tasks) ... ok
+test_created_object_identity_is_durable_when_uuid_is_observed (test_journal.JournalTests.test_created_object_identity_is_durable_when_uuid_is_observed) ... ok
+test_explicit_export_is_private_even_when_replacing_permissive_file (test_journal.JournalTests.test_explicit_export_is_private_even_when_replacing_permissive_file) ... ok
+test_explicit_export_refuses_symlink_without_modifying_target (test_journal.JournalTests.test_explicit_export_refuses_symlink_without_modifying_target) ... ok
+test_failure_to_persist_intent_prevents_server_call (test_journal.JournalTests.test_failure_to_persist_intent_prevents_server_call) ... ok
+test_fsync_failure_before_request_blocks_server_changes (test_journal.JournalTests.test_fsync_failure_before_request_blocks_server_changes) ... ok
+test_getters_and_session_logout_do_not_create_journal (test_journal.JournalTests.test_getters_and_session_logout_do_not_create_journal) ... ok
+test_intent_is_readable_before_server_call (test_journal.JournalTests.test_intent_is_readable_before_server_call) ... ok
+test_interrupted_workflow_with_known_resources_requires_review (test_journal.JournalTests.test_interrupted_workflow_with_known_resources_requires_review) ... ok
+test_invalid_record_types_warn_instead_of_crashing_history (test_journal.JournalTests.test_invalid_record_types_warn_instead_of_crashing_history) ... ok
+test_inventory_export_handles_xmlrpc_timestamps (test_journal.JournalTests.test_inventory_export_handles_xmlrpc_timestamps) ... ok
+test_lost_connection_is_unknown_and_not_replayed (test_journal.JournalTests.test_lost_connection_is_unknown_and_not_replayed) ... ok
+test_partial_final_record_preserves_prior_intent_and_warns (test_journal.JournalTests.test_partial_final_record_preserves_prior_intent_and_warns) ... ok
+test_private_permissions_and_no_credentials_or_raw_arguments (test_journal.JournalTests.test_private_permissions_and_no_credentials_or_raw_arguments) ... ok
+test_process_exit_after_intent_preserves_recovery_record (test_journal.JournalTests.test_process_exit_after_intent_preserves_recovery_record) ... ok
+test_reports_whitelist_fields_and_deduplicate_percentage_updates (test_journal.JournalTests.test_reports_whitelist_fields_and_deduplicate_percentage_updates) ... ok
+test_result_write_failure_blocks_further_mutations_but_allows_reads (test_journal.JournalTests.test_result_write_failure_blocks_further_mutations_but_allows_reads) ... ok
+test_symlink_directory_is_rejected (test_journal.JournalTests.test_symlink_directory_is_rejected) ... ok
+test_terminal_task_state_and_uuid_survive_new_journal_instance (test_journal.JournalTests.test_terminal_task_state_and_uuid_survive_new_journal_instance) ... ok
+test_uuid_identity_is_recorded_without_full_object (test_journal.JournalTests.test_uuid_identity_is_recorded_without_full_object) ... ok
+test_attachment_failure_preserves_created_storage (test_management.ManagementTests.test_attachment_failure_preserves_created_storage) ... ok
+test_invalid_mtu_does_not_create_network (test_management.ManagementTests.test_invalid_mtu_does_not_create_network) ... ok
+test_invalid_storage_makes_no_rpc (test_management.ManagementTests.test_invalid_storage_makes_no_rpc) ... ok
+test_iso_storage_uses_upstream_nfs_iso_config (test_management.ManagementTests.test_iso_storage_uses_upstream_nfs_iso_config) ... ok
+test_partial_property_failure_reports_the_object (test_management.ManagementTests.test_partial_property_failure_reports_the_object) ... ok
+test_power_and_maintenance_refuse_active_guests (test_management.ManagementTests.test_power_and_maintenance_refuse_active_guests) ... ok
+test_reboot_refuses_enabled_host (test_management.ManagementTests.test_reboot_refuses_enabled_host) ... ok
+test_rrd_filters_other_objects_and_nonfinite_samples (test_management.ManagementTests.test_rrd_filters_other_objects_and_nonfinite_samples) ... ok
+test_rrd_rejects_entity_documents (test_management.ManagementTests.test_rrd_rejects_entity_documents) ... ok
+test_copies_journals_and_leaves_originals (test_migrate.MigrateTests.test_copies_journals_and_leaves_originals) ... ok
+test_does_nothing_without_legacy_data (test_migrate.MigrateTests.test_does_nothing_without_legacy_data) ... ok
+test_skips_when_flagship_state_already_exists (test_migrate.MigrateTests.test_skips_when_flagship_state_already_exists) ... ok
+test_explicit_string_and_escaped_opaque_content (test_protocol.ProtocolTests.test_explicit_string_and_escaped_opaque_content) ... ok
+test_live_xcp_ng_26_task_result_implicit_string (test_protocol.ProtocolTests.test_live_xcp_ng_26_task_result_implicit_string) ... ok
+test_non_string_task_results_are_not_coerced_into_references (test_protocol.ProtocolTests.test_non_string_task_results_are_not_coerced_into_references) ... ok
+test_headless_cli_help_imports_without_display (test_recovery.RecoveryTests.test_headless_cli_help_imports_without_display) ... ok
+test_headless_history_reopens_saved_intent_and_does_not_replay (test_recovery.RecoveryTests.test_headless_history_reopens_saved_intent_and_does_not_replay) ... ok
+test_inspection_resolves_new_reference_by_uuid_and_only_uses_getters (test_recovery.RecoveryTests.test_inspection_resolves_new_reference_by_uuid_and_only_uses_getters) ... ok
+test_invalid_class_and_opaque_reference_do_not_reach_server (test_recovery.RecoveryTests.test_invalid_class_and_opaque_reference_do_not_reach_server) ... ok
+test_wrong_server_identity_is_not_presented_as_the_requested_object (test_recovery.RecoveryTests.test_wrong_server_identity_is_not_presented_as_the_requested_object) ... ok
+test_clipboard_is_consumed_without_exposing_or_synchronizing_content (test_rfb.RFBTests.test_clipboard_is_consumed_without_exposing_or_synchronizing_content) ... ok
+test_framebuffer_pixels_converted_without_alpha_or_endian_error (test_rfb.RFBTests.test_framebuffer_pixels_converted_without_alpha_or_endian_error) ... ok
+test_keyboard_and_pointer_wire_events (test_rfb.RFBTests.test_keyboard_and_pointer_wire_events) ... ok
+test_malformed_rectangles_and_encodings_fail_closed (test_rfb.RFBTests.test_malformed_rectangles_and_encodings_fail_closed) ... ok
+test_old_and_modern_handshake_requests_shared_truecolor_raw (test_rfb.RFBTests.test_old_and_modern_handshake_requests_shared_truecolor_raw) ... ok
+test_refuses_authentication_downgrade_and_oversized_desktop (test_rfb.RFBTests.test_refuses_authentication_downgrade_and_oversized_desktop) ... ok
+test_resize_and_copyrect_with_validated_source (test_rfb.RFBTests.test_resize_and_copyrect_with_validated_source) ... ok
+test_already_cancelling_task_is_not_requested_again (test_tasks.TaskTests.test_already_cancelling_task_is_not_requested_again) ... ok
+test_cancellation_request_does_not_claim_task_cancelled (test_tasks.TaskTests.test_cancellation_request_does_not_claim_task_cancelled) ... ok
+test_expired_session_does_not_change_task_outcome (test_tasks.TaskTests.test_expired_session_does_not_change_task_outcome) ... ok
+test_failure_remains_failure_and_does_not_resubmit (test_tasks.TaskTests.test_failure_remains_failure_and_does_not_resubmit) ... ok
+test_finished_task_is_not_cancelled (test_tasks.TaskTests.test_finished_task_is_not_cancelled) ... ok
+test_malformed_task_ref_is_rejected (test_tasks.TaskTests.test_malformed_task_ref_is_rejected) ... ok
+test_missing_task_is_unavailable_not_success (test_tasks.TaskTests.test_missing_task_is_unavailable_not_success) ... ok
+test_non_cancellable_task_is_not_submitted (test_tasks.TaskTests.test_non_cancellable_task_is_not_submitted) ... ok
+test_pending_is_not_success (test_tasks.TaskTests.test_pending_is_not_success) ... ok
+test_progress_is_bounded (test_tasks.TaskTests.test_progress_is_bounded) ... ok
+test_success_is_reported_after_server_confirmation (test_tasks.TaskTests.test_success_is_reported_after_server_confirmation) ... ok
+test_task_reference_is_opaque (test_tasks.TaskTests.test_task_reference_is_opaque) ... ok
+test_console_insecure_accept (test_tls.ConsoleTrustTests.test_console_insecure_accept) ... ok
+test_console_pin_accept (test_tls.ConsoleTrustTests.test_console_pin_accept) ... ok
+test_console_pin_mismatch_never_sends_session (test_tls.ConsoleTrustTests.test_console_pin_mismatch_never_sends_session) ... ok
+test_console_verify_failure_sends_nothing (test_tls.ConsoleTrustTests.test_console_verify_failure_sends_nothing) ... ok
+test_default_store_location_follows_xdg (test_tls.FingerprintTests.test_default_store_location_follows_xdg) ... ok
+test_host_keys_and_names (test_tls.FingerprintTests.test_host_keys_and_names) ... ok
+test_normalize_forms (test_tls.FingerprintTests.test_normalize_forms) ... ok
+test_store_ignores_corrupt_file (test_tls.FingerprintTests.test_store_ignores_corrupt_file) ... ok
+test_insecure_and_pin_flags (test_tls.RecoveryFlagTests.test_insecure_and_pin_flags) ... ok
+test_ca_pem_option_still_works (test_tls.XmlRpcTrustTests.test_ca_pem_option_still_works) ... ok
+test_changed_certificate_is_refused_before_credentials (test_tls.XmlRpcTrustTests.test_changed_certificate_is_refused_before_credentials) ... ok
+test_changed_saved_pin_is_refused_even_with_valid_ca (test_tls.XmlRpcTrustTests.test_changed_saved_pin_is_refused_even_with_valid_ca) ... ok
+test_default_still_verifies_and_reports_certificate (test_tls.XmlRpcTrustTests.test_default_still_verifies_and_reports_certificate) ... ok
+test_fetch_certificate_reads_leaf (test_tls.XmlRpcTrustTests.test_fetch_certificate_reads_leaf) ... ok
+test_insecure_accepts_without_any_pin (test_tls.XmlRpcTrustTests.test_insecure_accepts_without_any_pin) ... ok
+test_pin_accepts_hostname_mismatch (test_tls.XmlRpcTrustTests.test_pin_accepts_hostname_mismatch) ... ok
+test_saved_pin_accepts_and_file_is_private (test_tls.XmlRpcTrustTests.test_saved_pin_accepts_and_file_is_private) ... ok
+test_session_pin_accepts_self_signed (test_tls.XmlRpcTrustTests.test_session_pin_accepts_self_signed) ... ok
+test_stdlib_fallback_parser (test_tls.XmlRpcTrustTests.test_stdlib_fallback_parser) ... ok
+test_existing_file_and_running_vm_are_never_exported (test_transfers.TransferTests.test_existing_file_and_running_vm_are_never_exported) ... ok
+test_export_publishes_only_confirmed_task_and_records_digest (test_transfers.TransferTests.test_export_publishes_only_confirmed_task_and_records_digest) ... ok
+test_failed_server_task_keeps_private_partial_and_no_final_archive (test_transfers.TransferTests.test_failed_server_task_keeps_private_partial_and_no_final_archive) ... ok
+test_import_creates_halted_guest_maps_network_and_keeps_source (test_transfers.TransferTests.test_import_creates_halted_guest_maps_network_and_keeps_source) ... ok
+test_import_refuses_device_changes_on_preexisting_result (test_transfers.TransferTests.test_import_refuses_device_changes_on_preexisting_result) ... ok
+test_invalid_archive_never_creates_server_task (test_transfers.TransferTests.test_invalid_archive_never_creates_server_task) ... ok
+test_network_failure_keeps_recovery_task_and_never_replays (test_transfers.TransferTests.test_network_failure_keeps_recovery_task_and_never_replays) ... ok
+test_nonregular_empty_and_symlink_sources_send_nothing (test_transfers.TransferTests.test_nonregular_empty_and_symlink_sources_send_nothing) ... ok
+test_always_trust_saves_pin_and_retries_with_it (test_trust_gui.TrustGuiTests.test_always_trust_saves_pin_and_retries_with_it) ... ok
+test_cancel_does_not_connect (test_trust_gui.TrustGuiTests.test_cancel_does_not_connect) ... ok
+test_changed_dialog_shows_previous_fingerprint (test_trust_gui.TrustGuiTests.test_changed_dialog_shows_previous_fingerprint) ... ok
+test_connect_dialog_has_insecure_checkbox_and_warning (test_trust_gui.TrustGuiTests.test_connect_dialog_has_insecure_checkbox_and_warning) ... ok
+test_connect_once_does_not_save (test_trust_gui.TrustGuiTests.test_connect_once_does_not_save) ... ok
+test_insecure_checkbox_reaches_client (test_trust_gui.TrustGuiTests.test_insecure_checkbox_reaches_client) ... ok
+test_status_bar_indicator (test_trust_gui.TrustGuiTests.test_status_bar_indicator) ... ok
+test_trust_dialog_buttons_and_fields (test_trust_gui.TrustGuiTests.test_trust_dialog_buttons_and_fields) ... ok
+test_every_toolbar_action_stays_visible_after_narrowing (test_window_layout.WindowLayoutTests.test_every_toolbar_action_stays_visible_after_narrowing) ... ok
+test_initial_window_fits_the_display (test_window_layout.WindowLayoutTests.test_initial_window_fits_the_display) ... ok
+test_vm_actions_and_status_remain_visible_at_default_guest_resolution (test_window_layout.WindowLayoutTests.test_vm_actions_and_status_remain_visible_at_default_guest_resolution) ... ok
+test_large_memory_arguments_cross_real_xmlrpc_as_decimal_strings (test_wire.WireTests.test_large_memory_arguments_cross_real_xmlrpc_as_decimal_strings) ... ok
+test_real_wire_api_error_is_not_success (test_wire.WireTests.test_real_wire_api_error_is_not_success) ... ok
+test_recovery_uuid_inspection_crosses_verified_https (test_wire.WireTests.test_recovery_uuid_inspection_crosses_verified_https) ... ok
+test_trusted_wire_login_inventory_and_logout (test_wire.WireTests.test_trusted_wire_login_inventory_and_logout) ... ok
+test_untrusted_certificate_rejected (test_wire.WireTests.test_untrusted_certificate_rejected) ... ok
+test_wrong_hostname_rejected_even_with_trusted_ca (test_wire.WireTests.test_wrong_hostname_rejected_even_with_trusted_ca) ... ok
+test_cpu_shrink_lowers_startup_before_max (test_workflows.WorkflowTests.test_cpu_shrink_lowers_startup_before_max) ... ok
+test_hardware_failure_preserves_creation_recovery_context (test_workflows.WorkflowTests.test_hardware_failure_preserves_creation_recovery_context) ... ok
+test_installed_template_uses_copy_and_retains_disk_size (test_workflows.WorkflowTests.test_installed_template_uses_copy_and_retains_disk_size) ... ok
+test_installer_template_provisions_selected_storage_network_and_iso (test_workflows.WorkflowTests.test_installer_template_provisions_selected_storage_network_and_iso) ... ok
+test_invalid_plan_makes_no_server_calls (test_workflows.WorkflowTests.test_invalid_plan_makes_no_server_calls) ... ok
+test_large_integer_encoding_preserves_booleans (test_workflows.WorkflowTests.test_large_integer_encoding_preserves_booleans) ... ok
+test_memory_below_template_minimum_never_clones (test_workflows.WorkflowTests.test_memory_below_template_minimum_never_clones) ... ok
+test_non_template_is_rejected_before_mutation (test_workflows.WorkflowTests.test_non_template_is_rejected_before_mutation) ... ok
+test_partial_failure_retains_recovery_refs_and_never_deletes_disk (test_workflows.WorkflowTests.test_partial_failure_retains_recovery_refs_and_never_deletes_disk) ... ok
+test_progress_snapshots_preserve_pending_and_confirmed_outcomes (test_workflows.WorkflowTests.test_progress_snapshots_preserve_pending_and_confirmed_outcomes) ... ok
+test_reference_result_is_opaque (test_workflows.WorkflowTests.test_reference_result_is_opaque) ... ok
+test_running_guest_cannot_be_reconfigured (test_workflows.WorkflowTests.test_running_guest_cannot_be_reconfigured) ... ok
+test_stopped_monitor_does_not_submit_work (test_workflows.WorkflowTests.test_stopped_monitor_does_not_submit_work) ... ok
+test_template_cannot_be_modified_by_hardware_editor (test_workflows.WorkflowTests.test_template_cannot_be_modified_by_hardware_editor) ... ok
+test_timeout_retains_task_and_never_resubmits (test_workflows.WorkflowTests.test_timeout_retains_task_and_never_resubmits) ... ok
+test_arbitrary_block_boundaries_preserve_complete_envelope (test_xva.EnvelopeTests.test_arbitrary_block_boundaries_preserve_complete_envelope) ... ok
+test_truncated_body_and_end_markers_do_not_pass (test_xva.EnvelopeTests.test_truncated_body_and_end_markers_do_not_pass) ... ok
+test_wrong_metadata_bad_checksum_and_data_after_end_are_refused (test_xva.EnvelopeTests.test_wrong_metadata_bad_checksum_and_data_after_end_are_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 215 tests in 4.211s
+
+OK
+Flagship 1.2.0.dev1
+flagship-1.2.0-0.1.dev1.el10.noarch
+python3-3.12.16-2.el10_3.x86_64
+python3-tkinter-3.12.16-2.el10_3.x86_64
+NAME="Rocky Linux"
+VERSION="10.2 (Red Quartz)"
+RELEASE_TYPE="stable"
+ID="rocky"
+ID_LIKE="rhel centos fedora"
+VERSION_ID="10.2"
+PLATFORM_ID="platform:el10"
+PRETTY_NAME="Rocky Linux 10.2 (Red Quartz)"
+ANSI_COLOR="0;32"
+LOGO="fedora-logo-icon"
+CPE_NAME="cpe:/o:rocky:rocky:10::baseos"
+HOME_URL="https://rockylinux.org/"
+VENDOR_NAME="RESF"
+VENDOR_URL="https://resf.org/"
+BUG_REPORT_URL="https://bugs.rockylinux.org/"
+SUPPORT_END="2035-05-31"
+ROCKY_SUPPORT_PRODUCT="Rocky-Linux-10"
+ROCKY_SUPPORT_PRODUCT_VERSION="10.2"
+REDHAT_SUPPORT_PRODUCT="Rocky Linux"
+REDHAT_SUPPORT_PRODUCT_VERSION="10.2"
+PASS: installed native GUI and regression suite with network disabled
