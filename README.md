@@ -70,7 +70,7 @@ Passwords are not saved.
 The source tree is 1.2.0.dev2. Build and install the matching RPM as described in
 [BUILD.md](docs/BUILD.md). RPMs and dependency-complete offline archives produced
 for this work are under `dist/1.2.0.dev2/el9` and `dist/1.2.0.dev2/el10`.
-The published release links below refer to the earlier 1.1.0.dev2 build.
+The release links below install the 1.2.0.dev2 development prerelease.
 
 ## Published releases / Download
 
@@ -79,14 +79,14 @@ Runtime dependencies (`python3`, `python3-tkinter`, `ca-certificates`) are in
 the stock BaseOS/AppStream repos. You don't need EPEL, CRB or pip.
 
 Download the RPMs from the
-[latest release](https://github.com/mike0615/flagship/releases/latest), or
+[1.2.0.dev2 release](https://github.com/mike0615/flagship/releases/tag/v1.2.0-dev.2), or
 install directly:
 
 ```bash
 # Rocky Linux 9
-sudo dnf install https://github.com/mike0615/flagship/releases/download/v1.1.0-dev.2/flagship-1.1.0-0.2.dev2.el9.noarch.rpm
+sudo dnf install https://github.com/mike0615/flagship/releases/download/v1.2.0-dev.2/flagship-1.2.0-0.2.dev2.el9.noarch.rpm
 # Rocky Linux 10
-sudo dnf install https://github.com/mike0615/flagship/releases/download/v1.1.0-dev.2/flagship-1.1.0-0.2.dev2.el10.noarch.rpm
+sudo dnf install https://github.com/mike0615/flagship/releases/download/v1.2.0-dev.2/flagship-1.2.0-0.2.dev2.el10.noarch.rpm
 ```
 
 Then start **Flagship** from the application menu, or run `flagship`.

@@ -49,3 +49,13 @@ baseline and verifies exact filename coverage. Its SOURCE-COVERAGE.tsv identifie
 baseline versus delta sources with SHA-256 values. Retain the authenticated baseline
 archive alongside the delta; the delta alone is not a complete source set. Use the
 full collector for a self-contained consolidated source archive.
+
+## GitHub prerelease publication
+
+Push an annotated matching development tag, such as v1.2.0-dev.2, after committing
+its source and release notes. The release workflow runs native tests, builds and
+qualifies both Rocky majors, assembles uniquely named source/binary/offline assets,
+and publishes only after those checks succeed. Only the publication job receives
+contents:write. No personal token is required. The uploaded SHA256SUMS covers the
+exact release asset filenames; RELEASE_SOURCE.json identifies the source commit.
+Already published tags/releases are not automatically overwritten.

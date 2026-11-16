@@ -1,0 +1,68 @@
+name: Build and publish native release
+on:
+  push:
+    tags:
+      - 'v*-dev.*'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install build and GUI test tools
+        run: sudo apt-get update && sudo apt-get install -y podman rpm python3-tk xvfb openssl
+      - name: Run native desktop tests
+        run: xvfb-run -a python3 -m unittest discover -s tests -v
+      - name: Build and qualify Rocky 9 and 10 packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          for major in 9 10; do
+            ./scripts/build-rpm.sh "$major"
+            ./scripts/build-airgap.sh "$major"
+            ./scripts/test-offline.sh "$major"
+            ./qa/test-center-container.sh "$major"
+          done
+      - name: Assemble release assets and checksums
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 scripts/stage-release.py "$RELEASE_TAG"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-release-assets
+          path: dist/release-*/
+          if-no-files-found: error
+          retention-days: 14
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: native-release-assets
+          path: release-assets
+      - name: Verify and publish development release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd release-assets && sha256sum -c SHA256SUMS)
+          gh release create "$RELEASE_TAG" release-assets/* \
+            --verify-tag --prerelease \
+            --title "Flagship $RELEASE_TAG — native Rocky Linux 9/10" \
+            --notes-file "packaging/RELEASE_${RELEASE_TAG#v}.md"
