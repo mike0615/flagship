@@ -63,10 +63,13 @@ class VMPlan:
     description: str = ''
     home_host: str = ''
     boot_mode: str = ''
+    disk_bytes: int = 0
 
     def validate(self):
         if not self.name.strip() or len(self.name) > 255:
             raise ValueError('VM name must contain 1 to 255 characters')
+        if type(self.disk_bytes) is not int or not 0 <= self.disk_bytes <= 2*1024**4:
+            raise ValueError('Invalid disk byte size')
         if self.boot_mode not in ('', 'bios', 'uefi'): raise ValueError('Unsupported boot mode')
         for ref in (self.template, self.sr, self.network):
             if not isinstance(ref, str) or not ref or ref == NULL:
@@ -216,7 +219,7 @@ class Provisioner:
             if not installed:
                 vdi = self.async_call('VDI.create', {
                     'name_label': plan.name.strip() + ' disk', 'name_description': '',
-                    'SR': plan.sr, 'virtual_size': plan.disk_gib * GiB, 'type': 'user',
+                    'SR': plan.sr, 'virtual_size': plan.disk_bytes or plan.disk_gib * GiB, 'type': 'user',
                     'sharable': False, 'read_only': False, 'other_config': {},
                     'xenstore_data': {}, 'sm_config': {}}, reference=True)
                 self.resources['VDI'] = vdi

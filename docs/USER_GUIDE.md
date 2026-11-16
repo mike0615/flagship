@@ -166,3 +166,8 @@ if logout could not be delivered.
 See [CENTER_INTERFACE.md](CENTER_INTERFACE.md) for the new navigation, tables,
 notifications, wizard, NFS/private-network creation, host operations, RRD history
 and XVA transfers. These workflows require live-host qualification.
+
+## Workspace, portable images and consoles (1.3.0.dev1)
+
+See [PORTABLE_IMAGES.md](PORTABLE_IMAGES.md) for navigation, OVA/qcow2 import/export,
+docked/undocked consoles and the native Virt Viewer option.

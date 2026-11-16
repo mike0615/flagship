@@ -1,6 +1,6 @@
 Name:           flagship
-Version:        1.2.0
-Release:        0.2.dev2%{?dist}
+Version:        1.3.0
+Release:        0.1.dev1%{?dist}
 Summary:        Native Linux desktop management client for XAPI pools
 
 License:        BSD-2-Clause
@@ -11,6 +11,8 @@ BuildRequires:  python3-devel
 Requires:       python3 >= 3.9
 Requires:       python3-tkinter
 Requires:       ca-certificates
+Requires:       qemu-img
+Requires:       virt-viewer
 
 # Flagship was called XenAdmin Rocky (package xenadmin-rocky) up to 1.0.0.dev4.
 # dnf upgrade replaces it; the xenadmin-rocky and xenadmin-rocky-recovery
@@ -70,6 +72,11 @@ gtk-update-icon-cache -q %{_datadir}/icons/hicolor &>/dev/null || :
 %{_datadir}/%{name}/
 
 %changelog
+* Mon Nov 16 2026 Mike Anderson <mike@andersoncomputer.us> - 1.3.0-0.1.dev1
+- Redesigned infrastructure workspace, readable summaries and navigation.
+- Native OVA/qcow2 import/export with qemu-img, verified disk byte roundtrips.
+- Dock/undock/fullscreen console and one-use authenticated remote-viewer bridge.
+
 * Mon Nov 16 2026 Mike Anderson <mike@andersoncomputer.us> - 1.2.0-0.2.dev2
 - Fix live XCP-ng XVA imports: accept task-matched early HTTP 200 readiness
   and decode the singleton VM-set task result. Keep TLS pins, exact task

@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install build and GUI test tools
-        run: sudo apt-get update && sudo apt-get install -y podman rpm python3-tk xvfb openssl
+        run: sudo apt-get update && sudo apt-get install -y podman rpm python3-tk xvfb openssl qemu-utils
       - name: Run native desktop tests
         run: xvfb-run -a python3 -m unittest discover -s tests -v
       - name: Build and qualify Rocky 9 and 10 packages
