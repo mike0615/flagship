@@ -5,7 +5,7 @@ import threading
 import xmlrpc.client
 from urllib.parse import urlsplit
 from .journal import JournalError, OBJECT_CLASSES
-from .protocol import decode_reference_result
+from .protocol import decode_reference_result, decode_import_result
 from .tls import TrustPolicy, MODE_INSECURE
 
 
@@ -215,7 +215,8 @@ class Client:
             object_ref = None
             if result.get('status') == 'success' and (self.returns_reference(method) or method == 'HTTP.import'):
                 try:
-                    object_ref = decode_reference_result(result.get('result', ''))
+                    decoder = decode_import_result if method == 'HTTP.import' else decode_reference_result
+                    object_ref = decoder(result.get('result', ''))
                 except ValueError:
                     pass
             try:

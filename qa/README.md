@@ -105,3 +105,12 @@ Legacy dom0 coreutils exposes only argument-free `sync`; staging uses that
 portable flush. A completed upload can exist even if a later flush/status step
 fails. Inspect the exact final/partial names and full remote checksum before any
 retry; an existing staging record is never silently replaced.
+
+## Center-specific live workflows
+
+`live_center_smoke.py` extends isolated VM/device qualification with property
+editing, snapshot/revert and a complete XVA export/import roundtrip. Use an
+explicit writable SR UUID, expected HTTPS certificate fingerprint, private
+state directory and `--execute`. Credentials are prompted. The test never
+selects an existing ordinary VM for mutation. Follow with scoped
+`cleanup_protocol.py --pin ...` using the manifest, then inspect for leftovers.

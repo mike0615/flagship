@@ -104,3 +104,17 @@ xva.py and their tests. Integration updates use current TrustPolicy wrapping,
 validate local XVA framing before uploading, persist recovery file paths,
 and record imported VM UUIDs. No source-wide replacement from that older
 branch was performed. See CENTER_INTERFACE.md for implemented scope and gaps.
+
+## Live XVA import protocol correction
+
+The live XCP-ng 8.3.0 host exposed two differences from the simulated transfer
+server. XAPI's Import.handler sends HTTP 200 with a Task-Id before reading the
+archive. Import completion stores a VM-reference set in the task result. The
+native transport now binds early readiness to the exact task and the import
+workflow decodes exactly one member. No generic HTTP 200 response grants upload
+permission, and HTTP readiness never replaces successful task confirmation.
+The supplied XenAPI/HTTP.cs HttpPutStream/Put implementation also treats the
+initial successful response as the upload stream being ready.
+
+Primary server source:
+https://github.com/xapi-project/xen-api/blob/master/ocaml/xapi/import.ml

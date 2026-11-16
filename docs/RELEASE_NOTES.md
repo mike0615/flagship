@@ -1,3 +1,10 @@
+# Flagship 1.2.0.dev2
+
+Fixes XVA import compatibility found during live XCP-ng 8.3.0 qualification.
+Upload readiness accepts HTTP 100 Continue or a task-matched XAPI early 200;
+completion still requires a successful task. Import task VM-set results are
+decoded without weakening scalar results for other operations.
+
 # Flagship 1.2.0.dev1
 
 Native Center-style desktop and management workflows. See
