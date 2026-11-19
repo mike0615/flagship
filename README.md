@@ -20,6 +20,8 @@ Anderson Computer cyber chief toolset, together with
 It is an independent project maintained by Mike Anderson; it is not an official
 XCP-ng or XenServer product.
 
+**Who it's for:** Administrators moving from XCP-ng Center on Windows who want a native Linux desktop client for managing XAPI pools on Rocky Linux 9 and 10.
+
 **Status: development candidate 1.3.0.dev1.** There is no qualified v1.0
 release yet. A successful RPM build is not proof of working pool management or
 an offline install. See [qualification status](docs/QUALIFICATION.md) and the
@@ -220,3 +222,7 @@ Original application copyright/license notices are preserved in
 `upstream/LICENSE.xcp-ng`. The supplied Windows source is inventoried in
 `upstream/SHA256SUMS`; this repository contains the new native client, not the
 Wine wrapper found in the older private fork.
+
+---
+
+**Part of the Cyber Chief toolkit** by Anderson Computer. Sibling projects: [Flagship Web](https://github.com/mike0615/flagship-web) · [Porthole](https://github.com/mike0615/porthole) · [Skiff](https://github.com/mike0615/skiff) · [Sonar](https://github.com/mike0615/sonar) · [Helm RDP](https://github.com/mike0615/helm-rdp) · [Pathfinder](https://github.com/mike0615/pathfinder) · [FleetOps](https://github.com/mike0615/fleet-ops) · [Dockyard](https://github.com/mike0615/dockyard) · [CommShack](https://github.com/mike0615/commshack).
